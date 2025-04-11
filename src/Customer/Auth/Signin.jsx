@@ -43,7 +43,6 @@ const Signin = () => {
       ...form,
       [e.target.name]: e.target.value,
     });
-    console.log(form)
   };
 
   return (
