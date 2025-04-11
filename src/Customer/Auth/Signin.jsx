@@ -20,7 +20,6 @@ const Signin = () => {
     setLoading(true)
     try {
       const response = await axios.post(`${apiUrl}/auth/login`, form);
-      console.log(response.data)
       if(!response.data.token) {
         console.log("failed to create token")
       }
