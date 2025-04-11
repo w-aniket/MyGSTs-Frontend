@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+/* Container to hold scrolling text */
+.scrolling-container {
+    width: 100vw;
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    padding: 10px; /* Ensure it's above navbar */
+  }
+  
+  /* Wrapper to prevent flickering */
+  .scrolling-wrapper {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  /* The moving text */
+  .scrolling-text {
+    font-family: "JetBrains Mono", monospace;
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+    animation: scrollText 2100s linear infinite;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    color: rgb(17, 17, 17)
+  }
+  
+  /* Pause animation on hover */
+  .scrolling-text:hover {
+    animation-play-state: paused;
+  }
+  
+  /* Keyframes for smooth scrolling */
+  @keyframes scrollText {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%); /* Moves halfway before restarting */
+    }
+  }
+  

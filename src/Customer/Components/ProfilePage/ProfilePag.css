@@ -1,0 +1,188 @@
+/* Base styles */
+body {
+  color:Black
+  
+}
+.profile-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Optional: use if you want vertical centering too */
+  margin: 20px 0;      /* Optional spacing */
+}
+
+.profile-photo img,
+.profile-photo .placeholder {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #604646;
+  object-fit: cover;
+}
+
+.profile-page {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background: #f5f5f5;
+    padding: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #1d1d1d;
+  }
+  
+  .menu li {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: #f0f0f0;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    color: #333;
+  }
+  
+  .menu li:hover {
+    background-color: #ddd;
+  }
+  
+  .menu li.active {
+    background-color: #2c64c8;
+    color: white;
+    font-weight: bold;
+    border-left: 4px solid #1e47a1;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background: white;
+  }
+  
+  /* Hamburger menu icon */
+  .hamburger {
+    display: none;
+    font-size: 28px;
+    padding: 10px;
+    cursor: pointer;
+    background: #2c64c8;
+    color: white;
+    border-radius: 4px;
+  }
+  .personal-detail-section,
+   .address-section, 
+   .education-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .profile-form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .profile-form-group label {
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  
+  .profile-form-group input,
+  .profile-form-group select {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .profile-form-group p {
+    color:#960000;
+    font-Size: 0.9rem;
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  
+  .save-and-next {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+  }
+
+  
+  /* Hover effect */
+  .save-and-next:hover {
+    background-color: #218838;
+  }
+  
+  /* Active/click effect */
+  .save-and-next:active {
+    transform: scale(0.97);
+  }
+  
+  /* Disabled state */
+  .save-and-next:disabled {
+    background-color: #b1dfbb;
+    cursor: not-allowed;
+  }
+  
+  /* On wider screens, show 2 inputs per row */
+  @media (min-width: 768px) {
+    .profile-form-group {
+      width: 48%;
+    }
+  }
+  
+  
+  /* Responsive styles */
+  @media (max-width: 600px) {
+
+    .profile-photo img {
+      width: 150px;
+      height: 150px;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      transform: translateX(-100%);
+      z-index: 1000;
+    }
+  
+    .sidebar.open {
+      transform: translateX(0);
+    }
+  
+    .main-content {
+      padding: 15px;
+    }
+  
+    .hamburger {
+        display: block;
+        position: fixed;
+        top: 8rem;
+        right: 15px; /* <<< move to top-right */
+        z-index: 1100;
+      }
+  }
+  

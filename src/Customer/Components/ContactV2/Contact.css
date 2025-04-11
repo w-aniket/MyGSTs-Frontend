@@ -1,0 +1,159 @@
+/* Contact Page Styling */
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  background: #afafaf;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Left Side */
+.contact-info {
+  flex: 1;
+  min-width: 300px;
+  background: #1e3a8a;
+  color: white;
+  padding: 105px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-info h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.info-block {
+  margin-bottom: 15px;
+}
+
+.info-block h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.info-block p {
+  margin: 5px 0 0;
+}
+
+/* Right Side */
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+  background: white;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-form h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #f9f9f9;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #1e3a8a;
+  background: #fff;
+  outline: none;
+}
+
+.contact-form button {
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact-form button:hover {
+  background: #163074;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .input-group input,
+  .input-group textarea {
+    width: 100%;
+    padding: 16px 12px 8px;
+    font-size: 14px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+  }
+  
+  .input-group label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    color: #888;
+    font-size: 14px;
+    pointer-events: none;
+    transition: 0.2s ease all;
+    background: white;
+    padding: 0 4px;
+  }
+  
+  /* When focused or not empty */
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:focus + label,
+.input-group textarea:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  color: #1e3a8a;
+  background: white;
+  padding: 0 4px;
+  border: 1px solid #1e3a8a;
+  border-radius: 5px;
+}
+
+
+  
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-info,
+  .contact-form {
+    padding: 30px 20px;
+    border-radius: 0;
+  }
+}

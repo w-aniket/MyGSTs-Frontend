@@ -1,0 +1,116 @@
+/* Unique Job Card - Light Theme */
+.job-card-unique {
+    background: white; /* Clean White Card */
+    color: #333; /* Dark Gray Text for Readability */
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+    border: 1px solid #ddd; /* Subtle Border for Definition */
+}
+
+.job-card-unique:hover {
+    transform: scale(1.05);
+}
+
+/* Job Title Ribbon - Softer Look */
+.job-title-ribbon {
+    background: #0077b6; /* Elegant Blue */
+    padding: 12px;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 75%;
+    transform: rotate(-5deg);
+    box-shadow: 0 4px 8px rgba(0, 119, 182, 0.3);
+}
+
+/* Job Content */
+.job-content {
+    padding: 80px 20px 20px;
+    text-align: left;
+}
+
+/* Job Description */
+.job-description {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+/* Job Details */
+.job-details p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Icons */
+.icon {
+    color: #0077b6; /* Matching Blue Icons */
+    margin-right: 8px;
+}
+
+/* Apply Button */
+.apply-btn {
+    background: #0077b6;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: block;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.apply-btn:hover {
+    background: #005f8a; /* Slightly Darker on Hover */
+    transform: translateY(-3px);
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .job-card-unique {
+        max-width: 90%;
+    }
+
+    .job-title-ribbon {
+        width: 80%;
+        font-size: 1.3rem;
+    }
+
+    /* Ensure content and text are left-aligned */
+    .job-content {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Aligns entire content left */
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .job-description, 
+    .job-details p {
+        font-size: 0.85rem;
+        text-align: left !important; /* Force left alignment */
+        display: flex;
+        align-items: center; /* Ensures icons & text align properly */
+        width: 100%;
+    }
+
+    .job-details p .icon {
+        align-self: flex-start; /* Aligns icons with text */
+    }
+}

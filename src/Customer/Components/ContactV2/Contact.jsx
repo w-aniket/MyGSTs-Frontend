@@ -1,0 +1,81 @@
+import React from "react";
+import "./Contact.css";
+
+const Contact = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+    console.log("Form Data Submitted:", data);
+  };
+  return (
+    <>
+      <div className="contact-container">
+        <div className="contact-info">
+          <h2>Ganesh Wakchaure</h2>
+          <p>We’re here to help and answer any question you might have.</p>
+
+          <div className="info-block">
+            <h4>Company</h4>
+            <p>Awesome Tech Pvt Ltd</p>
+          </div>
+
+          <div className="info-block">
+            <h4>Email</h4>
+            <p>hello@awesometech.com</p>
+          </div>
+
+          <div className="info-block">
+            <h4>Phone</h4>
+            <p>+91 98765 43210</p>
+          </div>
+
+          <div className="info-block">
+            <h4>Address</h4>
+            <p>201 Silicon Valley Street, Bangalore, India</p>
+          </div>
+        </div>
+
+        {/* Right Side - Form */}
+        <div className="contact-form">
+          <h2>Contact Us</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <input type="text" name="name" required placeholder=" " />
+              <label>Full Name</label>
+            </div>
+
+            <div className="input-group">
+              <input type="email" name="email" required placeholder=" " />
+              <label>Email</label>
+            </div>
+
+            <div className="input-group">
+              <input type="tel" name="contact" required placeholder=" " />
+              <label>Contact Number</label>
+            </div>
+
+            <div className="input-group">
+              <input type="text" name="jobTitle" placeholder=" " />
+              <label>Job Title</label>
+            </div>
+
+            <div className="input-group">
+              <textarea
+                name="message"
+                rows="5"
+                required
+                placeholder=" "
+              ></textarea>
+              <label>Your Message</label>
+            </div>
+
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Contact;
