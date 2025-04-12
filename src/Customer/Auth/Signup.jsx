@@ -25,7 +25,6 @@ const Signup = () => {
     setLoading(true);
     try {
       const response = await axios.post(`${apiUrl}/auth/register`, form);
-      console.log(response.data);
       if (response.data.success) {
         setShowOtpInput(true);
       }
@@ -69,6 +68,18 @@ const Signup = () => {
     });
   };
 
+  const handleResendOTP = async () => {
+    setLoading(true)
+    try {
+      const res = await axios.post(`${apiUrl}/auth/resendOTP`, form)
+      toast.success(res.data.message)
+    } catch (error) {
+      const errorMessage =  (await error?.response?.data?.message) || "Failed to sent opt"
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
     <div className="body">
       <div className="auth-container">
@@ -139,6 +150,14 @@ const Signup = () => {
             <button id="submit" type="submit" disabled={loading}>
               {loading ? <span className="spinner"></span> : "Verify"}
             </button>
+            <p className="auth-footer-text"  >
+              OTP not recived?{" "}
+              <a onClick={handleResendOTP} aria-disabled={loading}>resend OTP</a>
+            </p>
+            <p className="auth-footer-text">
+              Already have an account?{" "}
+              <a onClick={() => navigate("/signin")}>Sign In</a>
+            </p>
           </form>
         )}
       </div>
