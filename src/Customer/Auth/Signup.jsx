@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Otp from "./Otp";
 
 const Signup = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [otp, setOtp] = useState("");
   const [showOtpInput, setShowOtpInput] = useState(false);
 
   const [form, setForm] = useState({
@@ -37,30 +37,6 @@ const Signup = () => {
     }
   };
 
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await axios.post(`${apiUrl}/auth/register/verify`, {
-        email: form.email,
-        otp,
-      });
-      if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
-        toast.success("Successfully Register");
-        setTimeout(() => {
-          navigate("/");
-        }, 900);
-      }
-    } catch (error) {
-      const errorMessage =
-        (await error?.response?.data?.message) || "OTP Verification failed";
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -68,18 +44,6 @@ const Signup = () => {
     });
   };
 
-  const handleResendOTP = async () => {
-    setLoading(true)
-    try {
-      const res = await axios.post(`${apiUrl}/auth/resendOTP`, form)
-      toast.success(res.data.message)
-    } catch (error) {
-      const errorMessage =  (await error?.response?.data?.message) || "Failed to sent opt"
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false)
-    }
-  }
   return (
     <div className="body">
       <div className="auth-container">
@@ -135,34 +99,10 @@ const Signup = () => {
             </p>
           </form>
         ) : (
-          <form onSubmit={handleVerifyOtp}>
-            <h1>Verify OTP</h1>
-            <p className="auth-footer-text">OTP sent to {form.email}</p>
-            <div className="form-group">
-              <label htmlFor="otp">OTP</label>
-              <input
-                type="number"
-                name="otp"
-                id="otp"
-                onChange={(e) => setOtp(e.target.value)}
-              />
-            </div>
-            <button id="submit" type="submit" disabled={loading}>
-              {loading ? <span className="spinner"></span> : "Verify"}
-            </button>
-            <p className="auth-footer-text"  >
-              OTP not recived?{" "}
-              <a onClick={handleResendOTP} aria-disabled={loading}>resend OTP</a>
-            </p>
-            <p className="auth-footer-text">
-              Already have an account?{" "}
-              <a onClick={() => navigate("/signin")}>Sign In</a>
-            </p>
-          </form>
+          <Otp email={form.email} purpose="register" />
         )}
       </div>
-
-      <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
