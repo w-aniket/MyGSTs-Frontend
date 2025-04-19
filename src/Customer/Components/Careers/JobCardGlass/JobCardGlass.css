@@ -18,23 +18,28 @@
 
 /* Job Title Ribbon - Softer Look */
 .job-title-ribbon {
-    background: #0077b6; /* Elegant Blue */
+    margin-top: 15px;
+    background: #0077b6; 
     padding: 12px;
     text-align: center;
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
-    position: absolute;
     top: 0;
     left: 0;
-    width: 75%;
-    transform: rotate(-5deg);
     box-shadow: 0 4px 8px rgba(0, 119, 182, 0.3);
+}
+
+
+.heading-centre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Job Content */
 .job-content {
-    padding: 80px 20px 20px;
+    padding: 40px 20px 20px;
     text-align: left;
 }
 

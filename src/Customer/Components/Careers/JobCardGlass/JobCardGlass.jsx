@@ -35,9 +35,11 @@ const JobCardGlass = ({
       <p className="job-description">{description}</p>
 
       <div className="job-details">
+        <div className="heading-centre">
         <p>
           <FaBriefcase className="icon" /> <strong>Job Type:</strong> {title}
         </p>
+        </div>
         <p>
           <FaUserGraduate className="icon" /> <strong>Qualification:</strong>{" "}
           {qualification}

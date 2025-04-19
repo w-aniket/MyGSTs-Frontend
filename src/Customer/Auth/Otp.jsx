@@ -66,7 +66,7 @@ const Otp = ({ email, purpose }) => {
         <div className="form-group">
           <label htmlFor="otp">OTP</label>
           <input
-            type="number"
+            type="text"
             name="otp"
             id="otp"
             onChange={(e) => setOtp(e.target.value)}

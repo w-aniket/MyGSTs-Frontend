@@ -26,6 +26,7 @@ import { useLocation } from 'react-router-dom';
           setUser(res.data.user);
         } catch (err) {
           console.error("Failed to fetch user:", err);
+          localStorage.removeItem('token')
         } finally {
           setLoadingUser(false);
         }

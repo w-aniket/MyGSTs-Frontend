@@ -1,35 +1,34 @@
 import React from "react";
 import "./Careers.css";
 import CareerInrto from "./CareerIntro/CareerInrto";
-import JobCard from "./JobCard/JobCard";
 import JobCardGlass from "./JobCardGlass/JobCardGlass";
 
 const jobListings = [
   {
     id: 1,
-    title: "Software Engineer",
-    description: "Develop innovative solutions with our tech team.",
-    qualification: "B.Tech / MCA",
-    experience: "2-5 years",
-    gender: "Any",
-    ageLimit: "22-40",
-    deadline: "2023-12-31",
-    skills: "JavaScript, React, Node.js",
+    title: "Accountant",
+    description: "Proficiency in Tally Prime and Excel, knowledge of accounting changes and construction equipment. Manage accounts payable and receivable, ensure compliance with taxes, and handle cash flow management",
+    qualification: " B.Com / M.Com",
+    experience: "0-3 years",
+    gender: "Male / Female",
+    ageLimit: "21 - 40",
+    deadline: "2025-12-31",
+    skills: "Tally ERP/ Tally Prime, Accounting,GST Return, Bank Reconcilition, TDS Return, Finalisation, Journal Entries",
   },
   {
     id: 2,
-    title: "UI/UX Designer",
-    description: "Create stunning user experiences & interfaces.",
-    qualification: "B.Des / Any Design Course",
+    title: "Junior Accountant",
+    description: "Tally Entries, Daily Accounting, Sales/Purchase Billing, GST Working, Must able to handle Backoffice work , Handling & resolving clients queries over the call, Develop and implement effective policies for all operational procedures.",
+    qualification: "B.Com / M.Com",
     experience: "1-3 years",
-    gender: "Any",
-    ageLimit: "22-35",
-    deadline: "2023-11-30",
-    skills: "Figma, Adobe XD, Sketch",
+    gender: "Male / Female",
+    ageLimit: "21 - 40",
+    deadline: "2025-11-30",
+    skills: "Daily accounting, TallyLead generation, MINProduct service, BillingBack officeOffice, administration, Operationsadmin executive",
   },
   {
     id: 3,
-    title: "Marketing Manager",
+    title: "Human Resources Trainer",
     description: "Lead and execute marketing strategies.",
     qualification: "MBA / Marketing",
     experience: "3-6 years",
