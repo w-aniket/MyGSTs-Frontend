@@ -9,6 +9,7 @@ import CasesRoundedIcon from "@mui/icons-material/CasesRounded";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { UserContext } from "../../../UserContex/UserContext";
+import ProfileLogo from "../ProfileLogo/ProfileLogo";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -16,7 +17,9 @@ const Navigation = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user, loadingUser } = useContext(UserContext);
   const dropdownRef = useRef(null);
-  const {setUser} = useContext(UserContext)
+  const { setUser } = useContext(UserContext);
+
+  // console.log("This is user",user);
 
   const navigation = [
     { name: "Home", href: "/", current: location.pathname === "/" },
@@ -48,7 +51,7 @@ const Navigation = () => {
   ];
 
   const signout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setUser(null);
     setIsDropdownOpen(false);
     navigate("/");
@@ -60,11 +63,11 @@ const Navigation = () => {
         setIsDropdownOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown',handleClickOutside)
-    }
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   return (
@@ -100,22 +103,40 @@ const Navigation = () => {
         {loadingUser ? (
           <span className="spinner"></span>
         ) : user ? (
-          <div className="profile-menu" ref={dropdownRef}>
-            <button
-              className="profile-button"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              <p>{user?.firstName.trim().charAt(0).toUpperCase()}</p>
-            </button>
-            <div className={`profile-dropdown ${isDropdownOpen ? "show" : ""}`}>
-              <a
-                onClick={() => navigate("/profile") || setIsDropdownOpen(false)}
-              >
-                Your Profile
-              </a>
-              <a onClick={signout}>Sign Out</a>
-            </div>
-          </div>
+          // <div className="profile-menu" ref={dropdownRef}>
+          //   <button
+          //     className="profile-button"
+          //     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          //   >
+          //     <p>{user?.firstName.trim().charAt(0).toUpperCase()}</p>
+          //   </button>
+          //   <div className={`profile-dropdown ${isDropdownOpen ? "show" : ""}`}>
+          //     <a
+          //       onClick={() => navigate("/profile") || setIsDropdownOpen(false)}
+          //     >
+          //       Your Profile
+          //     </a>
+          //     {user.role === "admin" && (
+          //       <>
+          //         <a onClick={() => navigate("/admin")}>Admin Dashboard</a>
+          //         <a onClick={() => navigate("/employee")}>
+          //           Employee Dashboard
+          //         </a>
+          //       </>
+          //     )}
+
+          //     {user.role === "employee" && (
+          //       <>
+          //         <a onClick={() => navigate("/employee")}>
+          //           Employee Dashboard
+          //         </a>
+          //       </>
+          //     )}
+
+          //     <a onClick={signout}>Sign Out</a>
+          //   </div>
+          // </div>
+          <ProfileLogo />
         ) : (
           <button id="signup" onClick={() => navigate("/signup")}>
             Sign Up

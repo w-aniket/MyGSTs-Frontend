@@ -5,6 +5,7 @@ import ScrollToTop from "./Customer/Components/ScrollToTop";
 import { UserContext } from "./UserContex/UserContext";
 import { useContext } from "react";
 import AdminRouter from "./Routers/AdminRouter";
+import EmployeeRouters from "./Routers/EmployeeRouters";
 
 function App() {
   const { user, loadingUser } = useContext(UserContext);
@@ -24,6 +25,21 @@ function App() {
               <Navigate
                 to="/"
                 state={{ from: "/admin" }}
+                replace
+              />
+            )
+          }
+        />
+
+        <Route
+          path="/employee/*"
+          element={
+            user && user?.role === "employee" || "admin" ? (
+              <EmployeeRouters />
+            ) : (
+              <Navigate
+                to="/"
+                state={{ from: "/employee" }}
                 replace
               />
             )
