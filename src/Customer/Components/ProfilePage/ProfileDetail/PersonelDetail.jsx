@@ -106,11 +106,6 @@ const PersonelDetail = () => {
           </p>
         </div>
       </div>
-      <div className="button-wrapper">
-        <button type="submit" className="save-and-next">
-          Save and Next
-        </button>
-      </div>
     </form>
   );
 };

@@ -239,11 +239,6 @@ const Education = () => {
           Allowed: <strong>.pdf</strong> | Max size: <strong>1MB</strong>
         </p>
       </div>
-      <div className="button-wrapper">
-        <button type="submit" className="save-and-next">
-          Submit
-        </button>
-      </div>
     </form>
   );
 };

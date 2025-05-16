@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import "./JobPosts.css";
 import AddJobModel from "../../Components/JobModel/AddJobModel";
 import { toast } from "react-toastify";
+import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
 
 const JobPosts = () => {
   const [jobs, setJobs] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [jobToEdit, setJobToEdit] = useState(null);
+  const [jobToDelete, setJobToDelete] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const fetchJobs = async () => {
@@ -20,7 +22,7 @@ const JobPosts = () => {
       setJobs(responce?.data?.jobs || []);
     } catch (error) {
       console.error("Error fetching jobs:", error);
-      toasrt.error("Failed to fetch jobs");
+      toast.error("Failed to fetch jobs");
     }
   };
 
@@ -28,19 +30,15 @@ const JobPosts = () => {
     fetchJobs();
   }, []);
 
-  const handleDelete = async (jobId) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this job post?"
-    );
-    if(!confirmDelete) return;
-
+  const ConfirmDelete = async () => {
     try {
-      await axios.delete(`${apiUrl}/api/jobs/${jobId}`, {
+      await axios.delete(`${apiUrl}/api/jobs/${jobToDelete}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       toast.success("Job deleted Successfully!");
+      setJobToDelete(null);
       fetchJobs();
     } catch (error) {
       console.error("Error deleting job:", error)
@@ -93,7 +91,7 @@ const JobPosts = () => {
                       >
                         Edit
                       </button>
-                      <button className="delete-btn" onClick={() => handleDelete(job._id)}>Delete</button>
+                      <button className="delete-btn" onClick={() => setJobToDelete(job._id)}>Delete</button>
                     </td>
                   </tr>
                 );
@@ -114,6 +112,14 @@ const JobPosts = () => {
           }}
           onJobAdded={fetchJobs}
           jobToEdit={jobToEdit}
+        />
+      )}
+
+      {jobToDelete && (
+        <ConfirmModal
+          message="Are you sure you want to delete this job?"
+          onConfirm={ConfirmDelete}
+          onCancel={() => setJobToDelete(null)}
         />
       )}
     </div>

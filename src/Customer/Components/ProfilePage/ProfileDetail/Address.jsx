@@ -1,9 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 const Address = () => {
-
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,11 +8,9 @@ const Address = () => {
     const data = Object.fromEntries(formData.entries());
     console.log(data);
 
-    navigate('/careers/profile/3');
-
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
           <h2>Permanent Address </h2>
       <div className="address-section">
         <div className="profile-form-group">
@@ -59,9 +54,6 @@ const Address = () => {
         </div>
       </div>
       <div className="button-wrapper">
-        <button type="submit" className="save-and-next">
-          Save and Next
-        </button>
       </div>
     </form>
   );
