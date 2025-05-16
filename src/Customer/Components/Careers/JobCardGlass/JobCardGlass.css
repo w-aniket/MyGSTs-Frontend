@@ -1,121 +1,99 @@
-/* Unique Job Card - Light Theme */
-.job-card-unique {
-    background: white; /* Clean White Card */
-    color: #333; /* Dark Gray Text for Readability */
-    width: 100%;
-    max-width: 420px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    position: relative;
-    transition: transform 0.3s ease-in-out;
-    border: 1px solid #ddd; /* Subtle Border for Definition */
+.career-page {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.job-card-unique:hover {
-    transform: scale(1.05);
+.career-heading {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
 }
 
-/* Job Title Ribbon - Softer Look */
-.job-title-ribbon {
-    margin-top: 15px;
-    background: #0077b6; 
-    padding: 12px;
-    text-align: center;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    top: 0;
-    left: 0;
-    box-shadow: 0 4px 8px rgba(0, 119, 182, 0.3);
+.job-listings {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
-
-.heading-centre{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.job-card-wrapper {
+  width: 100%;
 }
 
-/* Job Content */
-.job-content {
-    padding: 40px 20px 20px;
-    text-align: left;
+/* JobCardGlass style */
+.job-card-glass {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px 30px;
+  transition: box-shadow 0.3s ease;
+  cursor: default;
 }
 
-/* Job Description */
+.job-card-glass:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.job-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #34495e;
+  margin-bottom: 12px;
+}
+
 .job-description {
-    font-size: 1rem;
-    margin-bottom: 15px;
-    opacity: 0.9;
+  color: #555555;
+  line-height: 1.5;
+  font-size: 1rem;
+  margin-bottom: 20px;
 }
 
-/* Job Details */
 .job-details p {
-    font-size: 0.9rem;
-    margin: 5px 0;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  color: #666666;
+  font-size: 0.95rem;
+  margin: 6px 0;
 }
 
-/* Icons */
-.icon {
-    color: #0077b6; /* Matching Blue Icons */
-    margin-right: 8px;
+.job-details p .icon {
+  color: #2980b9;
+  margin-right: 10px;
+  min-width: 20px;
+  font-size: 1.1rem;
 }
 
-/* Apply Button */
 .apply-btn {
-    background: #0077b6;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    display: block;
-    width: 100%;
-    border: none;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+  margin-top: 20px;
+  padding: 12px 25px;
+  background-color: #2980b9;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .apply-btn:hover {
-    background: #005f8a; /* Slightly Darker on Hover */
-    transform: translateY(-3px);
+  background-color: #1c5980;
 }
-/* Responsive Design */
-@media (max-width: 768px) {
-    .job-card-unique {
-        max-width: 90%;
-    }
 
-    .job-title-ribbon {
-        width: 80%;
-        font-size: 1.3rem;
-    }
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .job-card-glass {
+    padding: 20px;
+  }
 
-    /* Ensure content and text are left-aligned */
-    .job-content {
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start; /* Aligns entire content left */
-        justify-content: flex-start;
-        width: 100%;
-    }
+  .job-title {
+    font-size: 1.4rem;
+  }
 
-    .job-description, 
-    .job-details p {
-        font-size: 0.85rem;
-        text-align: left !important; /* Force left alignment */
-        display: flex;
-        align-items: center; /* Ensures icons & text align properly */
-        width: 100%;
-    }
-
-    .job-details p .icon {
-        align-self: flex-start; /* Aligns icons with text */
-    }
+  .apply-btn {
+    width: 100%;
+  }
 }

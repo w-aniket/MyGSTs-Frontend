@@ -1,0 +1,127 @@
+/* General Layout */
+.content {
+  /* padding: 2rem; */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafc;
+  min-height: 100vh;
+}
+
+/* Header */
+.job-posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.job-posts-header h2 {
+  font-size: 1.8rem;
+  color: #1e3c72;
+  margin: 0;
+}
+
+/* Add Job Button */
+.add-job-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #1e3c72;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-job-btn:hover {
+  background-color: #16305b;
+}
+
+/* Table Container */
+.job-table-wrapper {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Table */
+.jobtable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.jobtable thead {
+  background-color: #1e3c72;
+  color: white;
+}
+
+.jobtable th,
+.jobtable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+
+
+.status-active {
+    color: #4caf50;
+}
+
+.status-inactive {
+    color: #f44336;
+    text-transform: capitalize;
+}
+/* Action Buttons */
+.edit-btn,
+.delete-btn {
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #388e3c;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .job-posts-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .add-job-btn {
+    width: 100%;
+  }
+
+  .jobtable {
+    font-size: 0.9rem;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}

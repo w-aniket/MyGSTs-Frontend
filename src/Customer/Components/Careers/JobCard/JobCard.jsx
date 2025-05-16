@@ -1,27 +1,18 @@
-import React from "react";
-import { FaBriefcase, FaUserGraduate, FaClock, FaVenusMars, FaUser, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
-import "./JobCard.css";
+import React from 'react';
+import './JobCard.css';
 
-const JobCard = () => {
+const JobCard = ({ ...job }) => {
   return (
-    <div className="job-card-white">
-      <div className="job-image">
-        <img src="https://source.unsplash.com/300x200/?office,teamwork" alt="Job" />
-      </div>
-
-      <div className="job-info">
-        <h2>Software Developer</h2>
-        <p className="job-description">Build cutting-edge software solutions with us!</p>
-
-        <div className="job-details">
-          <p><FaBriefcase className="icon" /> <strong>Job Type:</strong> Full-Time</p>
-          <p><FaUserGraduate className="icon" /> <strong>Qualification:</strong> B.Tech / MCA</p>
-          <p><FaClock className="icon" /> <strong>Experience:</strong> 2-5 years</p>
-          <p><FaVenusMars className="icon" /> <strong>Gender:</strong> Any</p>
-          <p><FaUser className="icon" /> <strong>Age Limit:</strong> 22 - 40 years</p>
-        </div>
-
-        <button className="apply-btn">Apply Now</button>
+    <div className="job-card">
+      <h2 className="job-title">{job.title}</h2>
+      <p className="job-description">{job.description}</p>
+      <div className="job-details">
+        <p><strong>Qualification:</strong> {job.qualification}</p>
+        <p><strong>Age:</strong> {job.age}</p>
+        <p><strong>Experience:</strong> {job.experience}</p>
+        <p><strong>Gender:</strong> {job.gender}</p>
+        <p><strong>Skills:</strong> {job.skills}</p>
+        <p><strong>Deadline:</strong> {job.deadline}</p>
       </div>
     </div>
   );

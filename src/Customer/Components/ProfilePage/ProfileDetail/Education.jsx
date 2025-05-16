@@ -63,17 +63,18 @@ const Education = () => {
       <h2>12th Details</h2>
       <div className="education-section">
         <div className="profile-form-group">
-          <label>Name of College *</label>
+          <label>Name of College</label>
           <input
             type="text"
             name="12-college-name"
             placeholder="College Name"
+            
           />
         </div>
 
         <div className="profile-form-group">
-          <label>University *</label>
-          <input type="text" name="12-university" placeholder="University" />
+          <label>University</label>
+          <input type="text" name="12-university" placeholder="University"  />
         </div>
 
         <div className="profile-form-group">
@@ -83,12 +84,13 @@ const Education = () => {
             name="12-yearOfPassing"
             onKeyDown={(e) => e.preventDefault()}
             onFocus={(e) => e.target.showPicker && e.target.showPicker()}
+            
           />
         </div>
 
         <div className="profile-form-group">
           <label>Percentage</label>
-          <input type="text" name="12-percentage" placeholder="Percentage" />
+          <input type="text" name="12-percentage" placeholder="Percentage"  />
         </div>
 
         <div className="profile-form-group">
@@ -99,6 +101,7 @@ const Education = () => {
             id="result"
             accept=".pdf"
             onChange={handleResultChange}
+            
           />
           <p>
             Allowed: <strong>.pdf</strong> | Max size: <strong>1Mb</strong>
@@ -163,14 +166,14 @@ const Education = () => {
           </p>
         </div>
       </div>
-      <h2>Graduation / Degree</h2>
+      <h2>Graduation / Degree </h2>
       <div className="education-section">
         <div className="profile-form-group">
-          <label>Course Name</label>
+          <label>Course Name *</label>
           <input type="text" name="degree-name" placeholder="Degree" required />
         </div>
         <div className="profile-form-group">
-          <label>University</label>
+          <label>University *</label>
           <input
             type="text"
             name="degree-university"
@@ -179,7 +182,7 @@ const Education = () => {
           />
         </div>
         <div className="profile-form-group">
-          <label>Year of Passing</label>
+          <label>Year of Passing *</label>
           <input
             type="date"
             name="degree-yearOfPassing"
@@ -189,7 +192,7 @@ const Education = () => {
           />
         </div>
         <div className="profile-form-group">
-          <label>Percentage</label>
+          <label>Percentage *</label>
           <input
             type="text"
             name="degree-percentage"
@@ -203,7 +206,6 @@ const Education = () => {
             type="text"
             name="degree-specialization"
             placeholder="Specialization"
-            required
           />
         </div>
         <div className="profile-form-group">
@@ -224,7 +226,7 @@ const Education = () => {
 
       <h2>Resume</h2>
       <div className="profile-form-group">
-        <label htmlFor="resume">Upload Resume*</label>
+        <label htmlFor="resume">Upload Resume *</label>
         <input
           type="file"
           name="resume"

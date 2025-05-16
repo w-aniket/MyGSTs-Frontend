@@ -1,69 +1,72 @@
 import React from "react";
-import { FaBriefcase, FaUserGraduate, FaClock, FaVenusMars, FaUser, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
-import "./JobCardGlass.css";
+import {
+  FaUserGraduate,
+  FaClock,
+  FaVenusMars,
+  FaUser,
+  FaCalendarAlt,
+  FaCheckCircle,
+} from "react-icons/fa";
+import "./JobCardGlass.css"; // assuming styles are here
+
 import { useNavigate } from "react-router-dom";
 
 const JobCardGlass = ({
-    title,
-    description,
-    jobType,
-    qualification,
-    experience,
-    gender,
-    ageLimit,
-    deadline,
-    skills,
-  }) => {
-    const navigate = useNavigate();
+  title,
+  description,
+  qualification,
+  experience,
+  gender,
+  ageLimit,
+  deadline,
+  skills,
+}) => {
+  const navigate = useNavigate();
 
-    const handleCilck = () => {
-     
-      navigate("/careers/profile/1");
-      
-      setTimeout(() => {
-        alert("Complete Profile to apply for this job");
-      }, 100);
-    }
+  const handleClick = () => {
+    navigate("/careers/profile/1");
+    setTimeout(() => {
+      alert("Complete Profile to apply for this job");
+    }, 100);
+  };
 
   return (
-    <div className="job-card-unique">
-    <div className="job-title-ribbon">
-      <h2>{title}</h2>
-    </div>
-
-    <div className="job-content">
+    <div className="job-card-glass">
+      <h2 className="job-title">{title}</h2>
       <p className="job-description">{description}</p>
 
       <div className="job-details">
-        <div className="heading-centre">
         <p>
-          <FaBriefcase className="icon" /> <strong>Job Type:</strong> {title}
-        </p>
-        </div>
-        <p>
-          <FaUserGraduate className="icon" /> <strong>Qualification:</strong>{" "}
-          {qualification}
+          <FaUserGraduate className="icon" />
+          <strong>Qualification:</strong>&nbsp;{qualification}
         </p>
         <p>
-          <FaClock className="icon" /> <strong>Experience:</strong> {experience}
+          <FaClock className="icon" />
+          <strong>Experience:</strong>&nbsp;{experience}
         </p>
         <p>
-          <FaVenusMars className="icon" /> <strong>Gender:</strong> {gender}
+          <FaVenusMars className="icon" />
+          <strong>Gender:</strong>&nbsp;{gender}
         </p>
         <p>
-          <FaUser className="icon" /> <strong>Age Limit:</strong> {ageLimit}
+          <FaUser className="icon" />
+          <strong>Age Limit:</strong>&nbsp;{ageLimit}
         </p>
         <p>
-          <FaCalendarAlt className="icon" /> <strong>Deadline:</strong> {deadline}
+          <FaCalendarAlt className="icon" />
+          <strong>Deadline:</strong>&nbsp;{deadline}
         </p>
         <p>
-          <FaCheckCircle className="icon" /> <strong>Skills:</strong> {skills}
+          <FaCheckCircle className="icon" />
+          <strong>Skills:</strong>&nbsp;{skills}
         </p>
       </div>
 
-      <button onClick={ handleCilck} className="apply-btn">Apply Now</button>
+      <button onClick={handleClick} className="apply-btn">
+        Apply Now
+      </button>
+      
     </div>
-  </div>
   );
 };
 

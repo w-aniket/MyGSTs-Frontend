@@ -1,0 +1,123 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import "./JobPosts.css";
+import AddJobModel from "../../Components/JobModel/AddJobModel";
+import { toast } from "react-toastify";
+
+const JobPosts = () => {
+  const [jobs, setJobs] = useState([]);
+  const [showModel, setShowModel] = useState(false);
+  const [jobToEdit, setJobToEdit] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const fetchJobs = async () => {
+    try {
+      const responce = await axios.get(`${apiUrl}/api/jobs`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setJobs(responce?.data?.jobs || []);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      toasrt.error("Failed to fetch jobs");
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const handleDelete = async (jobId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this job post?"
+    );
+    if(!confirmDelete) return;
+
+    try {
+      await axios.delete(`${apiUrl}/api/jobs/${jobId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      toast.success("Job deleted Successfully!");
+      fetchJobs();
+    } catch (error) {
+      console.error("Error deleting job:", error)
+      toast.error("Failed to delete Job");
+    }
+  }
+
+  return (
+    <div className="content">
+      <div className="job-posts-header">
+        <h2>Job Post</h2>
+        <button className="add-job-btn" onClick={() => setShowModel(true)}>
+          + Add Job
+        </button>
+      </div>
+
+      <div className="job-table-wrapper">
+        <table className="jobtable">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jobs.length > 0 ? (
+              jobs.map((job) => {
+                return (
+                  <tr key={job._id}>
+                    <td>{job.title}</td>
+                    <td>
+                      <span
+                        className={
+                          job.status === "Active"
+                            ? "status-active"
+                            : "status-inactive"
+                        }
+                      >
+                        {job.status}
+                      </span>
+                    </td>
+                    <td>
+                      <button
+                        className="edit-btn"
+                        onClick={() => {
+                          setJobToEdit(job);
+                          setShowModel(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button className="delete-btn" onClick={() => handleDelete(job._id)}>Delete</button>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan="3">No Job posts Found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      {showModel && (
+        <AddJobModel
+          onClose={() => {
+            setShowModel(false);
+            setJobToEdit(null);
+          }}
+          onJobAdded={fetchJobs}
+          jobToEdit={jobToEdit}
+        />
+      )}
+    </div>
+  );
+};
+
+export default JobPosts;

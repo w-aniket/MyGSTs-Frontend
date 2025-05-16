@@ -34,7 +34,7 @@ const ProfilePag = () => {
     }
   };
 
-  const imageUrl = true;
+  const imageUrl = false;
 
   return (
     <div className="profile-page">

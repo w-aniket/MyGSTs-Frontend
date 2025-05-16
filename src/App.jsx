@@ -6,6 +6,8 @@ import { UserContext } from "./UserContex/UserContext";
 import { useContext } from "react";
 import AdminRouter from "./Routers/AdminRouter";
 import EmployeeRouters from "./Routers/EmployeeRouters";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { user, loadingUser } = useContext(UserContext);
@@ -46,6 +48,7 @@ function App() {
           }
         />
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 }
