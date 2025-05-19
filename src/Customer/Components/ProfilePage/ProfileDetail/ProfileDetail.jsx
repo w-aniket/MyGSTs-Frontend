@@ -60,7 +60,6 @@ const ProfileDetail = ( {setImageUrl} ) => {
 
     resume: "",
   });
-  if (isProfileAvailable) setImageUrl(profile.passportPhoto);
 
   useEffect(() => {
     if (queryParams.get("apply") === "true" && jobId) {
@@ -192,11 +191,14 @@ const ProfileDetail = ( {setImageUrl} ) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        if (res.data.success) {
+        if (!jobId) {
           toast.success("Profile created successfully!");
+          navigate("/careers");
         }
+        
       }
 
+      if( jobId ) {
       await axios.post(
         `${apiUrl}/api/jobs/apply`,
         { jobId },
@@ -208,11 +210,22 @@ const ProfileDetail = ( {setImageUrl} ) => {
       );
       toast.success("Applied successfully!");
       navigate("/careers/appliedjob");
+    }
+
+    setApply(false);
+
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Error applying for job");
     }
   };
+
+  useEffect(() => {
+    if(isProfileAvailable && profile?.passportPhoto) {
+          setImageUrl(profile.passportPhoto);
+
+    }
+  },[isProfileAvailable, profile, setImageUrl])
 
   if (loading) return <p>Loading profile...</p>;
 
@@ -611,7 +624,7 @@ const ProfileDetail = ( {setImageUrl} ) => {
           </div>
 
           <div className="form-actions">
-            {applyMode && (
+            {applyMode ? (
               <button
                 type="button"
                 onClick={() => setApply(true)}
@@ -623,6 +636,20 @@ const ProfileDetail = ( {setImageUrl} ) => {
                   </>
                 ) : (
                   "Save and Apply"
+                )}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setApply(true)}
+                disabled={uploadingFiles}
+              >
+                {uploadingFiles ? (
+                  <>
+                    <span className="loading"></span> Uploading Files...
+                  </>
+                ) : (
+                  "Save"
                 )}
               </button>
             )}
