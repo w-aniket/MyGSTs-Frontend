@@ -33,7 +33,7 @@ const CustomerRouters = () => {
         <Route path="/about" element={<About />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/careers" element={<Careers />} />
-        <Route path="/careers/profile/:stepNumber" element={<ProfilePag />} />
+        <Route path="/careers/profile" element={<ProfilePag />} />
         <Route path="/careers/appliedjob" element={<ProfilePag />} />
         <Route path="/careers/opportunities" element={<ProfilePag />} />
         <Route path="/contact" element={<Contact />} />

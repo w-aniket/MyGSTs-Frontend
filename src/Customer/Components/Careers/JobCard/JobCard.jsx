@@ -10,8 +10,10 @@ import {
 import "./JobCard.css"; // assuming styles are here
 
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const JobCard = ({
+  _id,
   title,
   description,
   qualifications,
@@ -22,12 +24,26 @@ const JobCard = ({
   skills,
 }) => {
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  const handleClick = () => {
-    navigate("/careers/profile/1");
-    setTimeout(() => {
-      alert("Complete Profile to apply for this job");
-    }, 100);
+  const handleClick = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/signup");
+      return
+    }
+
+    try {
+      const res = await axios.get(`${apiUrl}/api/getUser`, {
+        headers: {
+          Authorization: `Bearer ${token}`},
+      })
+      navigate (`/careers/profile?apply=true&jobId=${_id}`, {
+      })
+    } catch (error) {
+      console.error("Invalid User:",  error.response?.data);
+    }
+
   };
 
   return (
@@ -63,7 +79,7 @@ const JobCard = ({
       </div>
 
       <button onClick={handleClick} className="apply-btn">
-        Apply Now
+        Apply
       </button>
       
     </div>

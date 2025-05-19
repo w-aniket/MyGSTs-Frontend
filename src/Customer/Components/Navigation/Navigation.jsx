@@ -17,7 +17,6 @@ const Navigation = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user, loadingUser } = useContext(UserContext);
   const dropdownRef = useRef(null);
-  const { setUser } = useContext(UserContext);
 
   // console.log("This is user",user);
 
@@ -50,12 +49,6 @@ const Navigation = () => {
     },
   ];
 
-  const signout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    setIsDropdownOpen(false);
-    navigate("/");
-  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -103,39 +96,6 @@ const Navigation = () => {
         {loadingUser ? (
           <span className="spinner"></span>
         ) : user ? (
-          // <div className="profile-menu" ref={dropdownRef}>
-          //   <button
-          //     className="profile-button"
-          //     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          //   >
-          //     <p>{user?.firstName.trim().charAt(0).toUpperCase()}</p>
-          //   </button>
-          //   <div className={`profile-dropdown ${isDropdownOpen ? "show" : ""}`}>
-          //     <a
-          //       onClick={() => navigate("/profile") || setIsDropdownOpen(false)}
-          //     >
-          //       Your Profile
-          //     </a>
-          //     {user.role === "admin" && (
-          //       <>
-          //         <a onClick={() => navigate("/admin")}>Admin Dashboard</a>
-          //         <a onClick={() => navigate("/employee")}>
-          //           Employee Dashboard
-          //         </a>
-          //       </>
-          //     )}
-
-          //     {user.role === "employee" && (
-          //       <>
-          //         <a onClick={() => navigate("/employee")}>
-          //           Employee Dashboard
-          //         </a>
-          //       </>
-          //     )}
-
-          //     <a onClick={signout}>Sign Out</a>
-          //   </div>
-          // </div>
           <ProfileLogo />
         ) : (
           <button id="signup" onClick={() => navigate("/signup")}>

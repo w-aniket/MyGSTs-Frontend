@@ -40,7 +40,7 @@ const ProfileLogo = () => {
         <p>{user?.firstName.trim().charAt(0).toUpperCase()}</p>
       </button>
       <div className={`profile-dropdown ${isDropdownOpen ? "show" : ""}`}>
-        <a onClick={() => navigate("/profile") || setIsDropdownOpen(false)}>
+        <a onClick={() => navigate("/careers/profile") || setIsDropdownOpen(false)}>
           Your Profile
         </a>
         {user.role === "admin" && (

@@ -4,12 +4,15 @@ import "./JobPosts.css";
 import AddJobModel from "../../Components/JobModel/AddJobModel";
 import { toast } from "react-toastify";
 import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
+import { downloadFile } from "../../../Utils/Download";
 
 const JobPosts = () => {
   const [jobs, setJobs] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [jobToEdit, setJobToEdit] = useState(null);
   const [jobToDelete, setJobToDelete] = useState(null);
+  const [applications, setApplications] = useState([]);
+
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const fetchJobs = async () => {
@@ -26,8 +29,24 @@ const JobPosts = () => {
     }
   };
 
+  const fetchApplications = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/api/admin/applications`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setApplications(res.data.applications || []);
+      console.log(res.data.applications);
+    } catch (err) {
+      console.error("Error fetching applications:", err);
+      toast.error("Failed to fetch applications");
+    }
+  };
+
   useEffect(() => {
     fetchJobs();
+    fetchApplications();
   }, []);
 
   const ConfirmDelete = async () => {
@@ -36,15 +55,15 @@ const JobPosts = () => {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      })
+      });
       toast.success("Job deleted Successfully!");
       setJobToDelete(null);
       fetchJobs();
     } catch (error) {
-      console.error("Error deleting job:", error)
+      console.error("Error deleting job:", error);
       toast.error("Failed to delete Job");
     }
-  }
+  };
 
   return (
     <div className="content">
@@ -91,7 +110,12 @@ const JobPosts = () => {
                       >
                         Edit
                       </button>
-                      <button className="delete-btn" onClick={() => setJobToDelete(job._id)}>Delete</button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => setJobToDelete(job._id)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 );
@@ -104,6 +128,54 @@ const JobPosts = () => {
           </tbody>
         </table>
       </div>
+
+            <div style={{marginTop:"48px"}} className="job-posts-header">
+
+      <h2>Job Applications</h2>
+            </div>
+      <div className="application-table-wrapper">
+        <table className="jobtable">
+          <thead>
+            <tr>
+              <th>Candidate</th>
+              <th>Job Title</th>
+              <th>Email</th>
+              <th>Resume</th>
+              <th>Status</th>
+              <th>View Profile</th>
+            </tr>
+          </thead>
+          <tbody>
+            {applications.length > 0 ? (
+              applications.map((app) => (
+                <tr key={app._id}>
+                  <td>{app.user?.fullName}</td>
+                  <td>{app.jobId?.title}</td>
+                  <td>{app.user?.email}</td>
+                  <td>
+                    {app.user?.resume ? (
+                      <a
+                        onClick={() => downloadFile(app.user.resume,`${app.user?.fullName}-resume.pdf`)}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Download
+                      </a>
+                    ) : (
+                      "Not Uploaded"
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">No applications found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
       {showModel && (
         <AddJobModel
           onClose={() => {

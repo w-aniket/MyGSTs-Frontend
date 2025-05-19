@@ -10,6 +10,7 @@ const ProfilePag = () => {
 
   const [activeSection, setActiveSection] = useState("profile");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     if (location.pathname.includes("appliedjob")) {
@@ -26,7 +27,7 @@ const ProfilePag = () => {
     setSidebarOpen(false);
 
     if (section === "profile") {
-      navigation("/careers/profile/1");
+      navigation("/careers/profile");
     } else if (section === "applied") {
       navigation("/careers/appliedjob");
     } else if (section === "opportunities") {
@@ -34,7 +35,6 @@ const ProfilePag = () => {
     }
   };
 
-  const imageUrl = false;
 
   return (
     <div className="profile-page">
@@ -48,7 +48,7 @@ const ProfilePag = () => {
         <div className="profile-photo">
           {imageUrl ? (
             <img
-              src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
+              src={imageUrl}
               alt="Profile"
             />
           ) : (
@@ -79,7 +79,7 @@ const ProfilePag = () => {
 
       {/* Main Content */}
       <div className="main-content">
-        {activeSection === "profile" && <ProfileDetail />}
+        {activeSection === "profile" && <ProfileDetail setImageUrl={setImageUrl} />}
         {activeSection === "applied" && <AppliedJob />}
         {activeSection === "opportunities" && <AppliedJob />}
       </div>
