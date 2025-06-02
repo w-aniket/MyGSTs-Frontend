@@ -13,10 +13,10 @@
 }
 
 .profile-view {
-  margin: 2rem auto;
+  /* margin: 2rem auto; */
   padding: 2rem;
   background-color: #fff;
-  border-radius: 16px;
+  /* border-radius: 16px; */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
 }

@@ -27,6 +27,7 @@ import { Routes, Route } from "react-router-dom";
 import AdminLayout from "../Admin/Layout/AdminLayout";
 import Dashboard from "../Admin/Pages/Dashboard/Dashboard";
 import JobPosts from "../Admin/Pages/JobPosts/JobPosts";
+import ProfileView from "../Customer/Components/ProfilePage/ProfileDetail/ProfileView";
 
 const AdminRouter = () => {
   return (
@@ -65,6 +66,12 @@ const AdminRouter = () => {
         path="/settings"
         element={<AdminLayout><JobPosts /></AdminLayout>}
       />
+
+        <Route 
+          path="profile/:id" 
+          element={<AdminLayout><ProfileView /></AdminLayout>}
+        />
+
     </Routes>
   );
 };

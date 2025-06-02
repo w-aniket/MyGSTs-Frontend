@@ -5,7 +5,7 @@ import "./ProfileDetail.css";
 import { toast } from "react-toastify";
 import { use } from "react";
 import ConfirmModal from "../../../../Component/ConfirmModal/ConfirmModal";
-import { downloadFile } from "../../../../Utils/Download";
+import ProfileView from "./ProfileView";
 
 const ProfileDetail = ( {setImageUrl} ) => {
   const location = useLocation();
@@ -232,133 +232,8 @@ const ProfileDetail = ( {setImageUrl} ) => {
   return (
     <div className="profile-detail-container">
       {isProfileAvailable ? (
-        <div className="profile-view">
-          <h3>Personal Details</h3>
-          <p>
-            <strong>Full Name:</strong> {profile.fullName}
-          </p>
-          <p>
-            <strong>Email:</strong> {profile.email}
-          </p>
-          <p>
-            <strong>Contact:</strong> {profile.contactNumber}
-          </p>
-          <p>
-            <strong>Date of Birth:</strong> {profile.dob.split("T")[0]}
-          </p>
-          <p>
-            <strong>Gender:</strong> {profile.gender}
-          </p>
         
-
-          <h3>Address</h3>
-          <p>
-            <strong>Street:</strong> {profile.address?.street}
-          </p>
-          <p>
-            <strong>City:</strong> {profile.address?.city}
-          </p>
-          <p>
-            <strong>State:</strong> {profile.address?.state}
-          </p>
-          <p>
-            <strong>Country:</strong> {profile.address?.country}
-          </p>
-          <p>
-            <strong>Pincode:</strong> {profile.address?.pincode}
-          </p>
-
-          <h3>Education - 10th</h3>
-          <p>
-            <strong>Board:</strong> {profile.education?.tenth?.board}
-          </p>
-          <p>
-            <strong>Year:</strong> {profile.education?.tenth?.year}
-          </p>
-          <p>
-            <strong>Percentage:</strong> {profile.education?.tenth?.percentage}
-          </p>
-          <p>
-            <strong>Marksheet:</strong>
-            {profile.education?.tenth?.marksheet && (
-              <a
-                onClick={() =>
-                  downloadFile(
-                    profile.education.tenth.marksheet,
-                    `10th-marksheet.pdf`
-                  )
-                }
-              >
-                Download
-              </a>
-            )}
-          </p>
-
-          <h3>Education - 12th</h3>
-          <p>
-            <strong>Board:</strong> {profile.education?.twelfth?.board}
-          </p>
-          <p>
-            <strong>Year:</strong> {profile.education?.twelfth?.year}
-          </p>
-          <p>
-            <strong>Percentage:</strong>{" "}
-            {profile.education?.twelfth?.percentage}
-          </p>
-          <p>
-            <strong>Marksheet:</strong>
-            {profile.education?.twelfth?.marksheet && (
-              <a
-                onClick={() => downloadFile(profile.education.twelfth.marksheet,"12th-marksheet.pdf")} 
-                rel="noopener noreferrer"
-              >
-                Download
-              </a>
-            )}
-          </p>
-
-          <h3>Education - Graduation</h3>
-          <p>
-            <strong>University:</strong>{" "}
-            {profile.education?.graduation?.university}
-          </p>
-          <p>
-            <strong>Year:</strong> {profile.education?.graduation?.year}
-          </p>
-          <p>
-            <strong>Percentage:</strong>{" "}
-            {profile.education?.graduation?.percentage}
-          </p>
-          <p>
-            <strong>Marksheet:</strong>
-            {profile.education?.graduation?.marksheet && (
-              <a
-                onClick={() =>downloadFile(profile.education.graduation.marksheet,"graduation-marksheet.pdf")}
-                rel="noopener noreferrer"
-              >
-                Download
-              </a>
-            )}
-          </p>
-
-          <h3>Resume</h3>
-          <p>
-            {profile.resume && (
-              <a
-                onClick={() => downloadFile(profile.resume, "resume.pdf")}
-                rel="noopener noreferrer"
-              >
-                Download resume
-              </a>
-            )}
-          </p>
-
-          {applyMode && (
-            <button className="apply-button" onClick={handleApply}>
-              Confirm & Apply
-            </button>
-          )}
-        </div>
+        <ProfileView profile={profile} applyMode={applyMode} handleApply={handleApply} />
       ) : (
         <form className="profile-form">
           <h3>Personal Details</h3>

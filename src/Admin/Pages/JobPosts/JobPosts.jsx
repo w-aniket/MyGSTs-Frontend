@@ -5,6 +5,7 @@ import AddJobModel from "../../Components/JobModel/AddJobModel";
 import { toast } from "react-toastify";
 import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
 import { downloadFile } from "../../../Utils/Download";
+import { useNavigate } from "react-router-dom";
 
 const JobPosts = () => {
   const [jobs, setJobs] = useState([]);
@@ -12,6 +13,7 @@ const JobPosts = () => {
   const [jobToEdit, setJobToEdit] = useState(null);
   const [jobToDelete, setJobToDelete] = useState(null);
   const [applications, setApplications] = useState([]);
+  const navigate = useNavigate();
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -164,6 +166,17 @@ const JobPosts = () => {
                     ) : (
                       "Not Uploaded"
                     )}
+                  </td>
+                  <td>
+                    status work pending
+                  </td>
+
+                  <td>
+                   <button
+                    onClick={() => navigate(`/admin/profile/${app.user?._id}`, { state: { profile: app.user}})}
+                   >
+                    View Profile
+                   </button>
                   </td>
                 </tr>
               ))
