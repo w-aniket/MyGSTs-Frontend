@@ -3,15 +3,38 @@ import React, { useEffect, useState } from "react";
 import AddJobModel from "../JobModel/AddJobModel";
 import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
 import { toast } from "react-toastify";
+import SearchFilter from "../SearchFilter/SearchFilter";
+import Pagination from "../Pagination/Pagination";
+
 
 const JobPostsTable = () => {
   const [jobs, setJobs] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [jobToEdit, setJobToEdit] = useState(null);
   const [jobToDelete, setJobToDelete] = useState(null);
+  const [loading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 5;
+
+
+    const searchFields = ["title", "status"];
+  const filterdJobs = jobs.filter((job) =>
+    searchFields.some((field) => 
+        job[field]?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
+  const totalPages = Math.ceil(filterdJobs.length / jobsPerPage);
+  const paginatedJobs = filterdJobs.slice(
+    (currentPage - 1) * jobsPerPage,
+    currentPage * jobsPerPage
+  )
+
   const fetchJobs = async () => {
+    setLoading(true);
     try {
       const responce = await axios.get(`${apiUrl}/api/jobs`, {
         headers: {
@@ -22,6 +45,8 @@ const JobPostsTable = () => {
     } catch (error) {
       console.error("Error fetching jobs:", error);
       toast.error("Failed to fetch jobs");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,22 +79,32 @@ const JobPostsTable = () => {
         </button>
       </div>
 
+        <SearchFilter searchTerm={searchTerm} onSearch={(value) => {
+            setSearchTerm(value);
+            setCurrentPage(1)
+        }}
+
+        />
       <div className="job-table-wrapper">
         <table className="jobtable">
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th scope="col">Title</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            {jobs.length > 0 ? (
-              jobs.map((job) => {
+            {loading ? (
+              <tr>
+                <td colSpan={3}>Loading...</td>
+              </tr>
+            ) : filterdJobs.length > 0 ? (
+              paginatedJobs.map((job) => {
                 return (
                   <tr key={job._id}>
-                    <td>{job.title}</td>
-                    <td>
+                    <td data-label="Title" >{job.title}</td>
+                    <td data-label="Status" >
                       <span
                         className={
                           job.status === "Active"
@@ -80,7 +115,7 @@ const JobPostsTable = () => {
                         {job.status}
                       </span>
                     </td>
-                    <td>
+                    <td data-label="Action" >
                       <button
                         className="edit-btn"
                         onClick={() => {
@@ -102,11 +137,18 @@ const JobPostsTable = () => {
               })
             ) : (
               <tr>
-                <td colSpan="3">No Job posts Found.</td>
+                <td colSpan="3">No matching jobs found.</td>
               </tr>
             )}
           </tbody>
         </table>
+
+        <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+        />
+
       </div>
       {showModel && (
         <AddJobModel

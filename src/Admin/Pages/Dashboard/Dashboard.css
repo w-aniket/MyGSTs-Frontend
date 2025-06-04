@@ -1,9 +1,9 @@
 /* Main content area */
-.content {
-  padding: 24px;
-  margin-left: 100px; /* Account for sidebar width */
+.content-body {
+  padding: 42px;
+  margin-left: 200px; /* Account for sidebar width */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f6f8;
+  background-color: #ffffff;
   min-height: 100vh;
   box-sizing: border-box;
 }

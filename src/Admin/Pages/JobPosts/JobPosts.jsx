@@ -4,7 +4,7 @@ import ApplicationsTable from "../../Components/JobApplication/ApplicationsTable
 
 const JobPosts = () => {
   return (
-    <div className="content">
+    <div className="">
       <JobPostsTable />
 
       <ApplicationsTable />
