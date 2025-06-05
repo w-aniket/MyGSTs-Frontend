@@ -143,13 +143,13 @@ const JobPostsTable = () => {
           </tbody>
         </table>
 
+
+      </div>
         <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={(page) => setCurrentPage(page)}
         />
-
-      </div>
       {showModel && (
         <AddJobModel
           onClose={() => {
