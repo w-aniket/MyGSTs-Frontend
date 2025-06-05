@@ -8,12 +8,12 @@ import Signin from "../Customer/Auth/Signin";
 import Reset from "../Customer/Auth/Reset";
 import NewPassword from "../Customer/Auth/NewPassword.jsx";
 import ScrollingText from "../Customer/Components/RunningText/ScrollingText";
-import Services from "../Customer/Components/Services/Services";
-import About from "../Customer/Components/About/About";
-import Resources from "../Customer/Components/Recources/Resources";
-import Careers from "../Customer/Components/Careers/Careers";
+import Services from "../Customer/Pages/Services/Services.jsx";
+import About from "../Customer/Pages/About/About.jsx";
+import Resources from "../Customer/Pages/Recources/Resources.jsx";
+import Careers from "../Customer/Pages/Careers/Careers.jsx";
 import ProfilePag from "../Customer/Components/ProfilePage/ProfilePag";
-import Contact from "../Customer/Components/ContactV2/Contact";
+import Contact from "../Customer/Pages/ContactV2/Contact.jsx";
 
 const CustomerRouters = () => {
   return (

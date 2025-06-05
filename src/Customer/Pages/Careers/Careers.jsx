@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Careers.css";
-import CareerInrto from "./CareerIntro/CareerInrto";
+import CareerInrto from "../../Components/CareerIntro/CareerInrto";
 import axios from "axios";
-import JobCard from "./JobCard/JobCard";
+import JobCard from "../../Components/JobCard/JobCard";
 
 const Careers = () => {
   const [jobs, setJobs] = useState([]);

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { downloadFile } from "../../../../Utils/Download";
 
 const ProfileView = ({ profile, applyMode, handleApply }) => {
+
+
   const location = useLocation();
 
   profile = location.state?.profile || profile;
