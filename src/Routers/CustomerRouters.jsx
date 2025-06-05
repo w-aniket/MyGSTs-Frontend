@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "../Customer/Components/Footer/Footer";
 import Navigation from "../Customer/Components/Navigation/Navigation";
 import { Route, Routes } from "react-router-dom";
-import Homepage from "../Customer/Components/Homepage/Homepage";
+// import Homepage from "../Customer/Components/Homepage/Homepage";
 import Signup from "../Customer/Auth/Signup";
 import Signin from "../Customer/Auth/Signin";
 import Reset from "../Customer/Auth/Reset";
@@ -14,6 +14,7 @@ import Resources from "../Customer/Pages/Recources/Resources.jsx";
 import Careers from "../Customer/Pages/Careers/Careers.jsx";
 import ProfilePag from "../Customer/Components/ProfilePage/ProfilePag";
 import Contact from "../Customer/Pages/ContactV2/Contact.jsx";
+import Homepage from "../Customer/Pages/Homepage/Homepage.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -24,7 +25,7 @@ const CustomerRouters = () => {
       </div>
 
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<Homepage/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signin/reset-password" element={<Reset />} />

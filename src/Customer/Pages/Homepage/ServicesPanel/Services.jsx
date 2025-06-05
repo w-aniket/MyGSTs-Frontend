@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typewriter } from 'react-simple-typewriter';
 import './Services.css';
+import ServiceCard from '../../../Components/ServiceCard/ServiceCard';
+import axios from 'axios';
 
 const servicesList = [
   { id: 1, href:'#', title: 'Service 1', imgSrc: 'https://cdn.corporatefinanceinstitute.com/assets/accounting-1024x683.jpeg', alt: 'Service 1 Image' },
@@ -14,6 +16,20 @@ const servicesList = [
 
 const Services = () => {
   const navigate = useNavigate();
+
+    const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+    useEffect(() => {
+      axios.get(`${apiUrl}/api/services`)
+      .then((res) => {
+        console.log("servise", res.data.services)
+        setServices(res.data.services.slice(0,6))
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false))
+  },[])
 
   return (
     <section className='services-container'>
@@ -33,11 +49,13 @@ const Services = () => {
       </div>
 
       <div className="services-cards">
-        {servicesList.map(service => (
-        <div key={service.id} onClick={() => navigate(service.href)} className="service-card">
-            <img src={service.imgSrc} alt={service.alt} />
-            <h2>{service.title}</h2>
-          </div>
+        {services.map(service => (
+        <ServiceCard key={service._id}
+            title={service.title}
+            icon={service.icon || "🔧"}
+            iconbg={service.iconbg || "#e0e0e0"}
+            features={service.features || []}
+          />
         ))}
       </div>
     </section>
@@ -45,3 +63,16 @@ const Services = () => {
 };
 
 export default Services;
+
+//       <div className="main-services-container ">
+//         {services.map((service) => (
+//           <ServiceCard key={service._id}
+//             title={service.title}
+//             icon={service.icon || "🔧"}
+//             iconbg={service.iconbg || "#e0e0e0"}
+//             features={service.features || []}
+//           />
+//         ))}
+//       </div>
+
+      
