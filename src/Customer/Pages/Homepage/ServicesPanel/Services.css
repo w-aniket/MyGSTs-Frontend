@@ -10,7 +10,6 @@
     border-top: solid 2px black
 }
 
-/* Header Section */
 .services-header {
     flex: 1;
     text-align: center;
@@ -39,7 +38,6 @@
     transform: scale(1.02);
 }
 
-/* Services Cards */
 .services-cards {
     flex: 2;
     display: flex;
@@ -49,7 +47,6 @@
     max-width: 800px;
 }
 
-/* Service Card */
 .service-card {
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
@@ -76,7 +73,6 @@
     color: #333;
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
     .services-container {
         flex-direction: column;
