@@ -9,7 +9,7 @@ const ServiceCard = ({title, icon, iconbg, features}) => {
             <span className="icon">{icon}</span>
         </div>
         <a href="#">
-          <span className="external-icon">🔗</span>
+          <span className="external-icon">»</span>
         </a>
         </div>
         <h3 className='main-service-title'>{title}</h3>
