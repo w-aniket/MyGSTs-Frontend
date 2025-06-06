@@ -1,23 +1,27 @@
-import React from 'react'
+import React from "react";
 
-const ServiceCard = ({title, icon, iconbg, features}) => {
+const ServiceCard = ({ title, icon, iconbg, features }) => {
   return (
-    <div className='main-service-card' style={{boxShadow: `2px 2px 1px 1px ${iconbg}80`}}>
-        <div className="main-service-header">
-
-        <div className="icon-circle" style={{backgroundColor: iconbg}}>
-            <span className="icon">{icon}</span>
+    <div
+      className="main-service-card"
+      style={{ boxShadow: `2px 2px 1px 1px ${iconbg}80` }}
+    >
+      <div className="main-service-header">
+        <div className="icon-circle" style={{ backgroundColor: iconbg }}>
+          <i className={icon} style={{ fontSize: "24px", color: "#fff" }}></i>
         </div>
         <a href="#">
           <span className="external-icon">🔗</span>
         </a>
-        </div>
-        <h3 className='main-service-title'>{title}</h3>
-        <ul className='main-service-features'>
-            {features.map((feature, idx) => <li key={idx}>{feature}</li>)}
-        </ul>
+      </div>
+      <h3 className="main-service-title">{title}</h3>
+      <ul className="main-service-features">
+        {features.map((feature, idx) => (
+          <li key={idx}>{feature}</li>
+        ))}
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default ServiceCard
+export default ServiceCard;

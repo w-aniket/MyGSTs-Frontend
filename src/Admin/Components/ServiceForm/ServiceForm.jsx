@@ -13,18 +13,69 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
     features: "",
   });
 
-const availableColors = [
-  "#e57373", "#f06292", "#ba68c8", "#9575cd", "#7986cb",
-  "#64b5f6", "#4fc3f7", "#4dd0e1", "#4db6ac", "#81c784",
-  "#aed581", "#dce775", "#fff176", "#ffd54f", "#ffb74d",
- 
-  "#ffab91", "#bcaaa4", "#FF6F61", "#6B5B95", "#88B04B",
-  "#F7CAC9", "#92A8D1", "#B565A7", "#009B77", "#DD4124",
-  "#45B8AC", "#EFC050", "#5B5EA6", "#9B2335", "#55B4B0",
-  "#E15D44", "#7FCDCD", "#BC243C", "#C3447A", "#ffb300"
-];
+  const availableColors = [
+    "#e57373",
+    "#f06292",
+    "#ba68c8",
+    "#9575cd",
+    "#7986cb",
+    "#64b5f6",
+    "#4fc3f7",
+    "#4dd0e1",
+    "#4db6ac",
+    "#81c784",
+    "#aed581",
+    "#dce775",
+    "#fff176",
+    "#ffd54f",
+    "#ffb74d",
 
+    "#ffab91",
+    "#bcaaa4",
+    "#FF6F61",
+    "#6B5B95",
+    "#88B04B",
+    "#F7CAC9",
+    "#92A8D1",
+    "#B565A7",
+    "#009B77",
+    "#DD4124",
+    "#45B8AC",
+    "#EFC050",
+    "#5B5EA6",
+    "#9B2335",
+    "#55B4B0",
+    "#E15D44",
+    "#7FCDCD",
+    "#BC243C",
+    "#C3447A",
+    "#ffb300",
+  ];
 
+  const availableIcons = [
+    { name: "Accounting", class: "fas fa-calculator" },
+    { name: "GST", class: "fas fa-file-invoice-dollar" },
+    { name: "Money", class: "fas fa-coins" },
+    { name: "ITR", class: "fas fa-file-contract" },
+    { name: "Banking", class: "fas fa-university" },
+    { name: "Investment", class: "fas fa-piggy-bank" },
+    { name: "Tax", class: "fas fa-receipt" },
+    { name: "Loan", class: "fas fa-hand-holding-usd" },
+    { name: "Income", class: "fas fa-dollar-sign" },
+    { name: "Document", class: "fas fa-file-alt" },
+    { name: "ID Card", class: "fas fa-id-card" },
+    { name: "Bill", class: "fas fa-file-invoice" },
+    { name: "Payment", class: "fas fa-money-check-alt" },
+    { name: "Report", class: "fas fa-chart-line" },
+    { name: "Ledger", class: "fas fa-book" },
+    { name: "Business", class: "fas fa-briefcase" },
+    { name: "Compliance", class: "fas fa-balance-scale" },
+    { name: "Secure File", class: "fas fa-lock" },
+    { name: "Analytics", class: "fas fa-chart-pie" },
+    { name: "Team", class: "fas fa-users" },
+    { name: "Email", class: "fas fa-envelope" },
+    { name: "User Account", class: "fas fa-user-circle" },
+  ];
 
   useEffect(() => {
     if (editData) {
@@ -94,13 +145,48 @@ const availableColors = [
         placeholder="Title"
         required
       />
-      <input
-        name="icon"
-        value={formData.icon}
-        onChange={handleChange}
-        placeholder="Icon"
-        required
-      />
+      <div style={{ margin: "10px 0" }}>
+        <label>Select an Icon:</label>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "12px",
+            marginTop: "8px",
+          }}
+        >
+          {availableIcons.map((icon) => (
+            <div
+              key={icon.class}
+              onClick={() => setFormData({ ...formData, icon: icon.class })}
+              style={{
+                fontSize: "24px",
+                padding: "10px",
+                borderRadius: "8px",
+                border:
+                  formData.icon === icon.class
+                    ? "3px solid black"
+                    : "1px solid #ccc",
+                cursor: "pointer",
+                background: "#f0f0f0",
+                width: "50px",
+                height: "50px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              title={icon.name}
+            >
+              <i className={icon.class}></i>
+            </div>
+          ))}
+        </div>
+        {formData.icon && (
+          <p style={{ marginTop: "6px" }}>
+            Selected Icon: <i className={formData.icon}></i> ({formData.icon})
+          </p>
+        )}
+      </div>
 
       <div style={{ margin: "10px 0" }}>
         <label>Icon Background Color:</label>
