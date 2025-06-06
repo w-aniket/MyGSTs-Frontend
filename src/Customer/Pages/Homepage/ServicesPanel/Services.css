@@ -80,12 +80,10 @@
 @media (max-width: 1024px) {
     .services-container {
         flex-direction: column;
-        text-align: center;
         align-items: center;
     }
 
     .services-header {
-        text-align: center;
         padding-right: 0;
         margin-bottom: 20px;
     }
