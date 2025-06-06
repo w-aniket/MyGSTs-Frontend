@@ -1,0 +1,109 @@
+.service-detail-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.service-detail-container h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #1c1c1e;
+}
+
+.service-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.service-icon img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+.description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.service-detail-container h3 {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.service-detail-container ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.service-detail-container ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.service-detail-container ul li::before {
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.features-list li::before {
+  content: '✔';
+  color: #2e7d32;
+}
+
+.benefits-list li::before {
+  content: '💡';
+  color: #ff9800;
+}
+
+.request-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.request-btn:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+  .service-detail-container {
+    padding: 1rem;
+  }
+
+  .service-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .service-detail-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .service-detail-container h3 {
+    font-size: 1rem;
+  }
+
+  .request-btn {
+    width: 100%;
+  }
+}

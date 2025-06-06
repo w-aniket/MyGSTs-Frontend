@@ -5,15 +5,6 @@ import './Services.css';
 import ServiceCard from '../../../Components/ServiceCard/ServiceCard';
 import axios from 'axios';
 
-const servicesList = [
-  { id: 1, href:'#', title: 'Service 1', imgSrc: 'https://cdn.corporatefinanceinstitute.com/assets/accounting-1024x683.jpeg', alt: 'Service 1 Image' },
-  { id: 2, href:'#', title: 'Service 2', imgSrc: 'https://cdn.corporatefinanceinstitute.com/assets/accounting-1024x683.jpeg', alt: 'Service 2 Image' },
-  { id: 3, href:'#', title: 'Service 3', imgSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ-af0A7H3MUkwHlk0oI29hOBDLva5nwNiyA&s  ', alt: 'Service 3 Image' },
-  { id: 4, href:'#', title: 'Service 4', imgSrc: 'https://cdn.corporatefinanceinstitute.com/assets/accounting-1024x683.jpeg', alt: 'Service 1 Image' },
-  { id: 5, href:'#', title: 'Service 5', imgSrc: 'https://cdn.corporatefinanceinstitute.com/assets/accounting-1024x683.jpeg', alt: 'Service 2 Image' },
-  { id: 6, href:'#', title: 'Service 6', imgSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ-af0A7H3MUkwHlk0oI29hOBDLva5nwNiyA&s  ', alt: 'Service 3 Image' },
-];
-
 const Services = () => {
   const navigate = useNavigate();
 
@@ -55,6 +46,7 @@ const Services = () => {
             icon={service.icon || "🔧"}
             iconbg={service.iconbg || "#e0e0e0"}
             features={service.features || []}
+            serviceId={service._id}
           />
         ))}
       </div>

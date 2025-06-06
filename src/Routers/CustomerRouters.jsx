@@ -15,6 +15,7 @@ import Careers from "../Customer/Pages/Careers/Careers.jsx";
 import ProfilePag from "../Customer/Components/ProfilePage/ProfilePag";
 import Contact from "../Customer/Pages/ContactV2/Contact.jsx";
 import Homepage from "../Customer/Pages/Homepage/Homepage.jsx";
+import ServiceDetail from "../Customer/Pages/ServiceDetail/ServiceDetail.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -31,6 +32,7 @@ const CustomerRouters = () => {
         <Route path="/signin/reset-password" element={<Reset />} />
         <Route path="/signin/new-password" element={<NewPassword />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/services/:id" element={<ServiceDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/careers" element={<Careers />} />

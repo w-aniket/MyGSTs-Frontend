@@ -45,6 +45,8 @@ const Services = () => {
             icon={service.icon || "🔧"} // Default icon if none provided
             iconbg={service.iconbg || "#e0e0e0"}
             features={service.features || []}
+            serviceId={service._id}
+
           />
         ))}
 

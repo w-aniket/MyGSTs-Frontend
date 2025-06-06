@@ -11,6 +11,9 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
     iconbg: "",
     category: "",
     features: "",
+    description: "",
+    pricing: "",
+    benefits: "",
   });
 
   const availableColors = [
@@ -29,7 +32,6 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
     "#fff176",
     "#ffd54f",
     "#ffb74d",
-
     "#ffab91",
     "#bcaaa4",
     "#FF6F61",
@@ -82,6 +84,9 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
       setFormData({
         ...editData,
         features: editData.features.join(", "),
+        benefits: editData.benefits?.join(", ") || "",
+        description: editData.description || "",
+        pricing: editData.pricing || "",
       });
     }
   }, [editData]);
@@ -98,6 +103,7 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
     const payload = {
       ...formData,
       features: formData.features.split(",").map((feature) => feature.trim()),
+      benefits: formData.benefits.split(", ").map((benefit) => benefit.trim())
     };
 
     if (editData) {
@@ -130,6 +136,9 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
       iconbg: "",
       category: "",
       features: "",
+      description: "",
+      benefits: "",
+      pricing: "",
     });
     setEditData(null);
     fetchServices();
@@ -235,6 +244,26 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
         placeholder="Features (comma separated)"
         required
       />
+
+      <textarea name="description" 
+        value={formData.description}
+        onChange={handleChange}
+        placeholder="Full Description"
+        required
+      />
+
+      <input name="pricing"
+        value={formData.pricing}
+        onChange={handleChange}
+        placeholder="Pricing (e.g., ₹500 or Free)"
+      />
+
+      
+      <textarea name="benefits" value={formData.benefits}
+        onChange={handleChange}
+        placeholder="Benefits (comma seperated)"
+      ></textarea>
+
       <button type="submit">
         {editData ? "Update Service" : "Add Service"}
       </button>
