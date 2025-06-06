@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import Pagination from "../Pagination/Pagination";
 
-
 const JobPostsTable = () => {
   const [jobs, setJobs] = useState([]);
   const [showModel, setShowModel] = useState(false);
@@ -16,22 +15,20 @@ const JobPostsTable = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const [searchTerm, setSearchTerm] = useState("");
+  const searchFields = ["title", "status"];
+  const filterdJobs = jobs.filter((job) =>
+    searchFields.some((field) =>
+      job[field]?.toLowerCase().includes(searchTerm.toLowerCase())
+)
+);
+
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
-
-
-    const searchFields = ["title", "status"];
-  const filterdJobs = jobs.filter((job) =>
-    searchFields.some((field) => 
-        job[field]?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
   const totalPages = Math.ceil(filterdJobs.length / jobsPerPage);
   const paginatedJobs = filterdJobs.slice(
     (currentPage - 1) * jobsPerPage,
     currentPage * jobsPerPage
-  )
+  );
 
   const fetchJobs = async () => {
     setLoading(true);
@@ -79,12 +76,13 @@ const JobPostsTable = () => {
         </button>
       </div>
 
-        <SearchFilter searchTerm={searchTerm} onSearch={(value) => {
-            setSearchTerm(value);
-            setCurrentPage(1)
+      <SearchFilter
+        searchTerm={searchTerm}
+        onSearch={(value) => {
+          setSearchTerm(value);
+          setCurrentPage(1);
         }}
-
-        />
+      />
       <div className="job-table-wrapper">
         <table className="jobtable">
           <thead>
@@ -103,8 +101,8 @@ const JobPostsTable = () => {
               paginatedJobs.map((job) => {
                 return (
                   <tr key={job._id}>
-                    <td data-label="Title" >{job.title}</td>
-                    <td data-label="Status" >
+                    <td data-label="Title">{job.title}</td>
+                    <td data-label="Status">
                       <span
                         className={
                           job.status === "Active"
@@ -115,7 +113,7 @@ const JobPostsTable = () => {
                         {job.status}
                       </span>
                     </td>
-                    <td data-label="Action" >
+                    <td data-label="Action">
                       <button
                         className="edit-btn"
                         onClick={() => {
@@ -142,14 +140,12 @@ const JobPostsTable = () => {
             )}
           </tbody>
         </table>
-
-
       </div>
-        <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={(page) => setCurrentPage(page)}
-        />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
       {showModel && (
         <AddJobModel
           onClose={() => {

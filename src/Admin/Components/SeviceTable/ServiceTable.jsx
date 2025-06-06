@@ -2,12 +2,47 @@ import axios from "axios";
 import "../../Pages/Services/Services.css";
 import { useState } from "react";
 import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
+import SearchFilter from "../SearchFilter/SearchFilter";
+import Pagination from "../Pagination/Pagination";
 
 const ServiceTable = ({ services, onEdit, onDelete, loading, setLoading }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [selectedServiceId, setSelectedServiceId] = useState(null);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchFields = ["title", "features"]
+  const filteredServices = services.filter((service) => 
+    searchFields.some((field) => {
+      const value = service[field];
+      if (Array.isArray(value)) {
+        return value.join(", ").toLowerCase().includes(searchTerm.toLowerCase());
+      }
+      return typeof value === "string" && value.toLowerCase().includes(searchTerm.toLowerCase())
+    }
+    )
+  )
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const servicesPerPage = 5;
+  const totalpages = Math.ceil(filteredServices.length / servicesPerPage);
+  const paginatedServices = filteredServices.slice(
+    (currentPage - 1) * servicesPerPage,
+    currentPage * servicesPerPage
+  )
+
   return (
     <>
+
+    <div className="serach-field">
+      <SearchFilter 
+        searchTerm={searchTerm}
+        onSearch={(value) => {
+          setSearchTerm(value);
+          setCurrentPage(1);
+        }}
+      />
+    </div>
+
     <table border="1" cellPadding="10">
       <thead>
     
@@ -28,16 +63,13 @@ const ServiceTable = ({ services, onEdit, onDelete, loading, setLoading }) => {
                 Loading...
               </td>
             </tr>
-          ) : services.length === 0 ? (
+          ) : filteredServices.length === 0 ? (
             <tr>
               <td colSpan="4" className="no-data-message">
                 No services available.
               </td>
             </tr>
-          )
-         
-        
-        : services.map((service) => (
+          ) : paginatedServices.map((service) => (
           <tr key={service._id}>
             <td data-label="Title">{service.title}</td>
             {/* <td data-label="Icon" >{service.icon}</td>
@@ -57,6 +89,13 @@ const ServiceTable = ({ services, onEdit, onDelete, loading, setLoading }) => {
         ))}
       </tbody>
     </table>
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalpages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+
     {
       confirmOpen && (
         <ConfirmModal
