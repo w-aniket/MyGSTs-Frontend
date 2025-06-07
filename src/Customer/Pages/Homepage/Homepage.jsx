@@ -11,7 +11,7 @@ const Homepage = () => {
       <IntroImage />
       <Services />
       <CareerInrto showButton={true} reverseLayout={true} />
-      <Contact  />
+      <Contact />
     </div>
   );
 };
