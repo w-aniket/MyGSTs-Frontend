@@ -194,33 +194,11 @@ td button:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
+  .admin-service-requests {
+    overflow-x: auto;
   }
 
-  thead {
-    display: none;
-  }
-
-  tr {
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    background: #fff;
-  }
-
-  td {
-    border: none;
-    padding: 8px 0;
-    position: relative;
-  }
-
-  td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    display: block;
-    margin-bottom: 4px;
-    color: #333;
+  .request-table {
+    min-width: 600px; /* Still readable but scrollable */
   }
 }

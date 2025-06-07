@@ -1,5 +1,6 @@
 import React from 'react';
 import './Dashboard.css';
+import AdminServiceRequests from '../../Components/ServiceRequests/AdminServiceRequests';
 
 const Dashboard = () => {
   return (
@@ -10,6 +11,8 @@ const Dashboard = () => {
         <div className="card"><h4>GST Filings</h4><p>25</p></div>
         <div className="card"><h4>ITR Filings</h4><p>18</p></div>
       </div>
+
+      <AdminServiceRequests />
 
       <div className="clients-table">
         <h4>Client List</h4>

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./ServiceDetail.css";
+import ServiceRequestForm from "../../Components/ServiceRequestForm/ServiceRequestForm";
 
 const ServiceDetail = () => {
   const { id } = useParams();
@@ -75,12 +76,11 @@ const ServiceDetail = () => {
         </>
       )}
 
-      <button
-        className="request-btn"
-        onClick={() => alert("we'll build this next!")}
+      <div
+        className="request-service-form"
       >
-        Request This Service
-      </button>
+        <ServiceRequestForm />
+      </div>
     </div>
   );
 };
