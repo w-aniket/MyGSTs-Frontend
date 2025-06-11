@@ -1,0 +1,98 @@
+.request-container{
+    max-width: 1100px;
+    margin: auto;
+    padding: 2rem 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.request-heading {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+    text-align: center;
+}
+
+.message {
+    text-align: center;
+    color: #4b5563;
+    font-size: 1rem;
+    margin-top: 2rem;
+    color: #2563eb;
+}
+
+.request-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:1.5rem
+}
+
+.request-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    transition: all 0.02s ease;
+    cursor: default;
+}
+
+.request-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.request-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.request-category {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+.request-status {
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.status-pending {
+    color: #d97706;
+}
+
+.status-in-progress {
+    color: #2563eb;
+}
+
+.status-done {
+    color: #16a34a;
+}
+
+.request-date {
+    font-size: 0.85rem;
+    color: #7a7e86;
+}
+
+.request-file a {
+    color: #3b83f6;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+.request-description {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: #374151;
+}
+
+@media screen and (max-width: 640px) {
+    .request-heading {
+        font-size: 1.5rem;
+    }
+
+    .request-card {
+        padding: 1rem;
+    }
+}

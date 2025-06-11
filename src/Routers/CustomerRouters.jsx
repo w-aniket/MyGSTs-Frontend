@@ -16,6 +16,7 @@ import ProfilePag from "../Customer/Components/ProfilePage/ProfilePag";
 import Contact from "../Customer/Pages/ContactV2/Contact.jsx";
 import Homepage from "../Customer/Pages/Homepage/Homepage.jsx";
 import ServiceDetail from "../Customer/Pages/ServiceDetail/ServiceDetail.jsx";
+import MyServiceRequests from "../Customer/Pages/MyRequests/MyServiceRequests.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -33,6 +34,7 @@ const CustomerRouters = () => {
         <Route path="/signin/new-password" element={<NewPassword />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:id" element={<ServiceDetail />} />
+        <Route path="/my-service-requests" element={<MyServiceRequests />} />
         <Route path="/about" element={<About />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/careers" element={<Careers />} />

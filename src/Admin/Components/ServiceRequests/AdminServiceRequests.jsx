@@ -58,7 +58,7 @@ const AdminServiceRequests = () => {
                 ) : (
                     requests.map((req) => (
                         <tr key={req._id}>
-                            <td>{req.name || "Guest"}</td>
+                            <td>{req.user?.firstName || ""}{" "}{req.user?.lastName || "Guest"}</td>
                             <td>{req.service?.title || "N/A"}</td>
                             <td>{req.email}</td>
                             <td>{req.phone}</td>
