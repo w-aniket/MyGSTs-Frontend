@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../UserContex/UserContext";
 
 const uploadToCloudinary = async (file) => {
+
   const data = new FormData();
   data.append("file", file);
   data.append("upload_preset", import.meta.env.VITE_CLOUDINARY_PRESET);
@@ -28,6 +29,8 @@ const uploadToCloudinary = async (file) => {
 };
 
 const ServiceRequestForm = () => {
+  const navigate  = useNavigate();
+
   const { id } = useParams(); // service ID from URL
   const user = useContext(UserContext); // get logged-in user (if any)
 
@@ -98,8 +101,7 @@ const ServiceRequestForm = () => {
         `${import.meta.env.VITE_API_URL}/api/service-requests`,
         payload
       );
-
-      alert("Request submitted successfully!");
+      
       setForm({
         name: "",
         email: "",
@@ -108,6 +110,7 @@ const ServiceRequestForm = () => {
         companyName: "",
         file: null,
       });
+      navigate('/my-service-requests')
     } catch (err) {
       console.error(err);
       alert("Something went wrong. Please try again.");
