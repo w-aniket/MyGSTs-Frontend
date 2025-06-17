@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import "./AdminServiceRequests.css"
 import { toast } from 'react-toastify'
+import { downloadFile } from '../../../Utils/Download'
 
 const AdminServiceRequests = () => {
     const [requests, setRequests] = useState([])
@@ -68,9 +69,8 @@ const AdminServiceRequests = () => {
 
     useEffect(() => {
         fetchRequests()
-    }, [requests]);
+    }, []);
 
-    console.log("request are:", requests)
   return (
     <div className='admin-service-requests'>
         <h2 className='title'>Service Requests</h2>   
@@ -169,11 +169,34 @@ const AdminServiceRequests = () => {
                         <p><strong>Description:</strong> {detailReq.description}</p>
                         <p><strong>Requested At:</strong> {new Date(detailReq.createdAt).toLocaleString()}</p>
                         {detailReq.file && (
-                            <p>
-                                <strong>Attachment:</strong>{' '}
-                                <a href={detailReq.file} target='_blank' rel="noopener noreferrer">Download</a>
-                            </p>
-                        )}
+  <p className="attachment">
+    <strong>Attachment:</strong>{' '}
+    {(() => {
+      // strip query string, lower‑case, then test for .pdf
+      const isPdf = detailReq.file.split('?')[0].toLowerCase().includes("raw");
+      const fileName = `request-${detailReq._id}.pdf`;
+
+      if (isPdf) {
+        return (
+          <button
+            className="download-btn"
+            onClick={() => downloadFile(detailReq.file, fileName)}
+          >
+            Download PDF
+          </button>
+        );
+      }
+
+      // fallback for images / others
+      return (
+        <a href={detailReq.file} target="_blank" rel="noopener noreferrer">
+          View File
+        </a>
+      );
+    })()}
+  </p>
+)}
+
 
                         <div className="modal-actions">
                             <button className='assign-btn' onClick={() => 

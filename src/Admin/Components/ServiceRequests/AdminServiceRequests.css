@@ -94,6 +94,15 @@
   border-radius: 4px;
   cursor: pointer;
 }
+.download-btn {
+  padding: 0.35rem 0.75rem;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 
 .modal-btn.cancel {
   background: #f44336;
