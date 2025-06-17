@@ -21,7 +21,10 @@ const Navigation = () => {
   // console.log("This is user",user);
 
   const navigation = [
-    { name: "Home", href: "/", current: location.pathname === "/" },
+    { name: "Home", 
+      href: "/",
+      current: location.pathname === "/" 
+    },
     {
       name: "Services",
       href: "/services",
@@ -48,7 +51,6 @@ const Navigation = () => {
       current: location.pathname === "/contact",
     },
   ];
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {

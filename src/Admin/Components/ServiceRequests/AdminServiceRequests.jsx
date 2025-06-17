@@ -3,12 +3,25 @@ import React, { useEffect, useState } from 'react'
 import "./AdminServiceRequests.css"
 import { toast } from 'react-toastify'
 import { downloadFile } from '../../../Utils/Download'
+import Pagination from '../Pagination/Pagination'
+import SearchFilter from '../SearchFilter/SearchFilter'
 
 const AdminServiceRequests = () => {
     const [requests, setRequests] = useState([])
     const [assignTarget, setAssignTarget] = useState(null);
     const [employees, setEmployees] = useState([]);
     const [selectedEmp, setSelectedEmp] = useState("");
+
+    const [filteredRequests, setFilteredRequests] = useState([])
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState('');
+    const itemsPerPage = 5;
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentItems = filteredRequests.slice(indexOfFirstItem, indexOfLastItem);
+const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
+
 
     const [detailReq, setDetailReq] = useState(null)
 
@@ -71,9 +84,24 @@ const AdminServiceRequests = () => {
         fetchRequests()
     }, []);
 
+    useEffect(() => {
+  const filtered = requests.filter((req) =>
+    (req.user?.firstName + " " + req.user?.lastName || "Guest")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
+    (req.service?.title || '')
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
+    (req.status).toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  setFilteredRequests(filtered);
+  setCurrentPage(1); 
+}, [searchTerm, requests]);
+
   return (
     <div className='admin-service-requests'>
         <h2 className='title'>Service Requests</h2>   
+        <SearchFilter searchTerm={searchTerm} onSearch={setSearchTerm}/>
         <table className="request-table">
             <thead>
                 <tr>
@@ -86,12 +114,12 @@ const AdminServiceRequests = () => {
                 </tr>
             </thead>
             <tbody>
-                {requests.length === 0 ? (
+                {currentItems.length === 0 ? (
                     <tr>
                         <td colSpan="8">No requests found</td>
                     </tr>
                 ) : (
-                    requests.map((req) => (
+                    currentItems.map((req) => (
                         <tr key={req._id}>
                             <td>{req.user?.firstName || ""}{" "}{req.user?.lastName || "Guest"}</td>
                             <td>{req.service?.title || "N/A"}</td>
@@ -120,6 +148,11 @@ const AdminServiceRequests = () => {
                 )}
             </tbody>
             </table>    
+            <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+            />
 
             {
                 assignTarget && (
@@ -162,7 +195,8 @@ const AdminServiceRequests = () => {
                 <div className="modal-overlay">
                     <div className="modal-box">
                         <h3 className="modal-title">Request Detail</h3>
-                        <p><strong>User:</strong> {detailReq.user?.firstName || ''}{' '}{detailReq.user?.lastName}</p>
+                        <p><strong>User (Login):</strong> {detailReq.user?.firstName || ''}{' '}{detailReq.user?.lastName}</p>
+                        <p><strong>Name :</strong> {detailReq.name}</p>
                         <p><strong>Email:</strong> {detailReq.email}</p>
                         <p><strong>Phone:</strong> {detailReq.phone}</p>
                         <p><strong>Service:</strong> {detailReq.service?.title}</p>

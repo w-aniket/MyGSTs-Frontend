@@ -56,7 +56,7 @@ const ProfileLogo = () => {
           </>
         )}
 
-        <a onClick={signout}>Sign Out</a>
+        <a className="sign-out" onClick={signout}>Sign Out</a>
       </div>
     </div>
   );

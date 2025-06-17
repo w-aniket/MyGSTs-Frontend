@@ -56,6 +56,8 @@
   transform: translateY(0);
 }
 
+
+
 .profile-dropdown a {
   display: block;
   padding: 10px 20px;
@@ -79,6 +81,10 @@
   transition: background 0.3s ease;
 }
 
+.profile-dropdown .sign-out {
+  color: rgb(255, 0, 0);
+}
+
 .mobile-menu-button:hover {
   background-color: #374151;
 }
@@ -96,6 +102,8 @@
   padding: 12px;
   text-align: center;
 }
+
+
 
 
 /* General Styling for Sign Up Button */
@@ -121,6 +129,8 @@
   transform: scale(0.95);
   box-shadow: 0 2px 6px rgba(0, 61, 128, 0.3);
 }
+
+
 
 
 @media (max-width: 900px) {
@@ -174,3 +184,4 @@
     padding: 10px 24px;
   }
 }
+
