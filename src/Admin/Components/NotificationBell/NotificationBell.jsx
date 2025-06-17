@@ -67,8 +67,6 @@ const toggleDropdown = () => {
   });
 };
 
-console.log(unseen)
-
   return (
     <div className="notification-wrapper" ref={dropdownref}>
       <div className="bell-icon" onClick={toggleDropdown}>

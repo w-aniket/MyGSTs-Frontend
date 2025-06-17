@@ -52,6 +52,38 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.status-select.pending {
+  background-color: #fff3cd;
+  border-color: #ffecb5;
+  color: #856404;
+}
+
+.status-select.assigned {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+
+.status-select.in-progress {
+  background-color: #fff0f6;
+  border-color: #ffb8d2;
+  color: #a61e4d;
+}
+
+.status-select.done {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+.view-btn {
+  padding: 0.35rem 0.7rem;
+  border: 1ps solid #4caf50;
+  background: #4caf50;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 .assign-btn,
 .modal-btn {

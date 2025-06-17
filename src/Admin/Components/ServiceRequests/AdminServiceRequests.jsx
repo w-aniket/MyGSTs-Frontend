@@ -9,6 +9,8 @@ const AdminServiceRequests = () => {
     const [employees, setEmployees] = useState([]);
     const [selectedEmp, setSelectedEmp] = useState("");
 
+    const [detailReq, setDetailReq] = useState(null)
+
     const apiUrl = import.meta.env.VITE_API_URL
     const token = localStorage.getItem('token');
     const authHeader = {headers: {Authorization: `Bearer ${token}`}};
@@ -41,7 +43,7 @@ const AdminServiceRequests = () => {
                 const res = await axios.get(`${apiUrl}/api/user/employees`, authHeader);
                 setEmployees(res.data.employees);
             } catch (err) {
-                console.log('Failed to fetch employees', err)
+                console.error('Failed to fetch employees', err)
             }
         }
     }
@@ -66,7 +68,9 @@ const AdminServiceRequests = () => {
 
     useEffect(() => {
         fetchRequests()
-    }, []);
+    }, [requests]);
+
+    console.log("request are:", requests)
   return (
     <div className='admin-service-requests'>
         <h2 className='title'>Service Requests</h2>   
@@ -75,12 +79,9 @@ const AdminServiceRequests = () => {
                 <tr>
                     <th>User</th>
                     <th>Service</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Description</th>
                     <th>Status</th>
-                    <th>Requested At</th>
                     <th>Assign</th>
+                    <th>Data</th>
 
                 </tr>
             </thead>
@@ -94,24 +95,25 @@ const AdminServiceRequests = () => {
                         <tr key={req._id}>
                             <td>{req.user?.firstName || ""}{" "}{req.user?.lastName || "Guest"}</td>
                             <td>{req.service?.title || "N/A"}</td>
-                            <td>{req.email}</td>
-                            <td>{req.phone}</td>
-                            <td>{req.description}</td>
                             <td>
-                                <select className='status-select' value={req.status} onChange={(e) => handleStatusChange(req._id, e.target.value)} >
+                                <select className={`status-select ${req.status.toLowerCase().replace(/\s/g, '-')}`} value={req.status} onChange={(e) => handleStatusChange(req._id, e.target.value)} >
                                     <option value="Pending">Pending</option>
                                     <option value="Assigned">Assigned</option>
                                     <option value="In Progress">In Progress</option>
                                     <option value="Done">Done</option>
                                 </select>
                             </td>
-                            <td>{new Date(req.createdAt).toLocaleString()}</td>
                             <td>
                                 {req.assignedTo ? (
-                                    <span>{req.assignedTo.firstName ? `${req.assignedTo.firstName} ${req.assignedTo.lastName}` : 'Assigned'}</span>
+                                    <span>{req.assignedTo.firstName ? `${req.assignedTo.firstName} ${req.assignedTo.lastName}` : 'Assigned'}
+                                    </span>
+                                    
                                 ) : (
                                     <button className='assign-btn' onClick={() => openAssignModel(req)}>Assign</button>
                                 )}
+                            </td>
+                            <td>
+                                <button className='view-btn' onClick={() => setDetailReq(req)}>View</button>
                             </td>
                         </tr>
                     ))
@@ -155,6 +157,38 @@ const AdminServiceRequests = () => {
                     </div>
                 )
             } 
+
+            {detailReq && (
+                <div className="modal-overlay">
+                    <div className="modal-box">
+                        <h3 className="modal-title">Request Detail</h3>
+                        <p><strong>User:</strong> {detailReq.user?.firstName || ''}{' '}{detailReq.user?.lastName}</p>
+                        <p><strong>Email:</strong> {detailReq.email}</p>
+                        <p><strong>Phone:</strong> {detailReq.phone}</p>
+                        <p><strong>Service:</strong> {detailReq.service?.title}</p>
+                        <p><strong>Description:</strong> {detailReq.description}</p>
+                        <p><strong>Requested At:</strong> {new Date(detailReq.createdAt).toLocaleString()}</p>
+                        {detailReq.file && (
+                            <p>
+                                <strong>Attachment:</strong>{' '}
+                                <a href={detailReq.file} target='_blank' rel="noopener noreferrer">Download</a>
+                            </p>
+                        )}
+
+                        <div className="modal-actions">
+                            <button className='assign-btn' onClick={() => 
+                                (   
+                                    setDetailReq(null),
+                                    openAssignModel(detailReq)
+                                )
+                            }>Assign</button>
+                            
+                            <button className="modal-btn cancel" onClick={()  =>setDetailReq(null)}>Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            )}
     </div>
   )
 }
