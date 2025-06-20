@@ -4,38 +4,30 @@ import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../UserContex/UserContext";
 
 const uploadToCloudinary = async (file) => {
-
   const data = new FormData();
-  data.append("file", file);
+  const uniqueId = `file_${Date.now()}`;
+  data.append("file", new Blob([file], { type: file.type }), uniqueId);
   data.append("upload_preset", import.meta.env.VITE_CLOUDINARY_PRESET);
   data.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD);
-
-  const uniqueId = `file_${Date.now()}`;
-  const blob = new Blob([file], { type: file.type });
-  data.append("file", blob, uniqueId);
   data.append("public_id", uniqueId);
 
-  let uploadUrl = `https://api.cloudinary.com/v1_1/${
-    import.meta.env.VITE_CLOUDINARY_CLOUD
-  }/auto/upload`;
-  if (file.type === "application/pdf") {
-    uploadUrl = `https://api.cloudinary.com/v1_1/${
-      import.meta.env.VITE_CLOUDINARY_CLOUD
-    }/raw/upload`;
-  }
+  const uploadUrl =
+    file.type === "application/pdf"
+      ? `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUDINARY_CLOUD
+        }/raw/upload`
+      : `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUDINARY_CLOUD
+        }/auto/upload`;
 
   const res = await axios.post(uploadUrl, data);
   return res.data.secure_url;
 };
 
 const ServiceRequestForm = () => {
-  const navigate  = useNavigate();
-
-  const { id } = useParams(); // service ID from URL
-  const user = useContext(UserContext); // get logged-in user (if any)
-
-  const [uploading, setUploading] = useState(false);
-  const [fileUrl, setFileUrl] = useState("");
+  const { id } = useParams();
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "",
@@ -43,31 +35,40 @@ const ServiceRequestForm = () => {
     phone: "",
     description: "",
     companyName: "",
-    file: null,
   });
 
+  const [files, setFiles] = useState([]);
+  const [fileUrls, setFileUrls] = useState([]);
+  const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const handleChange = async (e) => {
-    const { name, value, files } = e.target;
-    if (name === "file") {
-      const file = files[0];
-      setForm((prev) => ({ ...prev, file }));
-      if (file) {
-        try {
-          setUploading(true);
-          const url = await uploadToCloudinary(file);
-          setFileUrl(url);
-        } catch (err) {
-          console.error("File upload failed", err);
-          alert("Failed to upload file. Please try again.");
-        } finally {
-          setUploading(false);
-        }
-      }
-    } else {
-      setForm({ ...form, [name]: value });
+  const handleInputChange = async (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = async (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setFiles((prev) => [...prev, ...selectedFiles]);
+
+    setUploading(true);
+    try {
+      const uploaded = await Promise.all(
+        selectedFiles.map((file) => uploadToCloudinary(file))
+      );
+      setFileUrls((prev) => [...prev, ...uploaded]);
+    } catch (err) {
+      console.error("File upload failed", err);
+      alert("Failed to upload file. Please try again.");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
     }
+  };
+
+  const removeFile = (index) => {
+    setFiles((prev) => prev.fileter((_, i) => i !== index));
+    setFileUrls((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -75,42 +76,28 @@ const ServiceRequestForm = () => {
     setSubmitting(true);
 
     try {
-      let uploadedFileUrl = "";
-
-      if (form.file) {
-        uploadedFileUrl = await uploadToCloudinary(form.file);
-      }
-
       const payload = {
+        ...form,
         service: id,
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        description: form.description,
-        companyName: form.companyName,
-        file: fileUrl,
+        files: fileUrls,
+        user: user?._id || null,
       };
-
-      if (user.user?._id) {
-        payload.user = user.user._id;
-      }
-
-      console.log(payload)
 
       await axios.post(
         `${import.meta.env.VITE_API_URL}/api/service-requests`,
         payload
       );
-      
+
       setForm({
         name: "",
         email: "",
         phone: "",
         description: "",
         companyName: "",
-        file: null,
       });
-      navigate('/my-service-requests')
+      setFiles([]);
+      setFileUrls([]);
+      navigate("/my-service-requests");
     } catch (err) {
       console.error(err);
       alert("Something went wrong. Please try again.");
@@ -126,7 +113,7 @@ const ServiceRequestForm = () => {
         <input
           name="name"
           value={form.name}
-          onChange={handleChange}
+          onChange={handleInputChange}
           placeholder="Your Name"
           required
           className="form-input"
@@ -135,7 +122,7 @@ const ServiceRequestForm = () => {
           name="email"
           type="email"
           value={form.email}
-          onChange={handleChange}
+          onChange={handleInputChange}
           placeholder="Email"
           required
           className="form-input"
@@ -143,7 +130,7 @@ const ServiceRequestForm = () => {
         <input
           name="phone"
           value={form.phone}
-          onChange={handleChange}
+          onChange={handleInputChange}
           placeholder="Phone"
           required
           className="form-input"
@@ -151,24 +138,43 @@ const ServiceRequestForm = () => {
         <input
           name="companyName"
           value={form.companyName}
-          onChange={handleChange}
+          onChange={handleInputChange}
           placeholder="Company Name"
           className="form-input"
         />
         <textarea
           name="description"
           value={form.description}
-          onChange={handleChange}
+          onChange={handleInputChange}
           placeholder="Describe your requirement"
           required
           className="form-textarea"
         />
+        <label className="form-label">Upload Documents (PDF or Image)</label>
         <input
           name="file"
           type="file"
-          onChange={handleChange}
+          accept="image/*,application/pdf"
+          multiple
+          onChange={handleFileChange}
           className="form-file"
         />
+
+        <div className="file-preview-list">
+          {files.map((file, index) => (
+            <div key={index} className="file-preview-item">
+              <span className="file-name">{file.name}</span>
+              <button
+                type="button"
+                onClick={() => removeFile(index)}
+                className="remove-button"
+              >
+                ❌
+              </button>
+            </div>
+          ))}
+        </div>
+
         <button
           type="submit"
           disabled={submitting || uploading}

@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../UserContex/UserContext";
-import "./MyRequests.css"
+import "./MyRequests.css";
+import { downloadFile } from "../../../Utils/Download";
 
 const MyServiceRequests = () => {
   const { user } = useContext(UserContext);
@@ -27,6 +28,8 @@ const MyServiceRequests = () => {
       fetchRequests();
     }
   }, [user]);
+
+  console.log("Requests:", requests);
 
   if (loading) {
     return <p className="message loading">Loading your service requests...</p>;
@@ -57,13 +60,40 @@ const MyServiceRequests = () => {
               <p className="request-date">
                 Submitted on: {new Date(req.createdAt).toLocaleString()}
               </p>
-              {req.file && (
-                <p className="request-file">
-                  <a href={req.file} target="_blank" rel="noopner noreferrer">
-                    {" "}
-                    View uploaded file
-                  </a>
-                </p>
+
+              {req.files && req.files.length > 0 && (
+                <div className="request-files">
+                  <strong>Uploaded Files:</strong>
+                  <ul>
+                    {req.files.map((url, index) => {
+                      const isImage = /\.(jpe?g|png\gif|webp)$/i.test(url);
+                      const filename = `document-${index + 1}.pdf`;
+                      return (
+                        <li key={index}>
+                          {isImage ? (
+                            <a
+                              href={url}
+                              target="_black"
+                              rel="noopener noreferrer"
+                            >
+                              View image {index + 1}
+                            </a>
+                          ) : (
+                            <button
+                              className="pdf-download-btn"
+                              type="button"
+                              onClick={() => {
+                                downloadFile(url, filename);
+                              }}
+                            >
+                              Downloag PDF {index + 1}
+                            </button>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               )}
               <p className="request-description">
                 <strong>Description: </strong> {req.description}
