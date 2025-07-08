@@ -86,7 +86,7 @@ const MyServiceRequests = () => {
                                 downloadFile(url, filename);
                               }}
                             >
-                              Downloag PDF {index + 1}
+                              Download PDF {index + 1}
                             </button>
                           )}
                         </li>

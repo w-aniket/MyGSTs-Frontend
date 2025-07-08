@@ -101,7 +101,7 @@ const Navigation = () => {
           <ProfileLogo />
         ) : (
           <button id="signup" onClick={() => navigate("/signup")}>
-            Sign Up
+            Register
           </button>
         )}
       </div>

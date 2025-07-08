@@ -76,9 +76,9 @@ const Footer = () => {
               <p>
                 <img src={X} alt="" />
               </p>
-              <p>
+              <a href="https://www.instagram.com/mygsts.official/" target="_blank" rel="noopener noreferrer">
                 <img src={insta} alt="" />
-              </p>
+              </a>
               <p>
                 <img src={linkedin} alt="" />
               </p>

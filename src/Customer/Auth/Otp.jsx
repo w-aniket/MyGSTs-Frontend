@@ -83,7 +83,7 @@ const Otp = ({ email, purpose }) => {
         </p>
         <p className="auth-footer-text">
           Already have an account?{" "}
-          <a onClick={() => navigate("/signin")}>Sign In</a>
+          <a onClick={() => navigate("/signin")}>Login</a>
         </p>
       </form>
       <ToastContainer position="top-right" autoClose={3000} />

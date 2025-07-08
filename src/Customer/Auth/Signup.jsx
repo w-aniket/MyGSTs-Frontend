@@ -30,7 +30,7 @@ const Signup = () => {
       }
     } catch (error) {
       const errorMessage =
-        (await error?.response?.data?.message) || "Signup Failed";
+        (await error?.response?.data?.message) || "Register Failed";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -49,7 +49,7 @@ const Signup = () => {
       <div className="auth-container">
         {!showOtpInput ? (
           <form onSubmit={handleSubmit} className="auth-form">
-            <h1>Sign Up</h1>
+            <h1>Register</h1>
             <div className="form-group">
               <label htmlFor="firstName">First Name</label>
               <input
@@ -91,11 +91,11 @@ const Signup = () => {
               />
             </div>
             <button id="submit" type="submit" disabled={loading}>
-              {loading ? <span className="spinner"></span> : "Sign Up"}
+              {loading ? <span className="spinner"></span> : "Register"}
             </button>
             <p className="auth-footer-text">
               Already have an account?{" "}
-              <a onClick={() => navigate("/signin")}>Sign In</a>
+              <a onClick={() => navigate("/signin")}>Login</a>
             </p>
           </form>
         ) : (

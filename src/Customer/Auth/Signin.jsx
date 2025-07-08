@@ -41,7 +41,7 @@ const Signin = () => {
     } catch (error) {
       console.error(error)
       const errorMessage =
-        (await error?.response?.data?.message) || "Sign Failed";
+        (await error?.response?.data?.message) || "Login Failed";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -58,7 +58,7 @@ const Signin = () => {
   return (
     <div className="body">
       <div className="auth-container">
-        <h1>Sign In</h1>
+        <h1>Login</h1>
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -81,14 +81,14 @@ const Signin = () => {
             />
           </div>
           <button id="submit" type="submit" disabled={loading}>
-            {loading ? <span className="spinner"></span> : "Sign In"}
+            {loading ? <span className="spinner"></span> : "Login"}
           </button>
           <p>
             Forget your password?{" "}
             <a onClick={() => navigate("reset-password")}>Reset</a>
           </p>
           <p>
-            New Client? <a onClick={() => navigate("/signup")}>Sign Up</a>
+            New Client? <a onClick={() => navigate("/signup")}>Register</a>
           </p>
         </form>
       </div>
