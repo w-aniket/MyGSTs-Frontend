@@ -4,6 +4,7 @@ import Dashboard from "../Admin/Pages/Dashboard/Dashboard";
 import JobPosts from "../Admin/Pages/JobPosts/JobPosts";
 import ProfileView from "../Customer/Components/ProfilePage/ProfileDetail/ProfileView";
 import Services from "../Admin/Pages/Services/Services";
+import Manage from "../Admin/Pages/Manage/Manage";
 
 const AdminRouter = () => {
   return (
@@ -84,6 +85,15 @@ const AdminRouter = () => {
         element={
           <AdminLayout>
             <ProfileView />
+          </AdminLayout>
+        }
+      />
+
+      <Route
+        path="/manage"
+        element={
+          <AdminLayout>
+            <Manage />
           </AdminLayout>
         }
       />
