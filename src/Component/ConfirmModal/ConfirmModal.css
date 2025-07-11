@@ -28,6 +28,18 @@
   gap: 20px;
 }
 
+/* Yes/Confirm Button */
+.confirm-modal .confirm-btn {
+  background-color: #d9534f; /* Same blue as leader-team-manager button */
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
 .confirm-btn {
   background-color: #d9534f;
   color: white;
@@ -37,11 +49,27 @@
   cursor: pointer;
 }
 
-.cancel-btn {
+.confirm-modal .confirm-btn:hover {
+  background-color: #b24743; /* Match hover effect */
+}
+
+/* No/Cancel Button */
+.confirm-modal .cancel-btn {
   background-color: #6c757d;
   color: white;
   padding: 8px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
+
+
+.confirm-modal .cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+
+
+
