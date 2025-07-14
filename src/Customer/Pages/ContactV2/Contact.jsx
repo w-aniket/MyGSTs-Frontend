@@ -17,22 +17,29 @@ const Contact = () => {
 
           <div className="info-block">
             <h4>Company</h4>
-            <p>Awesome Tech Pvt Ltd</p>
+            <p>My GST Service</p>
           </div>
 
           <div className="info-block">
             <h4>Email</h4>
-            <p>hello@awesometech.com</p>
+            <p>mygstsofficial@gmail.com</p>
           </div>
 
           <div className="info-block">
             <h4>Phone</h4>
-            <p>+91 98765 43210</p>
+            <p>+91 8830-0787-32</p>
+            <p>+91 9356-4029-59</p>
           </div>
 
           <div className="info-block">
             <h4>Address</h4>
-            <p>201 Silicon Valley Street, Bangalore, India</p>
+            <p>THITE WASTI SR. NO. 14/1 NEAR.</p>
+            <p>THITE BUNGLOW KHARADI PUNE. 411014</p> 
+          </div>
+
+           <div className="info-block">
+            <h4>Social Media</h4>
+            <p>@mygsts.official</p>
           </div>
         </div>
 

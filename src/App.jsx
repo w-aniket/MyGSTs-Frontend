@@ -36,7 +36,7 @@ function App() {
         <Route
           path="/employee/*"
           element={
-            user && user?.role === "employee" || "admin" ? (
+            user && (user.role === "employee" || user.role === "leader" || user.role === "admin") ? (
               <EmployeeRouters />
             ) : (
               <Navigate

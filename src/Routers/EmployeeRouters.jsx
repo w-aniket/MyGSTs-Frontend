@@ -2,7 +2,7 @@ import React from 'react'
 import ProfileLogo from '../Customer/Components/ProfileLogo/ProfileLogo'
 import { Route, Routes } from 'react-router-dom'
 import EmployeeLayout from '../Staff/Layout/EmployeeLayout'
-import Dashboard from '../Admin/Pages/Dashboard/Dashboard'
+import EmployeeDashboard from '../Employee/Pages/EmployeeDashboard'
 
 const EmployeeRouters = () => {
   return (
@@ -10,7 +10,7 @@ const EmployeeRouters = () => {
       <Route path='/'
         element={
           <EmployeeLayout>
-            <Dashboard />
+            <EmployeeDashboard />
           </EmployeeLayout>
         }
       />

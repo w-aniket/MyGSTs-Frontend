@@ -50,7 +50,7 @@ const ProfileLogo = () => {
           </>
         )}
 
-        {user.role === "employee" && (
+        {(user.role === "employee" || user.role === "leader") && (
           <>
             <a onClick={() => navigate("/employee")}>Employee Dashboard</a>
           </>
