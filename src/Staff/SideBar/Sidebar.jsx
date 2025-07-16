@@ -17,7 +17,7 @@ const Sidebar = () => {
       <div className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <ul>
           <li><Link to="/employee" onClick={() => setSidebarOpen(false)}>Dashboard</Link></li>
-          {/* <li><Link to="/admin/services" onClick={() => setSidebarOpen(false)}>Services</Link></li> */}
+          {/* <li><Link to="/employee/team" onClick={() => setSidebarOpen(false)}>Team</Link></li> */}
           {/* <li><Link to="/admin/job-posts" onClick={() => setSidebarOpen(false)}>Job Posts</Link></li> */}
           {/* <li><Link to="/admin/transactions" onClick={() => setSidebarOpen(false)}>Transactions</Link></li> */}
           {/* <li><Link to="/admin/accounts" onClick={() => setSidebarOpen(false)}>Accounts</Link></li> */}

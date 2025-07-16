@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../UserContex/UserContext";
 import "./MyRequests.css";
-import { downloadFile } from "../../../Utils/Download";
+import AttachmentViewer from "../../../Admin/Components/AttachmentViewer/AttachmentViewer";
 
 const MyServiceRequests = () => {
   const { user } = useContext(UserContext);
@@ -63,36 +63,16 @@ const MyServiceRequests = () => {
 
               {req.files && req.files.length > 0 && (
                 <div className="request-files">
-                  <strong>Uploaded Files:</strong>
-                  <ul>
-                    {req.files.map((url, index) => {
-                      const isImage = /\.(jpe?g|png\gif|webp)$/i.test(url);
-                      const filename = `document-${index + 1}.pdf`;
-                      return (
-                        <li key={index}>
-                          {isImage ? (
-                            <a
-                              href={url}
-                              target="_black"
-                              rel="noopener noreferrer"
-                            >
-                              View image {index + 1}
-                            </a>
-                          ) : (
-                            <button
-                              className="pdf-download-btn"
-                              type="button"
-                              onClick={() => {
-                                downloadFile(url, filename);
-                              }}
-                            >
-                              Download PDF {index + 1}
-                            </button>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  <AttachmentViewer
+                    files={
+                  req.files?.length > 0
+                    ? req.files
+                    : req.file
+                    ? [req.file]
+                    : []
+                }
+                requestId={req._id}
+                  />
                 </div>
               )}
               <p className="request-description">

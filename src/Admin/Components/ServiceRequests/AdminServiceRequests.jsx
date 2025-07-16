@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { downloadFile } from "../../../Utils/Download";
 import Pagination from "../Pagination/Pagination";
 import SearchFilter from "../SearchFilter/SearchFilter";
+import AttachmentViewer from "../AttachmentViewer/AttachmentViewer";
 
 const AdminServiceRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -254,56 +255,17 @@ const AdminServiceRequests = () => {
               <strong>Requested At:</strong>{" "}
               {new Date(detailReq.createdAt).toLocaleString()}
             </p>
-            {(() => {
-              // normalise to an array so the rest of the code is simple
-              const filesArr =
-                detailReq.files?.length > 0
-                  ? detailReq.files
-                  : detailReq.file
-                  ? [detailReq.file]
-                  : [];
-
-              if (filesArr.length === 0) return null;
-
-              return (
-                <div className="attachment">
-                  <strong>Attachment{filesArr.length > 1 ? "s" : ""}:</strong>
-                  <ul>
-                    {filesArr.map((url, idx) => {
-                      // consider it a PDF if:
-                      //   1) the URL ends in ".pdf"
-                      //   2) OR it came from Cloudinary's raw endpoint
-                      const isPdf =
-                        /\.pdf(\?|$)/i.test(url) ||
-                        /\/raw\/upload\//i.test(url);
-
-                      const label = isPdf
-                        ? `Download PDF ${idx + 1}`
-                        : `View image ${idx + 1}`;
-                      const onClick = () =>
-                        isPdf
-                          ? downloadFile(
-                              url,
-                              `request-${detailReq._id}-${idx + 1}.pdf`
-                            )
-                          : window.open(url, "_blank", "noopener");
-
-                      return (
-                        <li key={idx}>
-                          <button
-                            type="button"
-                            className="download-btn"
-                            onClick={onClick}
-                          >
-                            {label}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })()}
+              <AttachmentViewer
+                files={
+                  detailReq.files?.length > 0
+                    ? detailReq.files
+                    : detailReq.file
+                    ? [detailReq.file]
+                    : []
+                }
+                requestId={detailReq._id}
+              />
+            
 
             <div className="modal-actions">
               <button
