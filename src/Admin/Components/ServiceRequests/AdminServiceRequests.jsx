@@ -6,8 +6,11 @@ import { downloadFile } from "../../../Utils/Download";
 import Pagination from "../Pagination/Pagination";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import AttachmentViewer from "../AttachmentViewer/AttachmentViewer";
+import ServiceRequestCard from "../../../Employee/Pages/DashBoard/ServiceRequestCard";
+// import ServiceRequestCard from "../"
 
 const AdminServiceRequests = () => {
+  const [teamMembers, setTeamMembers] = useState([]);
   const [requests, setRequests] = useState([]);
   const [assignTarget, setAssignTarget] = useState(null);
   const [employees, setEmployees] = useState([]);
@@ -40,6 +43,17 @@ const AdminServiceRequests = () => {
       console.error("Error fetching service requests", err);
     }
   };
+
+  const fetchMembersByLeader = async (leaderId) => {
+  try {
+    const res = await axios.get(`${apiUrl}/api/admin/team/members/${leaderId}`, authHeader);
+    return res.data.members;
+  } catch (error) {
+    console.error("Failed to fetch members for leader", error);
+    return [];
+  }
+};
+
 
   const handleStatusChange = async (id, newStatus) => {
     try {
@@ -113,6 +127,16 @@ const AdminServiceRequests = () => {
     setCurrentPage(1);
   }, [searchTerm, requests]);
 
+  useEffect(() => {
+  const loadTeamMembers = async () => {
+    if (detailReq?.assignedTo?._id) {
+      const members = await fetchMembersByLeader(detailReq.assignedTo._id);
+      setTeamMembers(members);
+    }
+  };
+  loadTeamMembers();
+}, [detailReq]);
+
   return (
     <div className="admin-service-requests">
       <h2 className="title">Service Requests</h2>
@@ -157,11 +181,15 @@ const AdminServiceRequests = () => {
                 </td>
                 <td>
                   {req.assignedTo ? (
-                    <span>
+                    <button
+                    
+                      className="assign-btn"
+                      onClick={() => openAssignModel(req)}
+                    >
                       {req.assignedTo.firstName
                         ? `${req.assignedTo.firstName} ${req.assignedTo.lastName}`
                         : "Assigned"}
-                    </span>
+                    </button>
                   ) : (
                     <button
                       className="assign-btn"
@@ -229,62 +257,30 @@ const AdminServiceRequests = () => {
       )}
 
       {detailReq && (
-        <div className="modal-overlay">
-          <div className="modal-box">
-            <h3 className="modal-title">Request Detail</h3>
-            <p>
-              <strong>User (Login):</strong> {detailReq.user?.firstName || ""}{" "}
-              {detailReq.user?.lastName}
-            </p>
-            <p>
-              <strong>Name :</strong> {detailReq.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {detailReq.email}
-            </p>
-            <p>
-              <strong>Phone:</strong> {detailReq.phone}
-            </p>
-            <p>
-              <strong>Service:</strong> {detailReq.service?.title}
-            </p>
-            <p>
-              <strong>Description:</strong> {detailReq.description}
-            </p>
-            <p>
-              <strong>Requested At:</strong>{" "}
-              {new Date(detailReq.createdAt).toLocaleString()}
-            </p>
-              <AttachmentViewer
-                files={
-                  detailReq.files?.length > 0
-                    ? detailReq.files
-                    : detailReq.file
-                    ? [detailReq.file]
-                    : []
-                }
-                requestId={detailReq._id}
-              />
-            
+  <div className="modal-overlay">
+    <div className="modal-box">
+      <h3 className="modal-title">Request Detail</h3>
+      <button
+        className="modal-btn cancel"
+        onClick={() => setDetailReq(null)}
+      >
+        ❌ Close
+      </button>
+      <ServiceRequestCard
+        request={detailReq}
+        user={{ role: "admin" }} // or pass actual admin user object if needed
+        members={teamMembers} // or fetch/skip if not needed
+        onRefresh={fetchRequests}
+        editedAssignments={{}} // optional, not needed if you're not editing
+        savingAssignments={{}} // same here
+        onMemberChange={() => {}}
+        onSaveMembers={() => {}}
+        onStatusUpdate={() => {}}
+      />
+    </div>
+  </div>
+)}
 
-            <div className="modal-actions">
-              <button
-                className="assign-btn"
-                onClick={() => (setDetailReq(null), openAssignModel(detailReq))}
-              >
-                Assign
-              </button>
-
-              <button
-                className="modal-btn cancel"
-                onClick={() => setDetailReq(null)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
