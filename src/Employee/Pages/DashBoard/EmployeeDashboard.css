@@ -129,6 +129,15 @@
   background-color: #1a5fc3;
 }
 
+.modal-input {
+  padding: 0.5rem;
+  width: 100%;
+  margin: 1rem 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+
 .my-employee-updates .below {
   display: flex;
   justify-content: space-between;

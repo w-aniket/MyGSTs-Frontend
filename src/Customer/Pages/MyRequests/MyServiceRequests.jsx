@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../UserContex/UserContext";
 import "./MyRequests.css";
 import AttachmentViewer from "../../../Admin/Components/AttachmentViewer/AttachmentViewer";
+import { toast } from "react-toastify";
+import { color } from "@mui/system";
 
 const MyServiceRequests = () => {
   const { user } = useContext(UserContext);
@@ -23,6 +25,63 @@ const MyServiceRequests = () => {
       setLoading(false);
     }
   };
+
+  const handlePayNow = async (invoice) => {
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/payment/create-order`,
+        { invoiceId: invoice._id, amount: invoice.amount },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      const { order, key } = res.data;
+
+      const options = {
+        key,
+        amount: order.amount,
+        name: "Accounting Services",
+        currency: "INR",
+        description: "Invoice Payment",
+        order_id: order.id,
+        handler: async function (response) {
+          try {
+            const verifyRes = await axios.post(
+              `${import.meta.env.VITE_API_URL}/api/payment/verify`,
+              {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                invoiceId: invoice._id,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            );
+            if (verifyRes.data.success) {
+              toast.success("Payment successfull by aniket");
+              fetchRequests();
+            }
+          } catch (error) {
+            console.error("Verification failed", error);
+          }
+        },
+        theme: {
+          color: "#0d6efd",
+        },
+      };
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error("Payment initiation failed", error);
+    }
+  };
+
   useEffect(() => {
     if (user) {
       fetchRequests();
@@ -65,19 +124,37 @@ const MyServiceRequests = () => {
                 <div className="request-files">
                   <AttachmentViewer
                     files={
-                  req.files?.length > 0
-                    ? req.files
-                    : req.file
-                    ? [req.file]
-                    : []
-                }
-                requestId={req._id}
+                      req.files?.length > 0
+                        ? req.files
+                        : req.file
+                        ? [req.file]
+                        : []
+                    }
+                    requestId={req._id}
                   />
                 </div>
               )}
               <p className="request-description">
                 <strong>Description: </strong> {req.description}
               </p>
+
+              {req.status === "Done" && req.invoice && (
+                <div className="payment-section">
+                  <p className="invoice-amount">
+                    Amount: ₹{req.invoice.amount}
+                  </p>
+                  {req.invoice?.isPaid ? (
+                    <span className="paid-badge">Paid</span>
+                  ) : (
+                    <button
+                      className="pay-now-btn"
+                      onClick={() => handlePayNow(req.invoice)}
+                    >
+                      Pay Now
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>

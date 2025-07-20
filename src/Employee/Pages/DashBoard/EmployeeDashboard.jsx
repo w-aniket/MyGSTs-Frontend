@@ -13,6 +13,9 @@ const EmployeeDashboard = () => {
   const [editedAssignments, setEditedAssignments] = useState({});
   const [savingAssignments, setSavingAssignments] = useState({});
   const [selectedRequest, setSelectedRequest] = useState(null); // ⬅️ New
+  const [invoiceModal, setInvoiceModal] = useState({ open: false, requestId: null });
+const [invoiceAmount, setInvoiceAmount] = useState("");
+
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
@@ -59,13 +62,29 @@ const EmployeeDashboard = () => {
     }
   };
 
-  const updateStatus = async (id, status, comment = "") => {
+  const handleStatusChange = (id, newStatus) => {
+    if (newStatus === "Done") {
+      setInvoiceModal({open: true, requestId: id})
+    } else {
+      updateStatus(id, newStatus)
+    }
+  }
+
+  const updateStatus = async (id, newStatus, amount = null) => {
+    
+    const body = {status: newStatus};
+    if (newStatus === "Done" && amount) {
+      body.amount = amount
+    }
     try {
-      await axios.patch(`${apiUrl}/api/service-requests/${id}/status`, { status, comment }, { headers });
+      await axios.patch(`${apiUrl}/api/service-requests/${id}/status`, body, { headers });
       toast.success("Status updated");
       fetchRequests();
     } catch (error) {
       toast.error(error?.response?.data?.message || "Failed to update");
+    } finally {
+      setInvoiceModal({ open: false, requestId: null });
+    setInvoiceAmount("");
     }
   };
 
@@ -145,10 +164,45 @@ const EmployeeDashboard = () => {
                   }))
                 }
                 onSaveMembers={assignMembers}
-                onStatusUpdate={updateStatus}
+                onStatusUpdate={handleStatusChange}
               />
             </div>
           )}
+
+          {invoiceModal.open && (
+  <div className="modal-overlay">
+    <div className="modal-box">
+      <h3 className="modal-title">Enter Invoice Amount</h3>
+      <input
+        type="number"
+        className="modal-input"
+        placeholder="Enter amount"
+        value={invoiceAmount}
+        onChange={(e) => setInvoiceAmount(e.target.value)}
+      />
+      <div className="modal-actions">
+        <button
+          className="modal-btn"
+          onClick={() =>
+            updateStatus(invoiceModal.requestId, "Done", invoiceAmount)
+          }
+        >
+          Submit
+        </button>
+        <button
+          className="modal-btn cancel"
+          onClick={() => {
+            setInvoiceModal({ open: false, requestId: null });
+            setInvoiceAmount("");
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
         </>
       )}
     </div>
