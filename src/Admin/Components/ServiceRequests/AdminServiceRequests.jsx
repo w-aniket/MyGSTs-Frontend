@@ -7,6 +7,7 @@ import Pagination from "../Pagination/Pagination";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import AttachmentViewer from "../AttachmentViewer/AttachmentViewer";
 import ServiceRequestCard from "../../../Employee/Pages/DashBoard/ServiceRequestCard";
+import InvoiceModal from "../../../Component/InvoiceModal/InvoiceModal";
 // import ServiceRequestCard from "../"
 
 const AdminServiceRequests = () => {
@@ -15,6 +16,11 @@ const AdminServiceRequests = () => {
   const [assignTarget, setAssignTarget] = useState(null);
   const [employees, setEmployees] = useState([]);
   const [selectedEmp, setSelectedEmp] = useState("");
+  const [invoiceModal, setInvoiceModal] = useState({
+    open: false,
+    requestId: null,
+  });
+  const [invoiceAmount, setInvoiceAmount] = useState("");
 
   const [filteredRequests, setFilteredRequests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,30 +51,45 @@ const AdminServiceRequests = () => {
   };
 
   const fetchMembersByLeader = async (leaderId) => {
-  try {
-    const res = await axios.get(`${apiUrl}/api/admin/team/members/${leaderId}`, authHeader);
-    return res.data.members;
-  } catch (error) {
-    console.error("Failed to fetch members for leader", error);
-    return [];
-  }
-};
+    try {
+      const res = await axios.get(
+        `${apiUrl}/api/admin/team/members/${leaderId}`,
+        authHeader
+      );
+      return res.data.members;
+    } catch (error) {
+      console.error("Failed to fetch members for leader", error);
+      return [];
+    }
+  };
 
+  const handleStatusChange = (id, newStatus) => {
+    if (newStatus === "Done") {
+      setInvoiceModal({ open: true, requestId: id });
+    } else {
+      updateStatus(id, newStatus);
+    }
+  };
 
-  const handleStatusChange = async (id, newStatus) => {
+  const updateStatus = async (id, newStatus, amount = null) => {
+    const body = { status: newStatus };
+    if (newStatus === "Done" && amount) {
+      body.amount = amount;
+    }
     try {
       await axios.patch(
         `${apiUrl}/api/service-requests/${id}/status`,
-        { status: newStatus },
+        body,
         authHeader
       );
-      setRequests((prev) =>
-        prev.map((req) =>
-          req._id === id ? { ...req, status: newStatus } : req
-        )
-      );
+      toast.success("Status updated");
+      fetchRequests();
     } catch (error) {
+      toast.error(error?.responce?.data?.message || "Failed to update status");
       console.error("Failed to update status", error);
+    } finally {
+      setInvoiceAmount("");
+      setInvoiceModal({ open: false, requestId: null });
     }
   };
 
@@ -128,14 +149,14 @@ const AdminServiceRequests = () => {
   }, [searchTerm, requests]);
 
   useEffect(() => {
-  const loadTeamMembers = async () => {
-    if (detailReq?.assignedTo?._id) {
-      const members = await fetchMembersByLeader(detailReq.assignedTo._id);
-      setTeamMembers(members);
-    }
-  };
-  loadTeamMembers();
-}, [detailReq]);
+    const loadTeamMembers = async () => {
+      if (detailReq?.assignedTo?._id) {
+        const members = await fetchMembersByLeader(detailReq.assignedTo._id);
+        setTeamMembers(members);
+      }
+    };
+    loadTeamMembers();
+  }, [detailReq]);
 
   return (
     <div className="admin-service-requests">
@@ -182,7 +203,6 @@ const AdminServiceRequests = () => {
                 <td>
                   {req.assignedTo ? (
                     <button
-                    
                       className="assign-btn"
                       onClick={() => openAssignModel(req)}
                     >
@@ -257,30 +277,41 @@ const AdminServiceRequests = () => {
       )}
 
       {detailReq && (
-  <div className="modal-overlay">
-    <div className="modal-box">
-      <h3 className="modal-title">Request Detail</h3>
-      <button
-        className="modal-btn cancel"
-        onClick={() => setDetailReq(null)}
-      >
-        ❌ Close
-      </button>
-      <ServiceRequestCard
-        request={detailReq}
-        user={{ role: "admin" }} // or pass actual admin user object if needed
-        members={teamMembers} // or fetch/skip if not needed
-        onRefresh={fetchRequests}
-        editedAssignments={{}} // optional, not needed if you're not editing
-        savingAssignments={{}} // same here
-        onMemberChange={() => {}}
-        onSaveMembers={() => {}}
-        onStatusUpdate={() => {}}
-      />
-    </div>
-  </div>
-)}
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h3 className="modal-title">Request Detail</h3>
+            <button
+              className="modal-btn cancel"
+              onClick={() => setDetailReq(null)}
+            >
+              ❌ Close
+            </button>
+            <ServiceRequestCard
+              request={detailReq}
+              user={{ role: "admin" }} // or pass actual admin user object if needed
+              members={teamMembers} // or fetch/skip if not needed
+              onRefresh={fetchRequests}
+              editedAssignments={{}} // optional, not needed if you're not editing
+              savingAssignments={{}} // same here
+              onMemberChange={() => {}}
+              onSaveMembers={() => {}}
+              onStatusUpdate={() => {}}
+            />
+          </div>
+        </div>
+      )}
 
+      {invoiceModal.open && (
+        <InvoiceModal 
+          amount={invoiceAmount}
+          onChange={setInvoiceAmount}
+          onSubmit={() => updateStatus(invoiceModal.requestId, "Done", invoiceAmount)}
+          onCancel={() => {
+            setInvoiceModal({open: false, requestId: null});
+            setInvoiceAmount("");
+          }}
+        />
+      )}
     </div>
   );
 };

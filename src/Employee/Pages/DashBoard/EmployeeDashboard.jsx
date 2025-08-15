@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "./EmployeeDashboard.css";
 import ServiceRequestCard from "./ServiceRequestCard";
+import InvoiceModal from "../../../Component/InvoiceModal/InvoiceModal";
 
 const EmployeeDashboard = () => {
   const { user } = useContext(UserContext);
@@ -13,9 +14,11 @@ const EmployeeDashboard = () => {
   const [editedAssignments, setEditedAssignments] = useState({});
   const [savingAssignments, setSavingAssignments] = useState({});
   const [selectedRequest, setSelectedRequest] = useState(null); // ⬅️ New
-  const [invoiceModal, setInvoiceModal] = useState({ open: false, requestId: null });
-const [invoiceAmount, setInvoiceAmount] = useState("");
-
+  const [invoiceModal, setInvoiceModal] = useState({
+    open: false,
+    requestId: null,
+  });
+  const [invoiceAmount, setInvoiceAmount] = useState("");
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
@@ -24,7 +27,9 @@ const [invoiceAmount, setInvoiceAmount] = useState("");
   const fetchRequests = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${apiUrl}/api/service-requests/assigned`, { headers });
+      const res = await axios.get(`${apiUrl}/api/service-requests/assigned`, {
+        headers,
+      });
       setRequests(res.data?.requests || []);
     } catch (error) {
       console.error("Error fetching requests", error);
@@ -47,7 +52,11 @@ const [invoiceAmount, setInvoiceAmount] = useState("");
   const assignMembers = async (reqId, memberIds) => {
     try {
       setSavingAssignments((prev) => ({ ...prev, [reqId]: true }));
-      await axios.patch(`${apiUrl}/api/service-requests/${reqId}/assign-members`, { members: memberIds }, { headers });
+      await axios.patch(
+        `${apiUrl}/api/service-requests/${reqId}/assign-members`,
+        { members: memberIds },
+        { headers }
+      );
       toast.success("Members Updated");
       fetchRequests();
       setEditedAssignments((prev) => {
@@ -64,27 +73,28 @@ const [invoiceAmount, setInvoiceAmount] = useState("");
 
   const handleStatusChange = (id, newStatus) => {
     if (newStatus === "Done") {
-      setInvoiceModal({open: true, requestId: id})
+      setInvoiceModal({ open: true, requestId: id });
     } else {
-      updateStatus(id, newStatus)
+      updateStatus(id, newStatus);
     }
-  }
+  };
 
   const updateStatus = async (id, newStatus, amount = null) => {
-    
-    const body = {status: newStatus};
+    const body = { status: newStatus };
     if (newStatus === "Done" && amount) {
-      body.amount = amount
+      body.amount = amount;
     }
     try {
-      await axios.patch(`${apiUrl}/api/service-requests/${id}/status`, body, { headers });
+      await axios.patch(`${apiUrl}/api/service-requests/${id}/status`, body, {
+        headers,
+      });
       toast.success("Status updated");
       fetchRequests();
     } catch (error) {
       toast.error(error?.response?.data?.message || "Failed to update");
     } finally {
       setInvoiceModal({ open: false, requestId: null });
-    setInvoiceAmount("");
+      setInvoiceAmount("");
     }
   };
 
@@ -93,26 +103,31 @@ const [invoiceAmount, setInvoiceAmount] = useState("");
     if (["leader", "employee", "admin"].includes(user?.role)) fetchRequests();
   }, [user]);
   useEffect(() => {
-  if (selectedRequest) {
-    const updated = requests.find((r) => r._id === selectedRequest._id);
-    if (updated) {
-      setSelectedRequest(updated);
+    if (selectedRequest) {
+      const updated = requests.find((r) => r._id === selectedRequest._id);
+      if (updated) {
+        setSelectedRequest(updated);
+      }
     }
-  }
-}, [requests]);
+  }, [requests]);
 
-  if (!user || loading) return <div className="emp-dashboard">Loading dashboard...</div>;
+  if (!user || loading)
+    return <div className="emp-dashboard">Loading dashboard...</div>;
 
   if (!["leader", "employee", "admin"].includes(user.role)) {
-    return <div className="emp-dashboard text-red-600">You are not authorized to view this dashboard.</div>;
+    return (
+      <div className="emp-dashboard text-red-600">
+        You are not authorized to view this dashboard.
+      </div>
+    );
   }
-
-  
 
   return (
     <div className="emp-dashboard">
       <h2 className="emp-dashboard_title">
-        {["leader", "admin"].includes(user.role) ? "Team Leader Dashboard" : "My Tasks"}
+        {["leader", "admin"].includes(user.role)
+          ? "Team Leader Dashboard"
+          : "My Tasks"}
       </h2>
 
       {requests.length === 0 ? (
@@ -149,7 +164,12 @@ const [invoiceAmount, setInvoiceAmount] = useState("");
           {selectedRequest && (
             <div className="request-detail">
               <h3>Request Details</h3>
-              <button onClick={() => setSelectedRequest(null)} className="close-detail">❌ Close</button>
+              <button
+                onClick={() => setSelectedRequest(null)}
+                className="close-detail"
+              >
+                ❌ Close
+              </button>
               <ServiceRequestCard
                 request={selectedRequest}
                 user={user}
@@ -170,39 +190,18 @@ const [invoiceAmount, setInvoiceAmount] = useState("");
           )}
 
           {invoiceModal.open && (
-  <div className="modal-overlay">
-    <div className="modal-box">
-      <h3 className="modal-title">Enter Invoice Amount</h3>
-      <input
-        type="number"
-        className="modal-input"
-        placeholder="Enter amount"
-        value={invoiceAmount}
-        onChange={(e) => setInvoiceAmount(e.target.value)}
-      />
-      <div className="modal-actions">
-        <button
-          className="modal-btn"
-          onClick={() =>
-            updateStatus(invoiceModal.requestId, "Done", invoiceAmount)
-          }
-        >
-          Submit
-        </button>
-        <button
-          className="modal-btn cancel"
-          onClick={() => {
-            setInvoiceModal({ open: false, requestId: null });
-            setInvoiceAmount("");
-          }}
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+            <InvoiceModal 
+              amount={invoiceAmount}
+              onChange={setInvoiceAmount}
+              onSubmit={() => 
+                updateStatus(invoiceModal.requestId, "Done", invoiceAmount)
+              }
+              onCancel={() => {
+                setInvoiceModal({open: false, requestId: null});
+                setInvoiceAmount("");
+              }}
+            />
+          )}
         </>
       )}
     </div>
