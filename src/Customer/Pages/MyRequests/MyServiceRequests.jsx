@@ -82,6 +82,31 @@ const MyServiceRequests = () => {
     }
   };
 
+  const downloadInvoice = async (invoiceId) => {
+    try {
+      const url = `${
+        import.meta.env.VITE_API_URL
+      }/api/invoices/${invoiceId}/download`;
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        responseType: "blob",
+      });
+      const blob = new Blob([res.data], {type: "application/pdf"});
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `invoice-${invoiceId}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(link.href);
+    } catch (err) {
+      console.error("Invoice download failed", err);
+      toast.error("Failed to download invoice");
+    }
+  };
+
   useEffect(() => {
     if (user) {
       fetchRequests();
@@ -141,10 +166,18 @@ const MyServiceRequests = () => {
               {req.status === "Done" && req.invoice && (
                 <div className="payment-section">
                   <p className="invoice-amount">
-                    Amount: ₹{req.invoice.amount}
+                    Amount: ₹ {req.invoice?.amount}
                   </p>
                   {req.invoice?.isPaid ? (
-                    <span className="paid-badge">Paid</span>
+                    <>
+                      <span className="paid-badge">Paid</span>
+                      <button
+                        className="paid-badge download-invoice-btn"
+                        onClick={() => downloadInvoice(req.invoice?._id)}
+                      >
+                        Invoice
+                      </button>
+                    </>
                   ) : (
                     <button
                       className="pay-now-btn"

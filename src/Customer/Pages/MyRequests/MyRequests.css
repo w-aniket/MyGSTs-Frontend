@@ -109,6 +109,20 @@
   text-decoration: none;
 }
 
+.download-invoice-btn {
+    margin-left: 8px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: #198754;
+    color: white;
+    cursor: pointer;
+}
+
+.download-invoice-btn:hover {
+    filter: brightness(0.85);
+}
+
 
 .request-description {
     margin-top: 0.75rem;
