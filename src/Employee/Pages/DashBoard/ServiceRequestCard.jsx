@@ -18,16 +18,14 @@ const ServiceRequestCard = ({
   const latestStatus =
     request?.employeeUpdates?.length > 0
       ? request.employeeUpdates.at(-1).status
-      : "In Progress";
+      : request.status;
 
   const originalAssignedIds = (request.assignedMembers || []).map((m) =>
     typeof m === "object" ? m._id : m
   );
   const currentIds = editedAssignments[request._id] ?? originalAssignedIds;
 
-  const myUpdates = (request?.employeeUpdates || []).filter(
-    (u) => u?.comment || u?.files?.length > 0
-  );
+  const myUpdates = request?.employeeUpdates || [];
 
   return (
     <div className="emp-dashboard_card">
@@ -43,24 +41,14 @@ const ServiceRequestCard = ({
       <p>
         <strong>Description:</strong> {request.description}
       </p>
-      <AttachmentViewer
-        files={
-          request.files?.length > 0
-            ? request.files
-            : request.file
-            ? [request.file]
-            : []
-        }
-        requestId={request._id}
-      />
+
+      <AttachmentViewer files={request.files || []} requestId={request._id} />
 
       {["leader", "admin"].includes(user.role) && (
         <>
           <StatusDropdown
             currentStatus={request.status}
-            onChange={(status) =>
-              onStatusUpdate(request._id, status, request.comment || "")
-            }
+            onChange={(status) => onStatusUpdate(request._id, status, "")}
           />
 
           <AssignMembersForm
@@ -83,6 +71,7 @@ const ServiceRequestCard = ({
           </ul>
         </>
       )}
+
       <EmployeeStatusUpdate
         requestId={request._id}
         latestStatus={latestStatus}
