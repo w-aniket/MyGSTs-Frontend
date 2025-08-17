@@ -63,13 +63,7 @@ const AdminServiceRequests = () => {
     }
   };
 
-  const handleStatusChange = (id, newStatus) => {
-    if (newStatus === "Done") {
-      setInvoiceModal({ open: true, requestId: id });
-    } else {
-      updateStatus(id, newStatus);
-    }
-  };
+
 
   const updateStatus = async (id, newStatus, amount = null) => {
     const body = { status: newStatus };
@@ -191,7 +185,7 @@ const AdminServiceRequests = () => {
                       .replace(/\s/g, "-")}`}
                     value={req.status}
                     onChange={(e) =>
-                      handleStatusChange(req._id, e.target.value)
+                      updateStatus(req._id, e.target.value)
                     }
                   >
                     <option value="Pending">Pending</option>

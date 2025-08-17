@@ -26,15 +26,13 @@ const MyServiceRequests = () => {
     }
   };
 
-  const handlePayNow = async (invoice) => {
+  const handlePayNow = async (serviceRequestId, amount) => {
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/payment/create-order`,
-        { invoiceId: invoice._id, amount: invoice.amount },
+        { serviceRequestId, amount },
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
 
@@ -43,9 +41,9 @@ const MyServiceRequests = () => {
       const options = {
         key,
         amount: order.amount,
-        name: "Accounting Services",
         currency: "INR",
-        description: "Invoice Payment",
+        name: "Accounting Services",
+        description: "Service Request Payment",
         order_id: order.id,
         handler: async function (response) {
           try {
@@ -55,7 +53,7 @@ const MyServiceRequests = () => {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
-                invoiceId: invoice._id,
+                serviceRequestId, // 👈 not invoiceId anymore
               },
               {
                 headers: {
@@ -63,22 +61,24 @@ const MyServiceRequests = () => {
                 },
               }
             );
+
             if (verifyRes.data.success) {
-              toast.success("Payment successfull by aniket");
-              fetchRequests();
+              toast.success("Payment successful ✅");
+              fetchRequests(); // reload to get invoice info
             }
           } catch (error) {
             console.error("Verification failed", error);
+            toast.error("Payment verification failed");
           }
         },
-        theme: {
-          color: "#0d6efd",
-        },
+        theme: { color: "#0d6efd" },
       };
+
       const razorpay = new window.Razorpay(options);
       razorpay.open();
-    } catch (error) {
-      console.error("Payment initiation failed", error);
+    } catch (err) {
+      console.error("Payment initiation failed", err);
+      toast.error("Unable to start payment");
     }
   };
 
@@ -93,7 +93,7 @@ const MyServiceRequests = () => {
         },
         responseType: "blob",
       });
-      const blob = new Blob([res.data], {type: "application/pdf"});
+      const blob = new Blob([res.data], { type: "application/pdf" });
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = `invoice-${invoiceId}.pdf`;
@@ -163,11 +163,10 @@ const MyServiceRequests = () => {
                 <strong>Description: </strong> {req.description}
               </p>
 
-              {req.status === "Done" && req.invoice && (
+              {req.amount > 0 && (
                 <div className="payment-section">
-                  <p className="invoice-amount">
-                    Amount: ₹ {req.invoice?.amount}
-                  </p>
+                  <p className="invoice-amount">Amount: ₹ {req.amount}</p>
+
                   {req.invoice?.isPaid ? (
                     <>
                       <span className="paid-badge">Paid</span>
@@ -175,13 +174,29 @@ const MyServiceRequests = () => {
                         className="paid-badge download-invoice-btn"
                         onClick={() => downloadInvoice(req.invoice?._id)}
                       >
-                        Invoice
+                        Download Invoice
                       </button>
+                      {req.status === "Done" &&
+                        req.employeeUpdates?.length > 0 && (
+                          <div className="employee-update">
+                            <h4>Latest Update</h4>
+                            <p>{req.employeeUpdates.at(-1).comment}</p>
+                            {req.employeeUpdates
+                              .at(-1)
+                              .files?.map((file, i) => (
+                                <AttachmentViewer
+                                  key={i}
+                                  files={[file]}
+                                  requestId={req._id}
+                                />
+                              ))}
+                          </div>
+                        )}
                     </>
                   ) : (
                     <button
                       className="pay-now-btn"
-                      onClick={() => handlePayNow(req.invoice)}
+                      onClick={() => handlePayNow(req._id, req.amount)}
                     >
                       Pay Now
                     </button>
