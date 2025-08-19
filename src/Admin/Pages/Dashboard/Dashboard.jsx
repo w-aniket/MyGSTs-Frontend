@@ -1,10 +1,10 @@
-import React from 'react';
-import './Dashboard.css';
-import AdminServiceRequests from '../../Components/ServiceRequests/AdminServiceRequests';
-import StatsCards from '../../../Component/StatsCards/StatsCards';
-import ClientTable from '../../../Component/ClientTable/ClientTable';
-import ServiceOverviewChart from '../../../Component/ServiceOverviewChart/ServiceOverviewChart';
-import RecentInvoicesTable from '../../../Component/RecentInvoicesTable/RecentInvoicesTable';
+import React from "react";
+import "./Dashboard.css";
+import AdminServiceRequests from "../../Components/ServiceRequests/AdminServiceRequests";
+import StatsCards from "../../../Component/StatsCards/StatsCards";
+import ClientTable from "../../../Component/ClientTable/ClientTable";
+import ServiceOverviewChart from "../../../Component/ServiceOverviewChart/ServiceOverviewChart";
+import RecentInvoicesTable from "../../../Component/RecentInvoicesTable/RecentInvoicesTable";
 
 const Dashboard = () => {
   return (
@@ -12,13 +12,13 @@ const Dashboard = () => {
 
       <StatsCards />
 
-     <ServiceOverviewChart />
-      <AdminServiceRequests />
+      <ServiceOverviewChart />
 
+      <AdminServiceRequests />
 
       <ClientTable />
 
-    <RecentInvoicesTable />
+      <RecentInvoicesTable />
       
     </div>
   );

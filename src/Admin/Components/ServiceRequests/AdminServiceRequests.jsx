@@ -63,8 +63,6 @@ const AdminServiceRequests = () => {
     }
   };
 
-
-
   const updateStatus = async (id, newStatus, amount = null) => {
     const body = { status: newStatus };
     if (newStatus === "Done" && amount) {
@@ -79,7 +77,7 @@ const AdminServiceRequests = () => {
       toast.success("Status updated");
       fetchRequests();
     } catch (error) {
-      toast.error(error?.responce?.data?.message || "Failed to update status");
+      toast.error(error?.response?.data?.message || "Failed to update status");
       console.error("Failed to update status", error);
     } finally {
       setInvoiceAmount("");
@@ -162,6 +160,7 @@ const AdminServiceRequests = () => {
             <th>User</th>
             <th>Service</th>
             <th>Status</th>
+            <th>Amount</th>
             <th>Assign</th>
             <th>Data</th>
           </tr>
@@ -184,9 +183,7 @@ const AdminServiceRequests = () => {
                       .toLowerCase()
                       .replace(/\s/g, "-")}`}
                     value={req.status}
-                    onChange={(e) =>
-                      updateStatus(req._id, e.target.value)
-                    }
+                    onChange={(e) => updateStatus(req._id, e.target.value)}
                   >
                     <option value="Pending">Pending</option>
                     <option value="Assigned">Assigned</option>
@@ -194,6 +191,14 @@ const AdminServiceRequests = () => {
                     <option value="Done">Done</option>
                   </select>
                 </td>
+                <td>
+                  {(() => {
+                    if (req.invoice) return <p className="done"> {req.amount} Paid ✅</p>;
+                    if (req.amount) return <p className="assigned">{req.amount} Pending ⏳</p>;
+                    return <p className="pending">Set Amount 💰</p>;
+                  })()}
+                </td>
+
                 <td>
                   {req.assignedTo ? (
                     <button
@@ -296,12 +301,14 @@ const AdminServiceRequests = () => {
       )}
 
       {invoiceModal.open && (
-        <InvoiceModal 
+        <InvoiceModal
           amount={invoiceAmount}
           onChange={setInvoiceAmount}
-          onSubmit={() => updateStatus(invoiceModal.requestId, "Done", invoiceAmount)}
+          onSubmit={() =>
+            updateStatus(invoiceModal.requestId, "Done", invoiceAmount)
+          }
           onCancel={() => {
-            setInvoiceModal({open: false, requestId: null});
+            setInvoiceModal({ open: false, requestId: null });
             setInvoiceAmount("");
           }}
         />

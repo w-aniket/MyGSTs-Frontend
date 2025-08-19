@@ -52,13 +52,13 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-.status-select.pending {
+.admin-service-requests .pending {
   background-color: #fff3cd;
   border-color: #ffecb5;
   color: #856404;
 }
 
-.status-select.assigned {
+.admin-service-requests .assigned {
   background-color: #d1ecf1;
   border-color: #bee5eb;
   color: #0c5460;
@@ -70,7 +70,7 @@
   color: #a61e4d;
 }
 
-.status-select.done {
+.admin-service-requests .done {
   background-color: #d4edda;
   border-color: #c3e6cb;
   color: #155724;
