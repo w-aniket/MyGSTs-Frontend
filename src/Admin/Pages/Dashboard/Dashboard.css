@@ -12,8 +12,7 @@
 
 /* Tables */
 
-.invoices-table,
-.chart-section {
+.invoices-table {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
@@ -23,8 +22,7 @@
 }
 
 
-.invoices-table h4,
-.chart-section h4 {
+.invoices-table h4 {
   margin-bottom: 16px;
   font-size: 1.2rem;
   color: #1e3c72;
@@ -33,11 +31,7 @@
 
 
 /* Chart section placeholder */
-.chart-section p {
-  text-align: center;
-  font-style: italic;
-  color: #888;
-}
+
 
 /* Responsive layout */
 @media (max-width: 768px) {
