@@ -52,3 +52,8 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+.status-badge { padding: 4px 8px; border-radius: 6px; font-weight: 600; }
+.status-assigned { background: #dbffff; color: #002991; }
+.status-in\ progress { background: #ffecb3; color: #a67c00; }
+.status-done { background: #c8e6c9; color: #2e7d32; }

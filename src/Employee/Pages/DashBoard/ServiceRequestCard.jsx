@@ -77,7 +77,7 @@ const ServiceRequestCard = ({
       console.error(err);
       toast.error(
         err?.response?.data?.message || "Failed to save amount"
-      );
+      );  
     } finally {
       setSavingAmount(false);
     }
@@ -89,7 +89,10 @@ const ServiceRequestCard = ({
         <strong>Service:</strong> {request.service?.title}
       </p>
       <p>
-        <strong>Status:</strong> {request.status}
+        <strong>Status:</strong>
+        <span className={`status-badge status-${request?.status.toLowerCase()}`}>
+          {request.status}
+        </span> 
       </p>
       <p>
         <strong>Customer:</strong> {request.user?.firstName}
