@@ -1,34 +1,20 @@
 import React from 'react';
 import './Dashboard.css';
 import AdminServiceRequests from '../../Components/ServiceRequests/AdminServiceRequests';
+import StatsCards from '../../../Component/StatsCards/StatsCards';
+import ClientTable from '../../../Component/ClientTable/ClientTable';
 
 const Dashboard = () => {
   return (
     <div className="">
-      <div className="cards">
-        <div className="card"><h4>Total Clients</h4><p>120</p></div>
-        <div className="card"><h4>Invoices</h4><p>$8,250</p></div>
-        <div className="card"><h4>GST Filings</h4><p>25</p></div>
-        <div className="card"><h4>ITR Filings</h4><p>18</p></div>
-      </div>
+
+      <StatsCards />
 
       <AdminServiceRequests />
 
-      <div className="clients-table">
-        <h4>Client List</h4>
-        <table>
-          <thead>
-            <tr><th>Name</th><th>Company</th><th>Status</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Margaret Curtis</td><td>Lorem Ipsum Inc.</td><td className="status-active">Active</td></tr>
-            <tr><td>Matthew Gonzalez</td><td>Lorem Ipsum Inc.</td><td className="status-inactive">Inactive</td></tr>
-            <tr><td>Amanda Reed</td><td>Lorem Ipsum Inc.</td><td className="status-active">Active</td></tr>
-            <tr><td>Brian Porter</td><td>Lorem Ipsum Inc.</td><td className="status-active">Active</td></tr>
-            <tr><td>Nicole Bell</td><td>Lorem Ipsum Inc.</td><td className="status-inactive">Inactive</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <ClientTable />
+
+     
 
       <div className="chart-section">
         <h4>Services Overview</h4>
