@@ -19,6 +19,29 @@ const RecentInvoicesTable = () => {
     },
   };
 
+  const downloadInvoice = async (invoiceId) => {
+      try {
+        const url = `${apiUrl}/api/invoices/${invoiceId}/download`;
+        const res = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: "blob",
+        });
+        const blob = new Blob([res.data], { type: "application/pdf" });
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `invoice-${invoiceId}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(link.href);
+      } catch (err) {
+        console.error("Invoice download failed", err);
+        toast.error("Failed to download invoice");
+      }
+    };
+
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
@@ -78,7 +101,7 @@ const RecentInvoicesTable = () => {
               <th>Client</th>
               <th>Date</th>
               <th>Amount</th>
-              <th>Status</th>
+              <th>Invoice</th>
             </tr>
           </thead>
           <tbody>
@@ -88,11 +111,12 @@ const RecentInvoicesTable = () => {
                   <td>{inv.invoiceNumber}</td>
                   <td>{inv.client?.firstName || ""} {inv.client?.lastName || "Unknown"}</td>
                   <td>{new Date(inv.createdAt).toLocaleDateString()}</td>
-                  <td>${inv.amount.toLocaleString()}</td>
+                  <td>₹ {inv.amount.toLocaleString()}</td>
                   <td
                     className="status-paid"
-                  >
-                    Paid
+                  ><button onClick={() =>downloadInvoice(inv._id)}>
+                    Download
+                  </button>
                   </td>
                 </tr>
               ))

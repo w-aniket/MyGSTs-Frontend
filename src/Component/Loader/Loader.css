@@ -1,0 +1,24 @@
+/* Wave Loader */
+.loader-wave {
+  display: flex;
+  gap: 4px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3498db;
+}
+
+.loader-wave span {
+  display: inline-block;
+  animation: wave 1.2s infinite;
+}
+
+.loader-wave span:nth-child(2) { animation-delay: 0.1s; }
+.loader-wave span:nth-child(3) { animation-delay: 0.2s; }
+.loader-wave span:nth-child(4) { animation-delay: 0.3s; }
+.loader-wave span:nth-child(5) { animation-delay: 0.4s; }
+.loader-wave span:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes wave {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-10px); }
+}

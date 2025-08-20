@@ -15,16 +15,12 @@ const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { user, loadingUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const dropdownRef = useRef(null);
 
-  // console.log("This is user",user);
 
   const navigation = [
-    { name: "Home", 
-      href: "/",
-      current: location.pathname === "/" 
-    },
+    { name: "Home", href: "/", current: location.pathname === "/" },
     {
       name: "Services",
       href: "/services",
@@ -95,11 +91,7 @@ const Navigation = () => {
 
         {/* Profile Section */}
 
-        {
-        // loadingUser ? (
-        //   <span className="spinner"></span>
-        // ) :
-         user ? (
+        {user ? (
           <ProfileLogo />
         ) : (
           <button id="signup" onClick={() => navigate("/signup")}>

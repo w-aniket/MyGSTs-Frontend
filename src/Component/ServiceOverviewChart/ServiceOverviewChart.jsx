@@ -90,7 +90,7 @@ const ServiceOverviewChart = () => {
   if (data.length === 0) return <p>No services found with invoices.</p>;
 
   return (
-    <div ref={ref} style={{ width: "100%", height: 350, marginTop: 20 }}>
+    <div className="service-overview" ref={ref} style={{ width: "100%", height: 350, marginTop: 20 }}>
       <h4>Services Overview</h4>
       <ResponsiveContainer>
         <PieChart>

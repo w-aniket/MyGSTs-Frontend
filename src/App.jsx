@@ -6,13 +6,12 @@ import { UserContext } from "./UserContex/UserContext";
 import { useContext } from "react";
 import AdminRouter from "./Routers/AdminRouter";
 import EmployeeRouters from "./Routers/EmployeeRouters";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loader from "./Component/Loader/Loader";
 
 function App() {
   const { user, loadingUser } = useContext(UserContext);
-  // if (loadingUser) return <div className="spinner"></div>;
-
   return (
     <>
       <ScrollToTop />
@@ -24,11 +23,7 @@ function App() {
             user && user?.role === "admin" ? (
               <AdminRouter />
             ) : (
-              <Navigate
-                to="/"
-                state={{ from: "/admin" }}
-                replace
-              />
+              <Navigate to="/" state={{ from: "/admin" }} replace />
             )
           }
         />
@@ -36,19 +31,24 @@ function App() {
         <Route
           path="/employee/*"
           element={
-            user && (user.role === "employee" || user.role === "leader" || user.role === "admin") ? (
+            user &&
+            (user.role === "employee" ||
+              user.role === "leader" ||
+              user.role === "admin") ? (
               <EmployeeRouters />
             ) : (
-              <Navigate
-                to="/"
-                state={{ from: "/employee" }}
-                replace
-              />
+              <Navigate to="/" state={{ from: "/employee" }} replace />
             )
           }
         />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
+
+      {loadingUser && (
+        <div className="loading-overlay">
+          <Loader /> {/* Try "wave" | "typing" | "shimmer" */}
+        </div>
+      )}
     </>
   );
 }
