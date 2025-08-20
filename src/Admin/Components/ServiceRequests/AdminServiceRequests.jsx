@@ -2,13 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./AdminServiceRequests.css";
 import { toast } from "react-toastify";
-import { downloadFile } from "../../../Utils/Download";
 import Pagination from "../Pagination/Pagination";
 import SearchFilter from "../SearchFilter/SearchFilter";
-import AttachmentViewer from "../AttachmentViewer/AttachmentViewer";
 import ServiceRequestCard from "../../../Employee/Pages/DashBoard/ServiceRequestCard";
 import InvoiceModal from "../../../Component/InvoiceModal/InvoiceModal";
-// import ServiceRequestCard from "../"
 
 const AdminServiceRequests = () => {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -21,6 +18,7 @@ const AdminServiceRequests = () => {
     requestId: null,
   });
   const [invoiceAmount, setInvoiceAmount] = useState("");
+  const [filterCompleted, setFilterCompleted] = useState("false"); 
 
   const [filteredRequests, setFilteredRequests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +34,7 @@ const AdminServiceRequests = () => {
   const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
 
   const [detailReq, setDetailReq] = useState(null);
+  
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
@@ -43,7 +42,7 @@ const AdminServiceRequests = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/api/service-requests`, authHeader);
+      const res = await axios.get(`${apiUrl}/api/service-requests?completed=${filterCompleted}`, authHeader);
       setRequests(res.data.requests);
     } catch (err) {
       console.error("Error fetching service requests", err);
@@ -61,6 +60,18 @@ const AdminServiceRequests = () => {
       console.error("Failed to fetch members for leader", error);
       return [];
     }
+  };
+
+  const renderPaymentStatus = (req) => {
+    if (req.invoice)
+      return <span className="status-badge paid">₹ {req.amount}/- Paid ✔</span>;
+    if (req.amount)
+      return (
+        <span className="status-badge pending-payment">
+          ₹ {req.amount}/- Pending ⏳
+        </span>
+      );
+    return <span className="status-badge set-amount">Set Amount 💰</span>;
   };
 
   const updateStatus = async (id, newStatus, amount = null) => {
@@ -123,7 +134,7 @@ const AdminServiceRequests = () => {
 
   useEffect(() => {
     fetchRequests();
-  }, []);
+  }, [filterCompleted]);
 
   useEffect(() => {
     const filtered = requests.filter(
@@ -153,7 +164,20 @@ const AdminServiceRequests = () => {
   return (
     <div className="admin-service-requests">
       <h2 className="title">Service Requests</h2>
-      <SearchFilter searchTerm={searchTerm} onSearch={setSearchTerm} />
+      <div className="filter-bar">
+
+      <SearchFilter  searchTerm={searchTerm} onSearch={setSearchTerm} />
+      <select
+        value={filterCompleted}
+        className="status-filter"
+        onChange={(e) => setFilterCompleted(e.target.value)}
+      >
+        <option value="false">Active Requests</option>
+        <option value="true">Completed Requests</option>
+        <option value="all">All Requests</option>
+      </select>
+      </div>
+
       <table className="request-table">
         <thead>
           <tr>
@@ -191,13 +215,7 @@ const AdminServiceRequests = () => {
                     <option value="Done">Done</option>
                   </select>
                 </td>
-                <td>
-                  {(() => {
-                    if (req.invoice) return <p className="done"> {req.amount} Paid ✅</p>;
-                    if (req.amount) return <p className="assigned">{req.amount} Pending ⏳</p>;
-                    return <p className="pending">Set Amount 💰</p>;
-                  })()}
-                </td>
+                <td>{renderPaymentStatus(req)}</td>
 
                 <td>
                   {req.assignedTo ? (
@@ -205,9 +223,9 @@ const AdminServiceRequests = () => {
                       className="assign-btn"
                       onClick={() => openAssignModel(req)}
                     >
-                      {req.assignedTo.firstName
-                        ? `${req.assignedTo.firstName} ${req.assignedTo.lastName}`
-                        : "Assigned"}
+                      {req.assignedTo?.firstName
+                        ? `${req.assignedTo?.firstName} ${req.assignedTo?.lastName}`
+                        : "Assign"}
                     </button>
                   ) : (
                     <button

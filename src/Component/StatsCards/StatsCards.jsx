@@ -12,18 +12,17 @@ import { Line, LineChart, ResponsiveContainer } from "recharts";
 
 const StatsCards = () => {
   const [stats, setStats] = useState([]);
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const apiUrl = import.meta.env.VITE_API_URL
+   const apiUrl = import.meta.env.VITE_API_URL
         const token = localStorage.getItem("token");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
-
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+  
         const res = await axios.get(`${apiUrl}/api/dashboard/stats`, config);
         const data = res.data;
 

@@ -1,33 +1,44 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./RecentInvoicesTable.css";
-
-const mockInvoices = [
-  { id: 1001, client: "Amanda Reed", date: "2025-08-10", amount: 1200, status: "Paid" },
-  { id: 1002, client: "Brian Porter", date: "2025-08-08", amount: 800, status: "Pending" },
-  { id: 1003, client: "William Reed", date: "2025-08-05", amount: 1000, status: "Paid" },
-  { id: 1004, client: "Margaret Curtis", date: "2025-08-03", amount: 1500, status: "Pending" },
-  { id: 1005, client: "Nicole Bell", date: "2025-08-02", amount: 950, status: "Paid" },
-  { id: 1006, client: "John Smith", date: "2025-07-30", amount: 700, status: "Pending" },
-  { id: 1007, client: "Emily Davis", date: "2025-07-28", amount: 1100, status: "Paid" },
-  // Add more mock invoices if needed
-];
 
 const RecentInvoicesTable = () => {
   const [invoices, setInvoices] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const invoicesPerPage = 5;
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("token");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   useEffect(() => {
-    setInvoices(mockInvoices);
+    const fetchInvoices = async () => {
+      try {
+        const res = await axios.get(`${apiUrl}/api/invoices`, config);
+        setInvoices(res.data);
+      } catch (err) {
+        console.error("Error fetching invoices", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInvoices();
   }, []);
 
+  // ✅ Fix: use client.name and invoiceNumber
   const filteredInvoices = invoices.filter(
     (inv) =>
-      inv.client.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      String(inv.id).includes(searchTerm)
+      inv.client?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(inv.invoiceNumber).includes(searchTerm)
   );
 
   // Pagination logic
@@ -40,6 +51,8 @@ const RecentInvoicesTable = () => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
   };
+
+  if (loading) return <p>Loading invoices...</p>;
 
   return (
     <div className="invoices-table">
@@ -69,24 +82,35 @@ const RecentInvoicesTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentInvoices.map((inv) => (
-              <tr key={inv.id}>
-                <td>{inv.id}</td>
-                <td>{inv.client}</td>
-                <td>{inv.date}</td>
-                <td>${inv.amount.toLocaleString()}</td>
-                <td className={inv.status === "Paid" ? "status-paid" : "status-pending"}>
-                  {inv.status}
-                </td>
+            {currentInvoices.length > 0 ? (
+              currentInvoices.map((inv) => (
+                <tr key={inv._id}>
+                  <td>{inv.invoiceNumber}</td>
+                  <td>{inv.client?.firstName || ""} {inv.client?.lastName || "Unknown"}</td>
+                  <td>{new Date(inv.createdAt).toLocaleDateString()}</td>
+                  <td>${inv.amount.toLocaleString()}</td>
+                  <td
+                    className="status-paid"
+                  >
+                    Paid
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">No invoices found</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
       {/* Pagination Controls */}
       <div className="pagination">
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
           Prev
         </button>
         {[...Array(totalPages)].map((_, i) => (
@@ -98,7 +122,10 @@ const RecentInvoicesTable = () => {
             {i + 1}
           </button>
         ))}
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>

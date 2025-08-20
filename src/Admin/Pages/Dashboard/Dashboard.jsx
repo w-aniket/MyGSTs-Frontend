@@ -16,9 +16,10 @@ const Dashboard = () => {
 
       <AdminServiceRequests />
 
+      <RecentInvoicesTable />
+      
       <ClientTable />
 
-      <RecentInvoicesTable />
       
     </div>
   );

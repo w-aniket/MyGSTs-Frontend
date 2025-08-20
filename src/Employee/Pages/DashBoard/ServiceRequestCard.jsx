@@ -5,7 +5,7 @@ import AssignMembersForm from "./AssignMembersForm";
 import StatusDropdown from "./StatusDropDown";
 import AttachmentViewer from "../../../Admin/Components/AttachmentViewer/AttachmentViewer";
 import EmployeeStatusUpdate from "../../Components/EmployeeStatusUpdate/EmployeeStatusUpdate";
-import "./serviceRequestCard.css"
+import "./serviceRequestCard.css";
 const ServiceRequestCard = ({
   request,
   user,
@@ -17,7 +17,6 @@ const ServiceRequestCard = ({
   onSaveMembers,
   onStatusUpdate,
 }) => {
-
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
   const headers = { Authorization: `Bearer ${token}` };
@@ -68,37 +67,54 @@ const ServiceRequestCard = ({
 
     try {
       setSavingAmount(true);
-      await axios.patch(`${apiUrl}/api/service-requests/${request._id}/amount`, {
-        amount: num,
-      },{headers});
+      await axios.patch(
+        `${apiUrl}/api/service-requests/${request._id}/amount`,
+        {
+          amount: num,
+        },
+        { headers }
+      );
       toast.success("Amount saved");
       await onRefresh?.();
     } catch (err) {
       console.error(err);
-      toast.error(
-        err?.response?.data?.message || "Failed to save amount"
-      );  
+      toast.error(err?.response?.data?.message || "Failed to save amount");
     } finally {
       setSavingAmount(false);
     }
   };
+  console.log(user);
 
   return (
     <div className="emp-dashboard_card">
       <p>
+        <strong>Client name:</strong> {request.name} / {request?.user.firstName}{" "}
+        {request?.user.lastName}
+      </p>
+      {(user.role === "admin" || user.role === "leader") && (
+        <>
+          <p>
+            <strong>Email:</strong> {request.email} / {request?.user.email}
+          </p>
+
+          <p>
+            <strong>Contact:</strong> {request.phone}
+          </p>
+        </>
+      )}
+      <p>
         <strong>Service:</strong> {request.service?.title}
       </p>
       <p>
-        <strong>Status:</strong>
-        <span className={`status-badge status-${request?.status.toLowerCase()}`}>
-          {request.status}
-        </span> 
-      </p>
-      <p>
-        <strong>Customer:</strong> {request.user?.firstName}
-      </p>
-      <p>
         <strong>Description:</strong> {request.description}
+      </p>
+      <p>
+        <strong>Status:</strong>
+        <span
+          className={`status-badge status-${request?.status.toLowerCase()}`}
+        >
+          {request.status}
+        </span>
       </p>
 
       {/* Files */}
@@ -135,7 +151,10 @@ const ServiceRequestCard = ({
 
           {/* --- Set Amount --- */}
           <div className="emp-dashboard_amount" style={{ marginTop: 12 }}>
-            <label className="emp-dashboard_label" htmlFor={`amt-${request._id}`}>
+            <label
+              className="emp-dashboard_label"
+              htmlFor={`amt-${request._id}`}
+            >
               Amount (₹)
             </label>
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
