@@ -95,9 +95,11 @@ const Navigation = () => {
 
         {/* Profile Section */}
 
-        {loadingUser ? (
-          <span className="spinner"></span>
-        ) : user ? (
+        {
+        // loadingUser ? (
+        //   <span className="spinner"></span>
+        // ) :
+         user ? (
           <ProfileLogo />
         ) : (
           <button id="signup" onClick={() => navigate("/signup")}>

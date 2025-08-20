@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { user, loadingUser } = useContext(UserContext);
-  if (loadingUser) return <div className="spinner"></div>;
+  // if (loadingUser) return <div className="spinner"></div>;
 
   return (
     <>
