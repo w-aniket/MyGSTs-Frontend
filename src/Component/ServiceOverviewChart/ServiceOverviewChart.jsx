@@ -79,7 +79,7 @@ const ServiceOverviewChart = () => {
         } else {
           clearInterval(interval);
         }
-      }, 300);
+      }, 200);
 
       return () => clearInterval(interval); // cleanup on unmount
     }
