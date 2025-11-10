@@ -1,0 +1,40 @@
+.contact-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 9999;
+}
+
+.contact-widget .icon {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.contact-widget .icon:hover {
+    transform: scale(1.1);
+    background: #f2f2f2;
+}
+
+.whatsapp {
+    color: #25d366;
+}
+
+.phone {
+    color: #1E88E5;
+}
+
+.email {
+    color: #FF5722;
+}
