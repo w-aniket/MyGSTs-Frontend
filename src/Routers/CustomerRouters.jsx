@@ -17,6 +17,7 @@ import Contact from "../Customer/Pages/ContactV2/Contact.jsx";
 import Homepage from "../Customer/Pages/Homepage/Homepage.jsx";
 import ServiceDetail from "../Customer/Pages/ServiceDetail/ServiceDetail.jsx";
 import MyServiceRequests from "../Customer/Pages/MyRequests/MyServiceRequests.jsx";
+import OTPLogin from "../Customer/Auth/OTPLogin.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -30,7 +31,7 @@ const CustomerRouters = () => {
         
         <Route path="/" element={<Homepage/>} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/signin" element={<OTPLogin />} />
         <Route path="/signin/reset-password" element={<Reset />} />
         <Route path="/signin/new-password" element={<NewPassword />} />
         <Route path="/services" element={<Services />} />

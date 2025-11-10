@@ -37,7 +37,7 @@ const ProfileLogo = () => {
         className="profile-button"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <p>{user?.firstName.trim().charAt(0).toUpperCase()}</p>
+        <p>{user?.email.trim().charAt(0).toUpperCase()}</p>
       </button>
       <div className={`profile-dropdown ${isDropdownOpen ? "show" : ""}`}>
         <a onClick={() => navigate("/careers/profile") || setIsDropdownOpen(false)}>

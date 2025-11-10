@@ -1,132 +1,115 @@
-/* Contact Page Styling */
+/* ============================ Contact.css ============================ */
+/* Corporate Business Design */
 
-.contact-container {
+.contact-wrapper {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  background: #afafaf;
+  background: #f3f4f6;
+  padding: 40px;
   font-family: "Segoe UI", sans-serif;
 }
 
-/* Left Side */
-.contact-info {
+.contact-card {
+  display: flex;
+  flex-wrap: wrap;
+  background: #ffffff;
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Left Section */
+.contact-left {
   flex: 1;
-  min-width: 300px;
+  padding: 60px 40px;
   background: #1e3a8a;
   color: white;
-  padding: 105px 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
-.contact-info h2 {
-  font-size: 28px;
-  margin-bottom: 15px;
+.business-title {
+  font-size: 30px;
+  font-weight: 700;
 }
 
-.contact-info p {
-  font-size: 15px;
-  margin-bottom: 20px;
+.business-subtext {
+  margin: 10px 0 25px;
+  opacity: 0.9;
 }
 
-.info-block {
-  margin-bottom: 15px;
+.business-block {
+  margin-bottom: 18px;
 }
 
-.info-block h4 {
+.business-block h4 {
   margin: 0;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 15px;
+  opacity: 0.9;
 }
 
-.info-block p {
-  margin: 5px 0 0;
+.business-block p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  opacity: 0.95;
 }
 
-/* Right Side */
-.contact-form {
+/* Right Section */
+.contact-right {
   flex: 1;
-  min-width: 300px;
+  padding: 50px 40px;
   background: white;
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
-.contact-form h2 {
+.contact-right h2 {
   font-size: 26px;
   margin-bottom: 20px;
-  color: #333;
+  color: #1e3a8a;
+  font-weight: 700;
 }
 
-.contact-form form {
+.contact-right form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
-.contact-form input,
-.contact-form textarea {
-  padding: 12px 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  background: #f9f9f9;
+/* Floating Label Inputs */
+.input-group {
+  position: relative;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-  border-color: #1e3a8a;
-  background: #fff;
-  outline: none;
-}
-
-.contact-form button {
-  background: #1e3a8a;
-  color: white;
-  border: none;
-  padding: 12px;
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 16px 14px 10px;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
   font-size: 15px;
-  cursor: pointer;
-  transition: background 0.3s;
+  outline: none;
+  transition: 0.2s ease;
 }
 
-.contact-form button:hover {
-  background: #163074;
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: #1e3a8a;
+  background: white;
 }
 
-.input-group {
-    position: relative;
-    margin-bottom: 10px;
-  }
-  
-  .input-group input,
-  .input-group textarea {
-    width: 100%;
-    padding: 16px 12px 8px;
-    font-size: 14px;
-    background: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    outline: none;
-  }
-  
-  .input-group label {
-    position: absolute;
-    left: 12px;
-    top: 14px;
-    color: #888;
-    font-size: 14px;
-    pointer-events: none;
-    transition: 0.2s ease all;
-    background: white;
-    padding: 0 4px;
-  }
-  
-  /* When focused or not empty */
+.input-group label {
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  font-size: 14px;
+  color: #6b7280;
+  pointer-events: none;
+  transition: 0.2s;
+  background: white;
+  padding: 0 4px;
+}
 
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label,
@@ -136,24 +119,35 @@
   left: 10px;
   font-size: 12px;
   color: #1e3a8a;
-  background: white;
-  padding: 0 4px;
   border: 1px solid #1e3a8a;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
+/* Button */
+.business-btn {
+  padding: 14px;
+  background: #1e3a8a;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-  
+.business-btn:hover {
+  background: #173170;
+}
 
-/* Mobile View */
+/* Mobile */
 @media (max-width: 768px) {
-  .contact-container {
+  .contact-card {
     flex-direction: column;
   }
 
-  .contact-info,
-  .contact-form {
+  .contact-left,
+  .contact-right {
     padding: 30px 20px;
-    border-radius: 0;
   }
 }

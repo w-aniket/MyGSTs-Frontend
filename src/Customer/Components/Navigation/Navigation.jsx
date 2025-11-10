@@ -94,8 +94,8 @@ const Navigation = () => {
         {user ? (
           <ProfileLogo />
         ) : (
-          <button id="signup" onClick={() => navigate("/signup")}>
-            Register
+          <button id="signup" onClick={() => navigate("/signin")}>
+            Login
           </button>
         )}
       </div>
