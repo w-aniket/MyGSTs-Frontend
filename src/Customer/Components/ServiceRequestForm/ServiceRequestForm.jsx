@@ -82,7 +82,7 @@ const ServiceRequestForm = () => {
         <input
           name="email"
           type="email"
-          value={form.email}
+          value={user ? user.email : form.email}
           onChange={handleInputChange}
           placeholder="Email"
           required
