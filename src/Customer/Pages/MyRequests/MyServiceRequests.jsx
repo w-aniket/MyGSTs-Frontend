@@ -132,7 +132,7 @@ const MyServiceRequests = () => {
             <div key={req._id} className="request-card">
               <h3 className="request-title">{req.service?.title}</h3>
               <p className="request-category">
-                Category: {req.service.category || "N/A"}
+                Category: {req.service?.category || "N/A"}
               </p>
               <p
                 className={`request-status status-${req.status
