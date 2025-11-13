@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaCheckCircle, FaLightbulb, FaFileAlt, FaPhoneAlt } from "react-icons/fa";
 import ServiceRequestForm from "../../Components/ServiceRequestForm/ServiceRequestForm";
@@ -42,6 +42,10 @@ const ServiceDetail = () => {
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
+   const sidebarRef = useRef(null);
+  const stickyRef = useRef(null);
+  const placeholderRef = useRef(null);
+  const [isFixed, setIsFixed] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -60,6 +64,76 @@ const ServiceDetail = () => {
 
     fetchService();
   }, [id, apiUrl]);
+
+   useEffect(() => {
+    const sidebar = sidebarRef.current;
+    const sticky = stickyRef.current;
+    const placeholder = placeholderRef.current;
+    if (!sidebar || !sticky || typeof window === "undefined") return;
+
+    // compute limits
+    const update = () => {
+      const sidebarRect = sidebar.getBoundingClientRect();
+      const stickyRect = sticky.getBoundingClientRect();
+      const containerRect = sidebar.parentElement.getBoundingClientRect(); // .sd-grid column area
+
+      // distance from top of document to top of sidebar
+      const sidebarTopDoc = window.scrollY + sidebarRect.top;
+      // distance from top of document to bottom boundary where sticky should stop
+      const containerBottomDoc = window.scrollY + containerRect.top + containerRect.height;
+
+      const stickPoint = sidebarTopDoc - 20; // when to start sticking (top:20px)
+      const stickyHeight = stickyRect.height;
+      const stopPoint = containerBottomDoc - stickyHeight - 20; // leave 20px gap from bottom
+
+      if (window.scrollY >= stickPoint && window.scrollY <= stopPoint) {
+        // make it fixed
+        if (!isFixed) setIsFixed(true);
+        // set width to match sidebar width so it doesn't collapse
+        sticky.style.width = `${sidebarRect.width}px`;
+        // set placeholder height so layout doesn't jump
+        if (placeholder) {
+          placeholder.style.height = `${stickyRect.height}px`;
+          placeholder.classList.add("active");
+        }
+      } else {
+        // unfix
+        if (isFixed) setIsFixed(false);
+        sticky.style.width = ""; // reset width
+        if (placeholder) {
+          placeholder.style.height = `0px`;
+          placeholder.classList.remove("active");
+        }
+      }
+
+      // if at bottom beyond stopPoint, align sticky to bottom of container
+      if (window.scrollY > stopPoint) {
+        // set transform to push it up so it doesn't overflow container
+        const translateY = Math.max(0, window.scrollY - stopPoint);
+        sticky.style.transform = `translateY(${-translateY}px)`;
+      } else {
+        sticky.style.transform = "";
+      }
+    };
+
+    // run once to set initial
+    update();
+
+    // throttled listener
+    let rAF = null;
+    const onScroll = () => {
+      if (rAF) cancelAnimationFrame(rAF);
+      rAF = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", update);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", update);
+      if (rAF) cancelAnimationFrame(rAF);
+    };
+  }, [isFixed]);
 
   if (loading) {
     return (
@@ -235,8 +309,13 @@ const ServiceDetail = () => {
           </div>
 
           {/* Right column: sticky request form (moves below on mobile) */}
-          <aside className="sd-sidebar" aria-label="Request service form">
-            <div className="sd-sticky">
+          <aside className="sd-sidebar" aria-label="Request service form" ref={sidebarRef}>
+            <div ref={placeholderRef} className="sd-sticky-placeholder"/>
+            <div
+              className={`sd-sticky ${isFixed ? "fixed" : ""}`}
+              ref={stickyRef}
+              aria-hidden={false}
+            >
               <div className="request-card">
                 <div className="request-head">
                   <div className="req-icon"><FaPhoneAlt /></div>

@@ -29,7 +29,7 @@ const JobCard = ({
   const handleClick = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/signup");
+      navigate("/signin");
       return
     }
 

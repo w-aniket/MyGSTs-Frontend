@@ -176,7 +176,36 @@
 
 /* SIDEBAR */
 .sd-sidebar { position: relative; }
-.sd-sticky { position: sticky; top:24px; }
+.sd-sticky {
+  /* sticky fallback: try native first */
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+  /* ensure no unexpected shrinking */
+  min-width: 0;
+}
+
+.sd-sticky.fixed {
+  position: fixed;
+  top: 20px;
+  z-index: 40;
+  /* width will be set inline via JS to match sidebar width */
+  box-shadow: 0 12px 30px rgba(14,30,37,0.12);
+}
+
+.sd-sticky-placeholder {
+  display: none;
+}
+
+/* when placeholder is used, show it */
+.sd-sticky-placeholder.active {
+  display: block;
+}
+
 .request-card { padding:14px; background:linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; box-shadow: 0 10px 30px rgba(14,30,37,0.06); }
 .request-head { display:flex; gap:12px; align-items:center; margin-bottom:10px; }
 .req-icon { width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#e6f6ff,#fff0f6); display:flex;align-items:center;justify-content:center;color:var(--accent); }
@@ -196,6 +225,6 @@
   .sd-hero { flex-direction: column; align-items: stretch; }
   .sd-hero-left { order: 1; }
   .sd-hero-right { order: 2; }
-  .sd-sidebar { order: 3; }
-  .sd-sticky { position: relative; top: auto; }
+  .sd-sidebar { order: 3; width: 100%;}
+  .sd-sticky { position: relative; top: auto; max-height: none; overflow: visible; }
 }

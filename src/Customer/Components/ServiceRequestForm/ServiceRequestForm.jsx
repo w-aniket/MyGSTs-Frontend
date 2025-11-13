@@ -19,6 +19,18 @@ const ServiceRequestForm = () => {
     companyName: "",
     description: "",
   });
+
+  useEffect(() => {
+  if (user) {
+    setForm({
+      name: `${user.firstName || ""} ${user.lastName || ""}`.trim(),
+      email: user.email || "",
+      phone: user.phone || "",
+      companyName: "",
+      description: "",
+    });
+  }
+}, [user]);
   
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -164,6 +176,7 @@ const ServiceRequestForm = () => {
             required
             className="form-input"
             readOnly={!!user?.email}
+            style={{ backgroundColor: "#f3f3f3", cursor: "not-allowed" }}
           />
           <input
             name="phone"

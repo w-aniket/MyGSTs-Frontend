@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./ProfileDetail.css";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { use } from "react";
 import ConfirmModal from "../../../../Component/ConfirmModal/ConfirmModal";
 import ProfileView from "./ProfileView";
+import { UserContext } from "../../../../UserContex/UserContext";
 
 const ProfileDetail = ( {setImageUrl} ) => {
   const location = useLocation();
@@ -14,6 +15,7 @@ const ProfileDetail = ( {setImageUrl} ) => {
   const jobId = queryParams.get("jobId");
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
+  const {user} = useContext(UserContext)
 
   const [apply, setApply] = useState(false);
   const [applyMode, setApplyMode] = useState(false);
@@ -60,6 +62,15 @@ const ProfileDetail = ( {setImageUrl} ) => {
 
     resume: "",
   });
+
+  useEffect(() => {
+  if (user?.email) {
+    setFormData((prev) => ({
+      ...prev,
+      email: user.email,
+    }));
+  }
+}, [user]);
 
   useEffect(() => {
     if (queryParams.get("apply") === "true" && jobId) {
@@ -253,8 +264,8 @@ const ProfileDetail = ( {setImageUrl} ) => {
             <input
               name="email"
               value={formData.email}
-              onChange={handleChange}
-              required
+              readOnly
+              style={{ backgroundColor: "#f3f3f3", cursor: "not-allowed" }}
             />
           </div>
 

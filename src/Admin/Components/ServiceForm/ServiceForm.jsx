@@ -14,6 +14,7 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
     description: "",
     pricing: "",
     benefits: "",
+    documents: "",
   });
 
   const availableColors = [
@@ -86,6 +87,7 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
         features: editData.features.join(", "),
         benefits: editData.benefits?.join(", ") || "",
         description: editData.description || "",
+        documents: editData.documents?.join(", ") || "",
         pricing: editData.pricing || "",
       });
     }
@@ -102,47 +104,53 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
     e.preventDefault();
     const payload = {
       ...formData,
-      features: formData.features.split(",").map((feature) => feature.trim()),
-      benefits: formData.benefits.split(", ").map((benefit) => benefit.trim())
+      features: formData.features
+        .split(",")
+        .map((feature) => feature.trim())
+        .filter(Boolean),
+      benefits: formData.benefits
+        .split(", ")
+        .map((benefit) => benefit.trim())
+        .filter(Boolean),
+      documents: formData.documents
+        .split(", ")
+        .map((document) => document.trim())
+        .filter(Boolean),
     };
 
-    if (editData) {
-      try {
+    try {
+      if (editData) {
         await axios.put(`${apiUrl}/api/services/${editData._id}`, payload, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-      } catch (error) {
-        console.error("Error updating service:", error);
-        alert("Failed to update service");
-      }
-    } else {
-      try {
+      } else {
         await axios.post(`${apiUrl}/api/services`, payload, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-      } catch (error) {
-        console.error("Error creating service:", error);
-        alert("Failed to create service");
       }
-    }
 
-    setFormData({
-      title: "",
-      icon: "",
-      iconbg: "",
-      category: "",
-      features: "",
-      description: "",
-      benefits: "",
-      pricing: "",
-    });
-    setEditData(null);
-    fetchServices();
-    if (closeModal) closeModal();
+      fetchServices();
+
+      setFormData({
+        title: "",
+        icon: "",
+        iconbg: "",
+        category: "",
+        features: "",
+        description: "",
+        benefits: "",
+        pricing: "",
+      });
+      setEditData(null);
+      if (closeModal) closeModal();
+    } catch (error) {
+      console.error("Error saving service:", error);
+      alert("Failed to save service");
+    }
   };
 
   return (
@@ -245,23 +253,33 @@ const ServiceForm = ({ fetchServices, editData, setEditData, closeModal }) => {
         required
       />
 
-      <textarea name="description" 
+      <textarea
+        name="description"
         value={formData.description}
         onChange={handleChange}
         placeholder="Full Description"
         required
       />
 
-      <input name="pricing"
+      <input
+        name="pricing"
         value={formData.pricing}
         onChange={handleChange}
         placeholder="Pricing (e.g., ₹500 or Free)"
       />
 
-      
-      <textarea name="benefits" value={formData.benefits}
+      <textarea
+        name="benefits"
+        value={formData.benefits}
         onChange={handleChange}
         placeholder="Benefits (comma seperated)"
+      ></textarea>
+
+      <textarea
+        name="documents"
+        value={formData.documents}
+        onChange={handleChange}
+        placeholder="Required Documents (comma seperated)"
       ></textarea>
 
       <button type="submit">

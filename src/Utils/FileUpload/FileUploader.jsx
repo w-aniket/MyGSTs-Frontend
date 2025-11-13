@@ -1,5 +1,5 @@
-// FileUploader.jsx
 import React from "react";
+import "./FileUploader.css";
 
 const FileUploader = ({ files, setFiles }) => {
   const handleFileChange = (e) => {
@@ -13,24 +13,26 @@ const FileUploader = ({ files, setFiles }) => {
   };
 
   return (
-    <div className="file-uploader">
+    <div className="uploader-wrapper">
       <input
         type="file"
         accept="image/*,application/pdf"
         multiple
         onChange={handleFileChange}
-        className="form-file"
+        className="uploader-input"
       />
-      <div className="file-preview-list">
+
+      <div className="uploader-file-list">
         {files.map((file, index) => (
-          <div key={index} className="file-preview-item">
-            <span className="file-name">{file.name}</span>
+          <div key={index} className="uploader-file-item">
+            <span className="uploader-file-name">{file.name}</span>
             <button
               type="button"
               onClick={() => removeFile(index)}
-              className="remove-button"
+              className="uploader-remove-btn"
+              title="Remove file"
             >
-              ❌
+              <i className="fas fa-trash"></i>
             </button>
           </div>
         ))}
