@@ -8,7 +8,6 @@ const ProfileView = ({ profile, applyMode, handleApply }) => {
   const location = useLocation();
 
   profile = location.state?.profile || profile;
-  console.log("ProfileView", profile);
   return (
     <div className="profile-view">
       <div className="profile-view-group">

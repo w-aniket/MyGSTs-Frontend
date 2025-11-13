@@ -1,26 +1,31 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../UserContex/UserContext";
 import FileUploader from "../../../Utils/FileUpload/FileUploader";
 import { uploadToCloudinary } from "../../../Utils/FileUpload/fileUploadUtils";
+import { toast } from "react-toastify";
+import "./ServiceRequestForm.css"
 
 const ServiceRequestForm = () => {
   const { id } = useParams();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    description: "",
+    name: user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "",
+    email: user?.email || "",
+    phone: user?.phone || "",
     companyName: "",
+    description: "",
   });
+  
   const [files, setFiles] = useState([]);
-  const [fileUrls, setFileUrls] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [fileUrls, setFileUrls] = useState([]);
+  const [otpStep, setOtpStep] = useState(false);
+  const [otp, setOtp] = useState("");
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
@@ -29,103 +34,196 @@ const ServiceRequestForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
+
+    // logged in user
+
+    if (user) return handleLoggedInSubmit();
+
+    // Not logged in
 
     try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/service-requests/send-otp`,
+        {
+          email: form.email,
+        }
+      );
+
+      if (res.data.success) {
+        toast.success("OTP sent to your email");
+        setOtpStep(true);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to send OTP");
+    }
+  };
+
+  const handleOtpVerification = async () => {
+    try {
+      setSubmitting(true);
+      setUploading(true);
+
+      // upload all files
+      const uploadedUrls = await Promise.all(
+        files.map((f) => uploadToCloudinary(f))
+      );
+      const validUrls = uploadedUrls.filter((u) => u && u.trim() !== "");
+
+      const payload = {
+        ...form,
+        service: id,
+        files: validUrls,
+        otp,
+      };
+
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/service-requests/verify-otp`,
+        payload
+      );
+
+      if (res.data.success) {
+        toast.success("Request submitted successfully!");
+
+        // save login token and user in context/localStorage
+        localStorage.setItem("token", res.data.token);
+        setUser(res.data.user);
+
+        navigate("/my-service-requests");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong during OTP verification");
+    } finally {
+      setSubmitting(false);
+      setUploading(false);
+    }
+  };
+
+  const handleLoggedInSubmit = async () => {
+    try {
+      setSubmitting(true);
+      setUploading(true);
+
       const uploadedUrls = await Promise.all(
         files.map((file) => uploadToCloudinary(file))
       );
-
       const validUrls = uploadedUrls.filter((url) => url && url.trim() !== "");
 
       const payload = {
         ...form,
         service: id,
         files: validUrls,
-        user: user?._id || null,
       };
+
+      const token = localStorage.getItem("token");
 
       await axios.post(
         `${import.meta.env.VITE_API_URL}/api/service-requests`,
-        payload
+        payload,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        description: "",
-        companyName: "",
-      });
-      setFileUrls([]);
+      toast.success("Service request submitted successfully!");
       navigate("/my-service-requests");
     } catch (err) {
       console.error(err);
-      alert("Something went wrong. Please try again.");
+      toast.error("Failed to submit service request");
     } finally {
       setSubmitting(false);
+      setUploading(false);
     }
   };
 
   return (
     <div className="service-request-container">
       <h2 className="form-title">Request This Service</h2>
-      <form onSubmit={handleSubmit} className="service-form">
-        <input
-          name="name"
-          value={form.name}
-          onChange={handleInputChange}
-          placeholder="Your Name"
-          required
-          className="form-input"
-        />
-        <input
-          name="email"
-          type="email"
-          value={user ? user.email : form.email}
-          onChange={handleInputChange}
-          placeholder="Email"
-          required
-          className="form-input"
-        />
-        <input
-          name="phone"
-          value={form.phone}
-          onChange={handleInputChange}
-          placeholder="Phone"
-          required
-          className="form-input"
-        />
-        <input
-          name="companyName"
-          value={form.companyName}
-          onChange={handleInputChange}
-          placeholder="Company Name"
-          className="form-input"
-        />
-        <textarea
-          name="description"
-          value={form.description}
-          onChange={handleInputChange}
-          placeholder="Describe your requirement"
-          required
-          className="form-textarea"
-        />
-        <label className="form-label">Upload Documents (PDF or Image)</label>
-        <FileUploader files={files} setFiles={setFiles} />
 
-        <button
-          type="submit"
-          disabled={submitting || uploading}
-          className="form-button"
-        >
-          {submitting
-            ? "Submitting..."
-            : uploading
-            ? "Uploading File..."
-            : "Submit Request"}
-        </button>
-      </form>
+      {!otpStep ? (
+        <form onSubmit={handleSubmit} className="service-form">
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleInputChange}
+            placeholder="Your Name"
+            required
+            className="form-input"
+          />
+          <input
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={handleInputChange}
+            placeholder="Email"
+            required
+            className="form-input"
+            readOnly={!!user?.email}
+          />
+          <input
+            name="phone"
+            value={form.phone}
+            onChange={handleInputChange}
+            placeholder="Phone"
+            required
+            className="form-input"
+          />
+          <input
+            name="companyName"
+            value={form.companyName}
+            onChange={handleInputChange}
+            placeholder="Company Name"
+            className="form-input"
+          />
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={handleInputChange}
+            placeholder="Describe your requirement"
+            required
+            className="form-textarea"
+          />
+          <label className="form-label">Upload Documents (PDF or Image)</label>
+          <FileUploader files={files} setFiles={setFiles} />
+
+          <button
+            type="submit"
+            disabled={submitting || uploading}
+            className="form-button"
+          >
+            {submitting
+              ? "Submitting..."
+              : uploading
+              ? "Uploading File..."
+              : "Submit Request"}
+          </button>
+        </form>
+      ) : (
+        <div className="otp-verification-container">
+          <h3>Verify Your Email</h3>
+          <p>Enter the OTP sent to {form.email}</p>
+          <input
+            type="text"
+            maxLength="6"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            placeholder="Enter OTP"
+            className="form-input"
+          />
+          <button
+            onClick={handleOtpVerification}
+            disabled={submitting || otp.length < 6}
+            className="form-button"
+          >
+            {submitting ? "Verifying..." : "Verify & Submit"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

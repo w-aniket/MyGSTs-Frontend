@@ -33,7 +33,6 @@ const ApplicationsTable = () => {
         },
       });
       setApplications(res.data.applications || []);
-      console.log(res.data.applications);
     } catch (err) {
       console.error("Error fetching applications:", err);
       toast.error("Failed to fetch applications");

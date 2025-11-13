@@ -32,6 +32,7 @@ const ProfilePag = () => {
       navigation("/careers/appliedjob");
     } else if (section === "opportunities") {
       navigation("/careers/opportunities");
+      
     }
   };
 

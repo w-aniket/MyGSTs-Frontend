@@ -83,7 +83,6 @@ const ServiceRequestCard = ({
       setSavingAmount(false);
     }
   };
-  console.log(user);
 
   return (
     <div className="emp-dashboard_card">

@@ -113,8 +113,6 @@ const MyServiceRequests = () => {
     }
   }, [user]);
 
-  console.log("Requests:", requests);
-
   if (loading) {
     return <p className="message loading">Loading your service requests...</p>;
   }

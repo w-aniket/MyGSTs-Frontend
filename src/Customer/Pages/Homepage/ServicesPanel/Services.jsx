@@ -15,7 +15,6 @@ const Services = () => {
     useEffect(() => {
       axios.get(`${apiUrl}/api/services`)
       .then((res) => {
-        console.log("servise", res.data.services)
         setServices(res.data.services.slice(0,6))
       })
       .catch((err) => console.error(err))
