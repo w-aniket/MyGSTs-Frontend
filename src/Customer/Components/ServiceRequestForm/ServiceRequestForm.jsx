@@ -3,9 +3,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../UserContex/UserContext";
 import FileUploader from "../../../Utils/FileUpload/FileUploader";
-import { uploadToCloudinary } from "../../../Utils/FileUpload/fileUploadUtils";
 import { toast } from "react-toastify";
-import "./ServiceRequestForm.css"
+import "./ServiceRequestForm.css";
 
 const ServiceRequestForm = () => {
   const { id } = useParams();
@@ -21,17 +20,17 @@ const ServiceRequestForm = () => {
   });
 
   useEffect(() => {
-  if (user) {
-    setForm({
-      name: `${user.firstName || ""} ${user.lastName || ""}`.trim(),
-      email: user.email || "",
-      phone: user.phone || "",
-      companyName: "",
-      description: "",
-    });
-  }
-}, [user]);
-  
+    if (user) {
+      setForm({
+        name: `${user.firstName || ""} ${user.lastName || ""}`.trim(),
+        email: user.email || "",
+        phone: user.phone || "",
+        companyName: "",
+        description: "",
+      });
+    }
+  }, [user]);
+
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -77,22 +76,15 @@ const ServiceRequestForm = () => {
       setSubmitting(true);
       setUploading(true);
 
-      // upload all files
-      const uploadedUrls = await Promise.all(
-        files.map((f) => uploadToCloudinary(f))
-      );
-      const validUrls = uploadedUrls.filter((u) => u && u.trim() !== "");
-
-      const payload = {
-        ...form,
-        service: id,
-        files: validUrls,
-        otp,
-      };
+      const formData = new FormData();
+      files.forEach((file) => formData.append("files", file));
+      Object.keys(form).forEach((key) => formData.append(key, form[key]));
+      formData.append("service", id);
+      formData.append("otp", otp);
 
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/service-requests/verify-otp`,
-        payload
+        formData
       );
 
       if (res.data.success) {
@@ -120,24 +112,21 @@ const ServiceRequestForm = () => {
       setSubmitting(true);
       setUploading(true);
 
-      const uploadedUrls = await Promise.all(
-        files.map((file) => uploadToCloudinary(file))
-      );
-      const validUrls = uploadedUrls.filter((url) => url && url.trim() !== "");
-
-      const payload = {
-        ...form,
-        service: id,
-        files: validUrls,
-      };
+      const formData = new FormData();
+      files.forEach((file) => formData.append("files", file));
+      Object.keys(form).forEach((key) => formData.append(key, form[key]));
+      formData.append("service", id);
 
       const token = localStorage.getItem("token");
 
       await axios.post(
         `${import.meta.env.VITE_API_URL}/api/service-requests`,
-        payload,
+        formData,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
@@ -175,7 +164,11 @@ const ServiceRequestForm = () => {
             required
             className="form-input"
             readOnly={!!user?.email}
-            style={!!user?.email ? { backgroundColor: "#f3f3f3", cursor: "not-allowed" } : {}}
+            style={
+              !!user?.email
+                ? { backgroundColor: "#f3f3f3", cursor: "not-allowed" }
+                : {}
+            }
           />
           <input
             name="phone"

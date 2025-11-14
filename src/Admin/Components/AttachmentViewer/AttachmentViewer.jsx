@@ -8,7 +8,8 @@ const AttachmentViewer = ({ files = [], requestId }) => {
     <div className="attachment">
       <strong>Attachment{files.length > 1 ? "s" : ""}:</strong>
       <ul>
-        {files.map((url, idx) => {
+        {files.map((file, idx) => {
+          const url = file.url
           const isPdf = /\.pdf(\?|$)/i.test(url) || /\/raw\/upload\//i.test(url);
 
           const label = isPdf
