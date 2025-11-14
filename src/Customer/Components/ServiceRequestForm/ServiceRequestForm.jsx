@@ -35,7 +35,6 @@ const ServiceRequestForm = () => {
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [fileUrls, setFileUrls] = useState([]);
   const [otpStep, setOtpStep] = useState(false);
   const [otp, setOtp] = useState("");
 
@@ -109,7 +108,7 @@ const ServiceRequestForm = () => {
       }
     } catch (err) {
       console.error(err);
-      toast.error("Something went wrong during OTP verification");
+      toast.error(err.response?.data?.message || "OTP verification fail");
     } finally {
       setSubmitting(false);
       setUploading(false);
@@ -176,7 +175,7 @@ const ServiceRequestForm = () => {
             required
             className="form-input"
             readOnly={!!user?.email}
-            style={{ backgroundColor: "#f3f3f3", cursor: "not-allowed" }}
+            style={!!user?.email ? { backgroundColor: "#f3f3f3", cursor: "not-allowed" } : {}}
           />
           <input
             name="phone"
