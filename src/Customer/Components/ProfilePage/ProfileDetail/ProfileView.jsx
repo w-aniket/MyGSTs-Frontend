@@ -12,7 +12,7 @@ const ProfileView = ({ profile, applyMode, handleApply }) => {
     <div className="profile-view">
       <div className="profile-view-group">
         <p>
-          <img src={profile.passportPhoto} alt="Profile Photo" width="200px" />
+          <img src={profile.passportPhoto.url} alt="Profile Photo" width="200px" />
         </p>
       </div>
       <div className="profile-view-group">

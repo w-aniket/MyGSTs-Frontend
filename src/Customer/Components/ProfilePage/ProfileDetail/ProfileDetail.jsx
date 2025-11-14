@@ -8,14 +8,14 @@ import ConfirmModal from "../../../../Component/ConfirmModal/ConfirmModal";
 import ProfileView from "./ProfileView";
 import { UserContext } from "../../../../UserContex/UserContext";
 
-const ProfileDetail = ( {setImageUrl} ) => {
+const ProfileDetail = ({ setImageUrl }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const jobId = queryParams.get("jobId");
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
 
   const [apply, setApply] = useState(false);
   const [applyMode, setApplyMode] = useState(false);
@@ -64,13 +64,13 @@ const ProfileDetail = ( {setImageUrl} ) => {
   });
 
   useEffect(() => {
-  if (user?.email) {
-    setFormData((prev) => ({
-      ...prev,
-      email: user.email,
-    }));
-  }
-}, [user]);
+    if (user?.email) {
+      setFormData((prev) => ({
+        ...prev,
+        email: user.email,
+      }));
+    }
+  }, [user]);
 
   useEffect(() => {
     if (queryParams.get("apply") === "true" && jobId) {
@@ -133,98 +133,100 @@ const ProfileDetail = ( {setImageUrl} ) => {
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
-    console.log("Form Data:", formData);
-  };
-
-  const uploadToCloudinary = async (file) => {
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", import.meta.env.VITE_CLOUDINARY_PRESET);
-    data.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD);
-
-    const uniqueId = `file_${Date.now()}`; // without .pdf
-    data.append("public_id", uniqueId);
-
-    // Clone the file without extension using Blob
-    const blob = new Blob([file], { type: file.type });
-    data.append("file", blob, uniqueId);
-
-    let uploadUrl = `https://api.cloudinary.com/v1_1/${
-      import.meta.env.VITE_CLOUDINARY_CLOUD
-    }/auto/upload`;
-
-    if (file.type === "application/pdf") {
-      uploadUrl = `https://api.cloudinary.com/v1_1/${
-        import.meta.env.VITE_CLOUDINARY_CLOUD
-      }/raw/upload`;
-    }
-
-    const res = await axios.post(uploadUrl, data);
-    return res.data.secure_url;
-  };
-
-  const handleFileChange = async (e, name) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setUploadingFiles(true);
-    try {
-      const url = await uploadToCloudinary(file);
-
-      if (name.includes(".")) {
-        const [section, field, subField] = name.split(".");
-        setFormData((prev) => ({
-          ...prev,
-          [section]: {
-            ...prev[section],
-            [field]: {
-              ...prev[section][field],
-              [subField]: url,
-            },
-          },
-        }));
-      } else {
-        setFormData((prev) => ({ ...prev, [name]: url }));
-      }
-    } catch (err) {
-      console.error("Cloudinary upload failed", err);
-      toast.error("File upload failed");
-    } finally {
-      setUploadingFiles(false);
-    }
   };
 
   const handleApply = async (e) => {
     e.preventDefault();
     try {
+      const fd = new FormData();
+
+      // append simple fields
+
+      fd.append("fullName", formData.fullName);
+      fd.append("email", formData.email);
+      fd.append("contactNumber", formData.contactNumber);
+      fd.append("dob", formData.dob);
+      fd.append("gender", formData.gender);
+
+      if (formData.passportPhoto instanceof File) {
+        fd.append("passportPhoto", formData.passportPhoto);
+      }
+
+      // adsress
+
+      fd.append("address", JSON.stringify(formData.address));
+
+      // education
+
+      fd.append(
+        "education",
+        JSON.stringify({
+          tenth: {
+            board: formData.education.tenth.board,
+            year: formData.education.tenth.year,
+            percentage: formData.education.tenth.percentage,
+          },
+          twelfth: {
+            board: formData.education.twelfth.board,
+            year: formData.education.twelfth.year,
+            percentage: formData.education.twelfth.percentage,
+          },
+          graduation: {
+            university: formData.education.graduation.university,
+            year: formData.education.graduation.year,
+            percentage: formData.education.graduation.percentage,
+          },
+        })
+      );
+
+      // education marksheets
+      if (formData.education.tenth.marksheet instanceof File) {
+        fd.append("tenthMarksheet", formData.education.tenth.marksheet);
+      }
+      if (formData.education.twelfth.marksheet instanceof File) {
+        fd.append("twelfthMarksheet", formData.education.twelfth.marksheet);
+      }
+      if (formData.education.graduation.marksheet instanceof File) {
+        fd.append(
+          "graduationMarksheet",
+          formData.education.graduation.marksheet
+        );
+      }
+
+      // resume
+      if (formData.resume instanceof File) {
+        fd.append("resume", formData.resume);
+      }
+
+
       if (!isProfileAvailable) {
-        const res = await axios.post(`${apiUrl}/api/user/profile`, formData, {
+        const res = await axios.post(`${apiUrl}/api/user/profile`, fd, {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         });
         if (!jobId) {
           toast.success("Profile created successfully!");
           navigate("/careers");
         }
-        
       }
 
-      if( jobId ) {
-      await axios.post(
-        `${apiUrl}/api/jobs/apply`,
-        { jobId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Applied successfully!");
-      navigate("/careers/appliedjob");
-    }
+      if (jobId) {
+        await axios.post(
+          `${apiUrl}/api/jobs/apply`,
+          { jobId },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Applied successfully!");
+        navigate("/careers/appliedjob");
+      }
 
-    setApply(false);
-
+      setApply(false);
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Error applying for job");
@@ -232,19 +234,21 @@ const ProfileDetail = ( {setImageUrl} ) => {
   };
 
   useEffect(() => {
-    if(isProfileAvailable && profile?.passportPhoto) {
-          setImageUrl(profile.passportPhoto);
-
+    if (isProfileAvailable && profile?.passportPhoto) {
+      setImageUrl(profile.passportPhoto.url);
     }
-  },[isProfileAvailable, profile, setImageUrl])
+  }, [isProfileAvailable, profile, setImageUrl]);
 
   if (loading) return <p>Loading profile...</p>;
 
   return (
     <div className="profile-detail-container">
       {isProfileAvailable ? (
-        
-        <ProfileView profile={profile} applyMode={applyMode} handleApply={handleApply} />
+        <ProfileView
+          profile={profile}
+          applyMode={applyMode}
+          handleApply={handleApply}
+        />
       ) : (
         <form className="profile-form">
           <h3>Personal Details</h3>
@@ -310,7 +314,12 @@ const ProfileDetail = ( {setImageUrl} ) => {
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => handleFileChange(e, "passportPhoto")}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  passportPhoto: e.target.files[0],
+                }))
+              }
               required
             />
           </div>
@@ -404,7 +413,18 @@ const ProfileDetail = ( {setImageUrl} ) => {
             <input
               type="file"
               accept=".pdf,.jpg,.png"
-              onChange={(e) => handleFileChange(e, "education.tenth.marksheet")}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  education: {
+                    ...prev.education,
+                    tenth: {
+                      ...prev.education.tenth,
+                      marksheet: e.target.files[0],
+                    },
+                  },
+                }))
+              }
               required
             />
           </div>
@@ -447,7 +467,16 @@ const ProfileDetail = ( {setImageUrl} ) => {
               type="file"
               accept=".pdf,.jpg,.png"
               onChange={(e) =>
-                handleFileChange(e, "education.twelfth.marksheet")
+                setFormData((prev) => ({
+                  ...prev,
+                  education: {
+                    ...prev.education,
+                    twelfth: {
+                      ...prev.education.twelfth,
+                      marksheet: e.target.files[0],
+                    },
+                  },
+                }))
               }
               required
             />
@@ -491,7 +520,16 @@ const ProfileDetail = ( {setImageUrl} ) => {
               type="file"
               accept=".pdf,.jpg,.png"
               onChange={(e) =>
-                handleFileChange(e, "education.graduation.marksheet")
+                setFormData((prev) => ({
+                  ...prev,
+                  education: {
+                    ...prev.education,
+                    graduation: {
+                      ...prev.education.graduation,
+                      marksheet: e.target.files[0],
+                    },
+                  },
+                }))
               }
               required
             />
@@ -504,7 +542,9 @@ const ProfileDetail = ( {setImageUrl} ) => {
             <input
               type="file"
               accept=".pdf"
-              onChange={(e) => handleFileChange(e, "resume")}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, resume: e.target.files[0] }))
+              }
               required
             />
           </div>
