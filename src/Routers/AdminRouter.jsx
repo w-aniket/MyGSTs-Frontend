@@ -5,6 +5,9 @@ import JobPosts from "../Admin/Pages/JobPosts/JobPosts";
 import ProfileView from "../Customer/Components/ProfilePage/ProfileDetail/ProfileView";
 import Services from "../Admin/Pages/Services/Services";
 import Manage from "../Admin/Pages/Manage/Manage";
+import Notification from "../Admin/Pages/Notification/Notification";
+import ContactRequests from "../Admin/Pages/ContactRequests/ContactRequests";
+import ContactDetail from "../Admin/Pages/ContactRequests/ContactDetail";
 
 const AdminRouter = () => {
   return (
@@ -94,6 +97,33 @@ const AdminRouter = () => {
         element={
           <AdminLayout>
             <Manage />
+          </AdminLayout>
+        }
+      />
+
+      <Route
+        path="/contact-requests"
+        element={
+          <AdminLayout>
+            <ContactRequests />
+          </AdminLayout>
+        }
+      />
+
+      <Route
+        path="/contact-requests/:id"
+        element={
+          <AdminLayout>
+            <ContactDetail />
+          </AdminLayout>
+        }
+      />
+
+      <Route
+        path="/notifications"
+        element={
+          <AdminLayout>
+            <Notification />
           </AdminLayout>
         }
       />

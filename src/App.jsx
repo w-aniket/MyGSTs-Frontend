@@ -9,14 +9,12 @@ import EmployeeRouters from "./Routers/EmployeeRouters";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./Component/Loader/Loader";
-import ContactWidget from "./Component/ContactWidget/ContactWidget";
 
 function App() {
   const { user, loadingUser } = useContext(UserContext);
   return (
     <>
       <ScrollToTop />
-      <ContactWidget />
       <Routes>
         <Route path="/*" element={<CustomerRouters />} />
         <Route

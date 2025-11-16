@@ -18,6 +18,7 @@ import Homepage from "../Customer/Pages/Homepage/Homepage.jsx";
 import ServiceDetail from "../Customer/Pages/ServiceDetail/ServiceDetail.jsx";
 import MyServiceRequests from "../Customer/Pages/MyRequests/MyServiceRequests.jsx";
 import OTPLogin from "../Customer/Auth/OTPLogin.jsx";
+import ContactWidget from "../Component/ContactWidget/ContactWidget.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -25,6 +26,8 @@ const CustomerRouters = () => {
       <div>
         <ScrollingText />
         <Navigation />
+        
+      <ContactWidget />
       </div>
 
       <Routes>

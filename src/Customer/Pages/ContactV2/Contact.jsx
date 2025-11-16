@@ -1,13 +1,25 @@
 // Contact.jsx (Corporate Business Design)
 import React from "react";
 import "./Contact.css";
+import { FaBuilding, FaEnvelope, FaPhone, FaMapMarkerAlt, FaInstagram } from "react-icons/fa";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Contact = () => {
-  const handleSubmit = (event) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
-    console.log("Form Data Submitted:", data);
+
+    console.log(data)
+     try {
+      await axios.post(`${apiUrl}/api/contact`,data);
+      toast.success("Your message has been send");
+      event.target.reset();
+     } catch (error) {
+      toast.error("Something went wrong");
+     }
   };
 
   return (
@@ -21,29 +33,29 @@ const Contact = () => {
           </p>
 
           <div className="business-block">
-            <h4>Company</h4>
+            <h4><FaBuilding style={{ marginRight: "8px" }} /> Company</h4>
             <p>My GST Service</p>
           </div>
 
           <div className="business-block">
-            <h4>Email</h4>
+            <h4><FaEnvelope style={{ marginRight: "8px" }} /> Email</h4>
             <p>mygstsofficial@gmail.com</p>
           </div>
 
           <div className="business-block">
-            <h4>Phone</h4>
+            <h4><FaPhone style={{ marginRight: "8px" }} /> Phone</h4>
             <p>+91 8830-0787-32</p>
             <p>+91 9356-4029-59</p>
           </div>
 
           <div className="business-block">
-            <h4>Address</h4>
+            <h4><FaMapMarkerAlt style={{ marginRight: "8px" }} /> Address</h4>
             <p>THITE WASTI SR. NO. 14/1 NEAR.</p>
             <p>THITE BUNGLOW KHARADI PUNE 411014</p>
           </div>
 
           <div className="business-block">
-            <h4>Social Media</h4>
+            <h4><FaInstagram style={{ marginRight: "8px" }} /> Social Media</h4>
             <p>@mygsts.official</p>
           </div>
         </div>
@@ -68,12 +80,12 @@ const Contact = () => {
             </div>
 
             <div className="input-group">
-              <input type="text" name="jobTitle" placeholder=" " />
-              <label>Job Title</label>
+              <input type="text" name="subject" placeholder=" " />
+              <label>Subject</label>
             </div>
 
             <div className="input-group">
-              <textarea name="message" rows="5" required placeholder=" "></textarea>
+              <textarea name="message" rows="3" required placeholder=" "></textarea>
               <label>Your Message</label>
             </div>
 

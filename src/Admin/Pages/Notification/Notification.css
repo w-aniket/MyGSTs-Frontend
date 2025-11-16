@@ -1,0 +1,110 @@
+.notification-page {
+  padding: 20px;
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+.notification-page h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Notification Card */
+.notification-card {
+  background: #fff;
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  transition: 0.2s ease;
+}
+
+.notification-card:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Unread Highlight */
+.notification-card.unread {
+  background: #eef5ff;
+  border-left: 4px solid #5d3bf6;
+  border-top: 2px solid #5d3bf6;
+}
+
+/* Card Typography */
+.notification-card h3 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+}
+
+.notification-card p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.notification-card small {
+  font-size: 12px;
+  color: #666;
+}
+
+/* ----------------------------- */
+/* RESPONSIVE DESIGN */
+/* ----------------------------- */
+
+@media (max-width: 768px) {
+  .notification-page {
+    padding: 15px;
+  }
+
+  .notification-page h2 {
+    font-size: 20px;
+  }
+
+  .notification-card {
+    padding: 14px 16px;
+  }
+
+  .notification-card h3 {
+    font-size: 16px;
+  }
+
+  .notification-card p {
+    font-size: 13px;
+  }
+
+  .notification-card small {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .notification-page {
+    padding: 12px;
+  }
+
+  .notification-card {
+    padding: 12px 14px;
+    border-radius: 8px;
+  }
+
+  .notification-page h2 {
+    font-size: 18px;
+  }
+
+  .notification-card h3 {
+    font-size: 15px;
+  }
+
+  .notification-card p {
+    font-size: 12px;
+  }
+}
