@@ -54,7 +54,7 @@ const ContactRequests = () => {
             {list.map((item) => (
               <tr
                 key={item._id}
-                onClick={() => navigate(`/admin/contact-requests/${item._id}`)}
+                onClick={() => navigate(`/admin/contact-request/${item._id}`)}
                 className="clickable-row"
               >
                 <td>{item.name}</td>

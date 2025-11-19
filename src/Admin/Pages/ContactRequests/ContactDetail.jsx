@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./ContactDetail.css"
 const ContactDetail = () => {
-     const { id } = useParams();
+  const { id } = useParams();
   const [item, setItem] = useState(null);
 
   const loadItem = async () => {

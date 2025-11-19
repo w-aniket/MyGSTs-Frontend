@@ -14,7 +14,7 @@ const Dashboard = () => {
 
       <ServiceOverviewChart />
 
-      <AdminServiceRequests />
+      {/* <AdminServiceRequests /> */}
 
       <RecentInvoicesTable />
       

@@ -21,9 +21,9 @@ const Notification = () => {
     await axios.patch(`${apiUrl}/api/notifications/read/${n._id}`);
 
     if (n.type === "contact") {
-      navigate(`/admin/contact-requests/${n.dataId}`);
+      navigate(`/admin/contact-request/${n.dataId}`);
     } else if (n.type === "service") {
-      navigate(`/admin/service-requests/${n.dataId}`);
+      navigate(`/admin/service-request/${n.dataId}`);
     } else if (n.type === "application") {
       navigate(`/admin/applications/${n.dataId}`);
     }

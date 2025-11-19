@@ -8,6 +8,7 @@ import Manage from "../Admin/Pages/Manage/Manage";
 import Notification from "../Admin/Pages/Notification/Notification";
 import ContactRequests from "../Admin/Pages/ContactRequests/ContactRequests";
 import ContactDetail from "../Admin/Pages/ContactRequests/ContactDetail";
+import ServiceRequestDetail from "../Admin/Pages/ServiceRequestDetail/ServiceRequestDetail";
 
 const AdminRouter = () => {
   return (
@@ -111,7 +112,16 @@ const AdminRouter = () => {
       />
 
       <Route
-        path="/contact-requests/:id"
+        path="/service-request/:requestId"
+        element={
+          <AdminLayout>
+            <ServiceRequestDetail />
+          </AdminLayout>
+        }
+      />
+
+      <Route
+        path="/contact-request/:id"
         element={
           <AdminLayout>
             <ContactDetail />
