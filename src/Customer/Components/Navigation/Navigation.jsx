@@ -6,10 +6,11 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import CasesRoundedIcon from "@mui/icons-material/CasesRounded";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { UserContext } from "../../../UserContex/UserContext";
 import ProfileLogo from "../ProfileLogo/ProfileLogo";
+import Full_Logo from "../../../assets/Full_Logo.png"
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -72,9 +73,9 @@ const Navigation = () => {
         </div>
 
         {/* Logo */}
-        <div className="navbar-logo">
-          <CasesRoundedIcon className="text-white" />
-        </div>
+        <Link to="/" className="navbar-logo">
+          <img src={Full_Logo} alt="Logo" />
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden sm:flex nav-links">

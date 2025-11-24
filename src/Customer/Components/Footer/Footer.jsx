@@ -88,7 +88,7 @@ const Footer = () => {
         <hr />
         <div className="sub_footer-below">
           <div className="sub_footer-copyright">
-            <p>@{new Date().getFullYear()} W. Aniket. All right reserved.</p>
+            <p>@{new Date().getFullYear()} W.Aniket All right reserved.</p>
           </div>
           <div className="sub_footer-below-links">
             <a href="#">

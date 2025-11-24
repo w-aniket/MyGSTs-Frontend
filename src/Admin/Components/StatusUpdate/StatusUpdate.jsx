@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { updateStatusApi } from "../../../Utils/APIs/serviceRequestApi";
 import { toast } from "react-toastify";
+import './updateStatus.css'
 
 const StatusUpdate = ({ request, onUpdated }) => {
   const [status, setStatus] = useState(request.status);
@@ -41,7 +42,7 @@ const StatusUpdate = ({ request, onUpdated }) => {
       </select>
 
       <button
-        onClick={updateStatus} disabled={loading}
+        onClick={updateStatus} disabled={loading || status === request.status}
       >
         {loading ? "Saving..." : "Save Changes"}
       </button>

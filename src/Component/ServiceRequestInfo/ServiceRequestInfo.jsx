@@ -1,30 +1,63 @@
-import React from 'react'
-import AttachmentViewer from '../../Admin/Components/AttachmentViewer/AttachmentViewer'
+import React from "react";
+import AttachmentViewer from "../../Admin/Components/AttachmentViewer/AttachmentViewer";
+import "./ServiceRequestInfo.css";
 
 const ServiceRequestInfo = ({ request, role }) => {
   return (
-    <div className='request-info card'>
-        <h2>Request Information</h2>
+    <div className="request-info">
+      <h2 className="info-title">Request Information</h2>
 
-        <div><strong>Client:</strong> {request.name || "N/A"}</div>
+      <div className="info-grid">
+        <div className="info-row">
+          <strong>Client:</strong> {request.name || "N/A"}
+        </div>
         {/*show email and phone if backend return admin leader owner */}
-        {request.email && <div><strong>Email:</strong> {request.email}</div>}
-      {request.phone && <div><strong>Phone:</strong> {request.phone}</div>}
-      <div><strong>Service:</strong> {request.service?.title || "N/A"}</div>
-      <div><strong>Category:</strong> {request.service?.category || "N/A"}</div>
-      <div><strong>Company:</strong> {request.companyName || "N/A"}</div>
-      <div><strong>Status:</strong> {request.status}</div>
-      <div><strong>Description:</strong>
-      <p>{request.description || "-"}</p>
-      </div>
-      <div><strong>Created:</strong> {new Date(request.createdAt).toLocaleString()}</div>
-      <div>
-        {request.files?.length ? (
-          <AttachmentViewer files={request.files || []} requestId={request._id} />
-        ) : <div>No attachments</div>}
+        {request.email && (
+          <div className="info-row">
+            <strong>Email:</strong> {request.email}
+          </div>
+        )}
+        {request.phone && (
+          <div className="info-row">
+            <strong>Phone:</strong> {request.phone}
+          </div>
+        )}
+        <div className="info-row">
+          <strong>Service:</strong>
+          <span>{request.service?.title || "N/A"}</span>
+        </div>
+        <div className="info-row">
+          <strong>Category:</strong>
+          <span>{request.service?.category || "N/A"}</span>
+        </div>
+        <div className="info-row">
+          <strong>Company:</strong>
+          <span>{request.companyName || "N/A"}</span>
+        </div>
+        <div className="info-row">
+          <strong>Status:</strong> {request.status}
+        </div>
+        <div className="info-row">
+          <strong>Created:</strong>{" "}
+          <span>{new Date(request.createdAt).toLocaleString()}</span>
+        </div>
+        <div className="info-row description-row">
+          <strong>Description:</strong>
+          <p>{request.description || "-"}</p>
+        </div>
+        <div className="info-row attachments-row">
+          {request.files?.length ? (
+            <AttachmentViewer
+              files={request.files || []}
+              requestId={request._id}
+            />
+          ) : (
+            <span>No attachments</span>
+          )}
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ServiceRequestInfo
+export default ServiceRequestInfo;

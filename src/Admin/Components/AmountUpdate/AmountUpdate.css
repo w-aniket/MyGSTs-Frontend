@@ -1,0 +1,91 @@
+.amount-update {
+  width: 100%;
+}
+
+/* Title */
+.amount-update .section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #333;
+}
+
+/* Form structure */
+.amount-update .form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.amount-update .form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+/* Inputs */
+.amount-update input,
+.amount-update textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  transition: border 0.2s ease;
+}
+
+.amount-update input:focus,
+.amount-update textarea:focus {
+  border-color: #6c63ff;
+  outline: none;
+}
+
+/* Current Amount Display */
+.current-amount {
+  padding: 10px 12px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Textarea */
+.amount-update textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Button */
+.btn-area {
+  margin-top: 12px;
+}
+
+.amount-update .btn-primary {
+  width: 160px;
+  padding: 10px 14px;
+  background: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.amount-update .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.amount-update .btn-primary:hover:not(:disabled) {
+  background: #5b54e6;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .amount-update .btn-primary {
+    width: 100%;
+  }
+}

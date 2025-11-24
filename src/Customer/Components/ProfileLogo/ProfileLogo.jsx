@@ -46,7 +46,6 @@ const ProfileLogo = () => {
         {user.role === "admin" && (
           <>
             <a onClick={() => navigate("/admin")}>Admin Dashboard</a>
-            <a onClick={() => navigate("/employee")}>Employee Dashboard</a>
           </>
         )}
 

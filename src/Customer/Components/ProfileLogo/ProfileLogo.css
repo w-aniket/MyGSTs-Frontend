@@ -107,7 +107,7 @@
 
 
 /* General Styling for Sign Up Button */
-#signup {
+.profile-menu #signup {
   background: linear-gradient(135deg, #f1f1f1, #ffffff);
   color: #0077B6;
   font-size: 16px;
@@ -118,14 +118,14 @@
 }
 
 /* Hover Effect */
-#signup:hover {
+.profile-menu #signup:hover {
   background: linear-gradient(135deg, #f2f2f2, #f5f5f5);
   transform: scale(1.05);
   box-shadow: 0 6px 14px rgba(0, 61, 128, 0.4);
 }
 
 /* Active (Click) Effect */
-#signup:active {
+.profile-menu #signup:active {
   transform: scale(0.95);
   box-shadow: 0 2px 6px rgba(0, 61, 128, 0.3);
 }
@@ -134,7 +134,7 @@
 
 
 @media (max-width: 900px) {
-  #signup {
+  .profile-menu #signup {
     font-size: 15px;
     padding: 10px 15px;
   }
@@ -150,7 +150,7 @@
 
 
 @media (max-width: 700px) {
-  #signup {
+  .profile-menu #signup {
     font-size: 14px;
     padding: 10px 12px;
   }
@@ -179,7 +179,7 @@
 
 /* Responsive Styling */
 @media (max-width: 600px) {
-  #signup {
+  .profile-menu #signup {
     font-size: 14px;
     padding: 10px 24px;
   }

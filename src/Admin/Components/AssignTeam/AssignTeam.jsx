@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { assignTeamApi } from "../../../Utils/APIs/serviceRequestApi";
+import "./AssignTeam.css";
 
 const AssignTeam = ({ request, onUpdated }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -46,29 +47,42 @@ const AssignTeam = ({ request, onUpdated }) => {
   };
 
   return (
-    <div className="assign-team card">
-      <h2>Assign Team</h2>
+    <div className="assign-team">
+      <h2 className="section-title">Assign Team</h2>
 
-      <label htmlFor="">Select Team:</label>
-      <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
-        <option value="">Select</option>
-        {teams.map((team) => (
+      <div className="form-group">
+        <label htmlFor="">Select Team:</label>
+        <select
+          value={selectedTeam}
+          onChange={(e) => setSelectedTeam(e.target.value)}
+        >
+          <option value="">Select</option>
+          {teams.map((team) => (
             <option key={team._id} value={team._id}>
-                {team.name}
+              {team.name}
             </option>
-        ))}
-      </select>
+          ))}
+        </select>
+      </div>
 
-      <label htmlFor="">Note (optional):</label>
-      <textarea 
-        value={note}
-        onChange={(e)=> setNote(e.target.value)}
-        placeholder="Add a note for the team (optional)"
-      />
+      <div className="form-group">
+        <label htmlFor="">Note (optional):</label>
+        <textarea
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          placeholder="Add a note for the team (optional)"
+        />
+      </div>
 
-      <button disabled={loading} onClick={handleAssign} className="btn-primary">
-        {loading ? "Saving..." : "Assign Team"}
-      </button>
+      <div className="btn-area">
+        <button
+          disabled={loading}
+          onClick={handleAssign}
+          className="btn-primary"
+        >
+          {loading ? "Saving..." : "Assign Team"}
+        </button>
+      </div>
     </div>
   );
 };

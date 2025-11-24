@@ -7,6 +7,7 @@ import AssignTeam from "../../Components/AssignTeam/AssignTeam";
 import StatusUpdate from "../../Components/StatusUpdate/StatusUpdate";
 import AmountUpdate from "../../Components/AmountUpdate/AmountUpdate";
 import AddComment from "../../Components/AddComment/AddComment";
+import "./ServiceRequestDetail.css";
 
 const ServiceRequestDetail = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -37,8 +38,8 @@ const ServiceRequestDetail = () => {
     if (requestId) loadRequest();
   }, [requestId]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!request) return <div>Not found</div>;
+  if (loading) return <div className="loading">Loading...</div>;
+  if (!request) return <div className="not-found">Not found</div>;
 
   const role = user?.role;
 
@@ -46,28 +47,48 @@ const ServiceRequestDetail = () => {
     <div className="service-request-detail">
       <h1>Service Request</h1>
 
-      <ServiceRequestInfo request={request} role={role} />
+      <div className="section-box full-width">
+        <ServiceRequestInfo request={request} role={role} />
+      </div>
 
-      {/* Role-based conditional rendering */}
-      {role === "admin" && (
-        <AssignTeam request={request} onUpdated={loadRequest} />
-      )}
+      <div className="three-grid">
+        <div className="section-box">
+          {/* Role-based conditional rendering */}
+          {role === "admin" && (
+            <AssignTeam request={request} onUpdated={loadRequest} />
+          )}
+        </div>
+        <div className="section-box">
+          {role === "admin" && (
+            <AmountUpdate request={request} onUpdated={loadRequest} />
+          )}
+        </div>
+        <div className="section-box">
+          {(role === "admin" || role === "leader") && (
+            <StatusUpdate request={request} onUpdated={loadRequest} />
+          )}
+        </div>
+      </div>
 
-      {role === "admin" && (
-        <AmountUpdate request={request} onUpdated={loadRequest} />
-      )}
-      {(role === "admin" || role === "leader") && (
-        <StatusUpdate request={request} onUpdated={loadRequest} />
-      )}
+      <div className="two-grid">
+        <div className="section-box">
+          {(role === "admin" || role === "leader" || role === "employee") && (
+            <AddComment request={request} onUpdated={loadRequest} />
+          )}
+        </div>
 
-      {(role === "admin" || role === "leader" || role === "employee") && (
-        <AddComment request={request} onUpdated={loadRequest} />
-      )}
-      
+        <div className="section-box">
+          <p>AddFile Component Coming Soon</p>
+          {/* Files and comments available to staff; client may also see public comments */}
+          {/* <FilesAndComments request={request} role={role} onUpdated={loadRequest} /> */}
+        </div>
 
-      {/* Files and comments available to staff; client may also see public comments */}
-      {/* <FilesAndComments request={request} role={role} onUpdated={loadRequest} /> */}
+
+      </div>
       {/* <ActivityLogs requestId={request._id} role={role} /> */}
+          <div className="section-box full-width">
+            <p>Activity Logs Component Coming Soon</p>
+          </div>
     </div>
   );
 };

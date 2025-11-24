@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { addCommentApi } from "../../../Utils/APIs/serviceRequestApi";
 import { toast } from "react-toastify";
+import './AddComment.css'
+
 const AddComment = ({ request, onUpdated }) => {
   const [text, setText] = useState("");
   const [visibleToClient, setVisibleToClient] = useState(false);
@@ -48,7 +50,7 @@ const AddComment = ({ request, onUpdated }) => {
 
       {request.comments?.length > 0 ? (
         request.comments.map((c, index) => (
-          <div key={index} className="comment-box">
+          <div key={index} className="comment-item">
             <p>
               <strong>{c.user}</strong>
             </p>

@@ -1,0 +1,71 @@
+.assign-team{
+    width: 100%;
+}
+
+.assign-team .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #333;
+}
+
+.assign-team .form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.assign-team .form-group label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.assign-team select,
+.assign-team textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    transition: border 0.2s ease;
+}
+
+.assign-team select:focus,
+.assign-team textarea:focus {
+  border-color: #6c63ff;
+  outline: none;
+}
+
+.assign-team textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.btn-area {
+    margin-top: 12px;
+}
+
+.btn-primary {
+    width: 160px;
+    padding: 10px 14px;
+    background: #6c63ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #5b54e6;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .btn-primary {
+    width: 100%;
+  }
+}
