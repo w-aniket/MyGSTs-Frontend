@@ -3,6 +3,10 @@ import { useParams } from "react-router-dom";
 import { UserContext } from "../../../UserContex/UserContext";
 import axios from "axios";
 import ServiceRequestInfo from "../../../Component/ServiceRequestInfo/ServiceRequestInfo";
+import AssignTeam from "../../Components/AssignTeam/AssignTeam";
+import StatusUpdate from "../../Components/StatusUpdate/StatusUpdate";
+import AmountUpdate from "../../Components/AmountUpdate/AmountUpdate";
+import AddComment from "../../Components/AddComment/AddComment";
 
 const ServiceRequestDetail = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -45,15 +49,22 @@ const ServiceRequestDetail = () => {
       <ServiceRequestInfo request={request} role={role} />
 
       {/* Role-based conditional rendering */}
-      {/* {role === "admin" && (
+      {role === "admin" && (
         <AssignTeam request={request} onUpdated={loadRequest} />
-      )} */}
-      {/* {(role === "admin" || role === "leader") && (
-        <StatusUpdate request={request} onUpdated={loadRequest} />
-      )} */}
-      {/* {role === "admin" && (
+      )}
+
+      {role === "admin" && (
         <AmountUpdate request={request} onUpdated={loadRequest} />
-      )} */}
+      )}
+      {(role === "admin" || role === "leader") && (
+        <StatusUpdate request={request} onUpdated={loadRequest} />
+      )}
+
+      {(role === "admin" || role === "leader" || role === "employee") && (
+        <AddComment request={request} onUpdated={loadRequest} />
+      )}
+      
+
       {/* Files and comments available to staff; client may also see public comments */}
       {/* <FilesAndComments request={request} role={role} onUpdated={loadRequest} /> */}
       {/* <ActivityLogs requestId={request._id} role={role} /> */}

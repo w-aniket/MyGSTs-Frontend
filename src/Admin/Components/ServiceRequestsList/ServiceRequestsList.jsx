@@ -27,7 +27,6 @@ export default function ServiceRequestList() {
   }, []);
 
   if (loading) return <p className="sr-loading">Loading...</p>;
-  console.log(requests)
 
   return (
     <div className="sr-container">
@@ -56,7 +55,7 @@ export default function ServiceRequestList() {
                 <td>{req.email || "N/A"}</td>
                 <td>{req.service?.title || "N/A"}</td>
                 <td>
-                  <span className={`sr-status sr-status-${req.status?.toLowerCase()}`}>{req.status}</span>
+                  <span className={`sr-status sr-status-${req.status?.toLowerCase().replace(/\s+/g, "-")}`}>{req.status}</span>
                 </td>
                 <td>{new Date(req.createdAt).toLocaleString()}</td>
                 <td>
