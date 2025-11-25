@@ -1,0 +1,140 @@
+/* Main Wrapper */
+.work-file-upload {
+  width: 100%;
+}
+
+/* Title */
+.work-file-upload .section-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #333;
+}
+
+/* Form Group */
+.work-file-upload .form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.work-file-upload .form-group label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #444;
+}
+
+.work-file-upload .form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  min-height: 90px;
+  resize: vertical;
+  transition: border 0.2s ease;
+}
+
+.work-file-upload .form-group textarea:focus {
+  border-color: #6c63ff;
+  outline: none;
+}
+
+/* Upload Button */
+.work-file-upload .btn-area {
+  margin-bottom: 20px;
+}
+
+.work-file-upload .btn-primary {
+  /* padding: 10px 14px; */
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.work-file-upload .btn-primary:hover:not(:disabled) {
+  background: #5b54e6;
+}
+
+.work-file-upload .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Files List */
+.work-file-upload .work-files-list {
+  margin-top: 25px;
+}
+
+.work-file-upload .work-files-list h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.work-file-upload .work-files-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.work-file-upload .work-files-list li {
+  margin-bottom:5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Download/View Button */
+.work-file-upload .download-btn {
+  padding: 6px 12px;
+  background: #ececff;
+  border: 1px solid #c9c9ff;
+  color: #4a47d1;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: fit-content;
+  transition: 0.2s ease;
+  text-decoration: none;
+}
+
+.work-file-upload .download-btn:hover {
+  background: #dcdcff;
+}
+
+/* Delete Button */
+.work-file-upload .work-files-list li button:last-child {
+  width: fit-content;
+  padding: 6px 12px;
+  background: #ff6b6b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.work-files-list li button:last-child:hover {
+  background: #e65a5a;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .work-file-upload .btn-primary {
+    width: 100%;
+  }
+
+  .work-file-upload .download-btn,
+  .work-files-list li button:last-child {
+    width: 100%;
+  }
+}

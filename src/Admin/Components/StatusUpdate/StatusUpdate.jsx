@@ -23,8 +23,6 @@ const StatusUpdate = ({ request, onUpdated }) => {
       setLoading(false);
     }
   };
-
-  console.log(status);
   return (
     <div className="status-box">
       <h3>Update Status</h3>

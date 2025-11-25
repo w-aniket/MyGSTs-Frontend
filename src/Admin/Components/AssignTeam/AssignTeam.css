@@ -47,7 +47,7 @@
     margin-top: 12px;
 }
 
-.btn-primary {
+.assign-team .btn-primary {
     width: 160px;
     padding: 10px 14px;
     background: #6c63ff;
@@ -59,13 +59,13 @@
     transition: 0.2s ease;
 }
 
-.btn-primary:hover:not(:disabled) {
+.assign-team .btn-primary:hover:not(:disabled) {
   background: #5b54e6;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
-  .btn-primary {
+  .assign-team .btn-primary {
     width: 100%;
   }
 }

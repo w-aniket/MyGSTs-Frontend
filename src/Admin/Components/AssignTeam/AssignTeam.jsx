@@ -70,7 +70,7 @@ const AssignTeam = ({ request, onUpdated }) => {
         <textarea
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          placeholder="Add a note for the team (optional)"
+          placeholder="Add a note"
         />
       </div>
 

@@ -8,6 +8,7 @@ import StatusUpdate from "../../Components/StatusUpdate/StatusUpdate";
 import AmountUpdate from "../../Components/AmountUpdate/AmountUpdate";
 import AddComment from "../../Components/AddComment/AddComment";
 import "./ServiceRequestDetail.css";
+import WorkFileUpload from "../../Components/WorkFileUpload/WorkFileUpload";
 
 const ServiceRequestDetail = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -42,6 +43,7 @@ const ServiceRequestDetail = () => {
   if (!request) return <div className="not-found">Not found</div>;
 
   const role = user?.role;
+  console.log(request)
 
   return (
     <div className="service-request-detail">
@@ -70,25 +72,23 @@ const ServiceRequestDetail = () => {
         </div>
       </div>
 
-      <div className="two-grid">
-        <div className="section-box">
-          {(role === "admin" || role === "leader" || role === "employee") && (
+      {(role === "admin" || role === "leader" || role === "employee") && (
+        <div className="two-grid">
+          <div className="section-box">
             <AddComment request={request} onUpdated={loadRequest} />
-          )}
-        </div>
-
-        <div className="section-box">
-          <p>AddFile Component Coming Soon</p>
-          {/* Files and comments available to staff; client may also see public comments */}
-          {/* <FilesAndComments request={request} role={role} onUpdated={loadRequest} /> */}
-        </div>
-
-
-      </div>
-      {/* <ActivityLogs requestId={request._id} role={role} /> */}
-          <div className="section-box full-width">
-            <p>Activity Logs Component Coming Soon</p>
           </div>
+
+          <div className="section-box">
+            <WorkFileUpload request={request} onUpdated={loadRequest} />
+            {/* <FilesAndComments request={request} role={role} onUpdated={loadRequest} /> */}
+          </div>
+        </div>
+      )}
+
+      {/* <ActivityLogs requestId={request._id} role={role} /> */}
+      <div className="section-box full-width">
+        <p>Activity Logs Component Coming Soon</p>
+      </div>
     </div>
   );
 };
