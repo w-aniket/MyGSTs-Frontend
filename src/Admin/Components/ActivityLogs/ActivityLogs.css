@@ -1,0 +1,44 @@
+.al-container {
+  width: 100%;
+}
+
+.al-title {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.al-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.al-item {
+  padding: 15px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  border-left: 4px solid #4a90e2;
+}
+
+.al-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.al-detail {
+  margin: 5px 0;
+  color: #333;
+}
+
+.al-meta {
+  font-size: 14px;
+  color: #777;
+}
+
+.al-empty {
+  color: #444;
+  margin-top: 10px;
+  font-style: italic;
+}

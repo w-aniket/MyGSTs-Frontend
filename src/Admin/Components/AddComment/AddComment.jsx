@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { addCommentApi } from "../../../Utils/APIs/serviceRequestApi";
 import { toast } from "react-toastify";
-import './AddComment.css'
+import "./AddComment.css";
 
 const AddComment = ({ request, onUpdated }) => {
   const [text, setText] = useState("");
@@ -17,6 +17,7 @@ const AddComment = ({ request, onUpdated }) => {
       const res = await addCommentApi(request._id, { text, visibleToClient });
       setText("");
       onUpdated();
+      toast.success("Comment add successfull");
     } catch (error) {
       console.error(error);
       toast.error("Failed to add comment");
@@ -25,9 +26,16 @@ const AddComment = ({ request, onUpdated }) => {
     }
   };
 
+  const sorted = [...request.comments].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+  const staffComments = sorted.filter((c) => !c.visibleToClient);
+  const clientComments = sorted.filter((c) => c.visibleToClient);
+
   return (
     <div className="comment-box">
-      <h3>Add Comment</h3>
+      <h3>Comments</h3>
 
       <textarea
         value={text}
@@ -48,21 +56,41 @@ const AddComment = ({ request, onUpdated }) => {
         {loading ? "Posting..." : "Add Comment"}
       </button>
 
-      {request.comments?.length > 0 ? (
-        request.comments.map((c, index) => (
-          <div key={index} className="comment-item">
-            <p>
-              <strong>{c.user}</strong>
-            </p>
+      <div className="comment-section-block">
+        <h4>Staff Comments</h4>
+        {staffComments.length === 0 && <p>No staff comments.</p>}
+
+        {staffComments.map((c, i) => (
+          <div key={i} className="comment-item comment-internal">
+            <strong>
+              {c.commentedBy?.firstName} {c.commentedBy?.lastName}
+            </strong>{" "}
+            <small>({c.role})</small>
             <p>{c.text}</p>
             <span className="comment-date">
               {new Date(c.createdAt).toLocaleString()}
             </span>
           </div>
-        ))
-      ) : (
-        <p>No comments yet.</p>
-      )}
+        ))}
+      </div>
+
+      <div className="comment-section-block">
+        <h4>Client Visible Comments</h4>
+        {clientComments.length === 0 && <p>No client-visible comments.</p>}
+
+        {clientComments.map((c, i) => (
+          <div key={i} className="comment-item comment-client">
+            <strong>
+              {c.commentedBy?.firstName} {c.commentedBy?.lastName}
+            </strong>{" "}
+            <small>({c.role})</small>
+            <p>{c.text}</p>
+            <span className="comment-date">
+              {new Date(c.createdAt).toLocaleString()}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
