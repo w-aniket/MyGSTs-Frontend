@@ -79,7 +79,7 @@ const RecentInvoicesTable = () => {
   if (loading) return <p>Loading invoices...</p>;
 
   return (
-    <div className="invoices-table">
+    <div className="recent-invoices-table">
       <h4>Recent Invoices</h4>
 
       {/* Search */}

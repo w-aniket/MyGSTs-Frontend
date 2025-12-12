@@ -1,4 +1,4 @@
-/* Container */
+/* Root container specificity */
 .role-manager {
   max-width: 900px;
   margin: 30px auto;
@@ -20,12 +20,12 @@
 }
 
 /* Search Filter */
-.search-filter {
+.role-manager .search-filter {
   margin-bottom: 20px;
 }
 
 /* Table Styling */
-.role-table {
+.role-manager .role-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
@@ -34,13 +34,13 @@
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
 }
 
-.role-table thead {
+.role-manager .role-table thead {
   background: #4a90e2;
   color: #fff;
 }
 
-.role-table th,
-.role-table td {
+.role-manager .role-table th,
+.role-manager .role-table td {
   padding: 12px 14px;
   font-size: 14px;
   text-align: left;
@@ -49,16 +49,16 @@
   white-space: normal;
 }
 
-.role-table tbody tr:nth-child(even) {
+.role-manager .role-table tbody tr:nth-child(even) {
   background: #f8f9fc;
 }
 
-.role-table tbody tr:hover {
+.role-manager .role-table tbody tr:hover {
   background: #eef3fb;
 }
 
 /* Select Dropdowns */
-.role-table select {
+.role-manager .role-table select {
   width: 100%;
   padding: 6px 10px;
   border: 1px solid #ccc;
@@ -69,27 +69,27 @@
   cursor: pointer;
 }
 
-.role-table select:focus {
+.role-manager .role-table select:focus {
   border-color: #4a90e2;
   outline: none;
   background: #fff;
 }
 
-.role-table select:disabled {
+.role-manager .role-table select:disabled {
   background: #e5e5e5;
   cursor: not-allowed;
   color: #888;
 }
 
 /* Pagination */
-.pagination {
+.role-manager .pagination {
   display: flex;
   justify-content: center;
   margin-top: 10px;
   gap: 5px;
 }
 
-.pagination button {
+.role-manager .pagination button {
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
@@ -100,61 +100,27 @@
   transition: 0.2s;
 }
 
-.pagination button:hover {
+.role-manager .pagination button:hover {
   background: #cfcfcf;
 }
 
-.pagination button.active {
+.role-manager .pagination button.active {
   background: #4a90e2;
   color: white;
 }
 
-/* Confirm Modal Styling */
-.confirm-modal {
-  max-width: 400px;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-  font-family: "Inter", sans-serif;
-}
-
-.confirm-modal button {
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.confirm-modal .confirm-btn {
-  background: #4a90e2;
-  color: white;
-  margin-right: 10px;
-}
-
-.confirm-modal .confirm-btn:hover {
-  background: #2d7ad2;
-}
-
-.confirm-modal .cancel-btn {
-  background: #e5e5e5;
-  color: black;
-}
-
-.confirm-modal .cancel-btn:hover {
-  background: #cfcfcf;
-}
-
-/* Mobile Responsive */
 @media (max-width: 600px) {
   .role-manager {
     padding: 15px;
   }
 
-  .role-table th,
-  .role-table td {
+  .role-manager .role-table th,
+  .role-manager .role-table td {
     font-size: 12px;
     padding: 8px;
+  }
+
+  .role-manager .pagination {
+    flex-wrap: wrap;
   }
 }

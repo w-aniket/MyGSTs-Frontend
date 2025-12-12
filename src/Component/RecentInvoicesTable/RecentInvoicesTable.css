@@ -1,82 +1,160 @@
-.invoices-table {
+/* Root container for isolation */
+.recent-invoices-table {
   margin-top: 30px;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Inter", sans-serif;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
-.invoice-search-input {
-  padding: 8px 10px;
-  margin-bottom: 10px;
+/* Heading */
+.recent-invoices-table h4 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  border-left: 4px solid #4a90e2;
+  padding-left: 10px;
+  color: #222;
+}
+
+/* Search input */
+.recent-invoices-table .invoice-search-input {
+  padding: 8px 12px;
+  margin-bottom: 15px;
   font-size: 14px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   width: 100%;
   max-width: 300px;
+  transition: 0.2s;
 }
 
-.table-wrapper {
+.recent-invoices-table .invoice-search-input:focus {
+  border-color: #4a90e2;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Table wrapper for horizontal scroll */
+.recent-invoices-table .table-wrapper {
   overflow-x: auto;
 }
 
-.invoices-table table {
+/* Table styling */
+.recent-invoices-table table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.invoices-table th,
-.invoices-table td {
-  padding: 10px 12px;
+.recent-invoices-table th,
+.recent-invoices-table td {
+  padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
   font-size: 14px;
+  vertical-align: middle;
+  word-break: break-word;
+  white-space: normal;
+  border-bottom: 1px solid #eee;
 }
 
-.invoices-table th {
-  background-color: #f5f5f5;
-  color: black;
+.recent-invoices-table th {
+  background-color: #4a90e2;
+  color: #fff;
+  font-weight: 600;
 }
 
-.status-paid {
-  color: #4CAF50;
-  font-weight: bold;
+.recent-invoices-table tbody tr:nth-child(even) {
+  background: #f8f9fc;
 }
 
-.status-pending {
-  color: #FF9800;
-  font-weight: bold;
+.recent-invoices-table tbody tr:hover {
+  background: #eef3fb;
 }
 
+/* Download button */
+.recent-invoices-table button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4a90e2;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-.pagination {
-  margin-top: 10px;
+.recent-invoices-table button:hover {
+  background-color: #2d7ad2;
+}
+
+/* Status classes */
+.recent-invoices-table .status-paid {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.recent-invoices-table .status-pending {
+  color: #ff9800;
+  font-weight: 600;
+}
+
+/* Pagination */
+.recent-invoices-table .pagination {
+  margin-top: 15px;
   display: flex;
-  gap: 5px;
+  justify-content: center;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
-.pagination button {
-  padding: 6px 10px;
+.recent-invoices-table .pagination button {
+  padding: 6px 12px;
   border: 1px solid #ccc;
   background-color: #fff;
+  border-radius: 6px;
+  font-weight: 500;
   cursor: pointer;
-  border-radius: 4px;
+  transition: 0.2s;
 }
 
-.pagination button.active {
-  background-color: #2196F3;
+.recent-invoices-table .pagination button.active {
+  background-color: #4a90e2;
   color: #fff;
-  border-color: #2196F3;
+  border-color: #4a90e2;
 }
 
-.pagination button:disabled {
+.recent-invoices-table .pagination button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Responsive */
+/* Mobile responsive */
 @media (max-width: 600px) {
-  .invoices-table th,
-  .invoices-table td {
-    padding: 8px;
+  .recent-invoices-table th,
+  .recent-invoices-table td {
     font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .recent-invoices-table .invoice-search-input {
+    max-width: 100%;
+  }
+
+  .recent-invoices-table .pagination {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .recent-invoices-table .pagination button {
+    width: 100%;
+    margin-bottom: 5px;
   }
 }
