@@ -1,49 +1,83 @@
 .request-info {
-    width: 100%;
+  width: 100%;
 }
 
 .info-title {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #333;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .request-info .info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap:  14px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 24px;
 }
 
 .request-info .info-row {
-    display: flex;
-    flex-direction: column;
-    font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
 }
 
 .request-info .info-row strong {
-    font-weight: 600;
-    color: #444;
+  font-weight: 600;
+  color: #444;
 }
 
 .request-info .info-row span {
-    margin-top: 2px;
-    color: #555;
+  margin-top: 2px;
+  color: #555;
 }
 
 .request-info .description-row {
-    grid-column: 1 / -1;
+  grid-column: 1 / -1;
 }
 
 .request-info .description-row p {
-    margin-top: 4px;
-    line-height: 1.5;
+  margin-top: 4px;
+  line-height: 1.5;
 }
 
 .request-info .attachments-row span {
   margin-top: 4px;
   color: #666;
   font-size: 14px;
+}
+
+.request-info .info-row .invoice-btn {
+    all: unset;
+    color: #3710b9;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.request-info .info-row .sr-status,
+.request-info .info-row .payment-status {
+    font-weight: bold;
+}
+
+.request-info .info-row .sr-status-pending, 
+.request-info .info-row .payment-pending {
+  color: #f59e0b;
+}
+
+.request-info .info-row .sr-status-assigned {
+  color: #3b82f6;
+}
+
+.request-info .info-row .sr-status-in-progress {
+  color: #6366f1;
+}
+
+.request-info .info-row .sr-status-done,
+.request-info .info-row .payment-paid {
+  color: #10b981;
+}
+
+.request-info .info-row .payment-overdue {
+  color: #f51b0b;
 }
 
 @media (max-width: 700px) {

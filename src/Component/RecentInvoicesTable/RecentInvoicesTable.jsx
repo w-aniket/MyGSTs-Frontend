@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./RecentInvoicesTable.css";
+import { downloadInvoice } from "../../Utils/Invoice/downloadInvoice";
 
 const RecentInvoicesTable = () => {
   const [invoices, setInvoices] = useState([]);
@@ -19,28 +20,28 @@ const RecentInvoicesTable = () => {
     },
   };
 
-  const downloadInvoice = async (invoiceId) => {
-      try {
-        const url = `${apiUrl}/api/invoices/${invoiceId}/download`;
-        const res = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          responseType: "blob",
-        });
-        const blob = new Blob([res.data], { type: "application/pdf" });
-        const link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `invoice-${invoiceId}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(link.href);
-      } catch (err) {
-        console.error("Invoice download failed", err);
-        toast.error("Failed to download invoice");
-      }
-    };
+  // const downloadInvoice = async (invoiceId) => {
+  //     try {
+  //       const url = `${apiUrl}/api/invoices/${invoiceId}/download`;
+  //       const res = await axios.get(url, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         responseType: "blob",
+  //       });
+  //       const blob = new Blob([res.data], { type: "application/pdf" });
+  //       const link = document.createElement("a");
+  //       link.href = window.URL.createObjectURL(blob);
+  //       link.download = `invoice-${invoiceId}.pdf`;
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       link.remove();
+  //       window.URL.revokeObjectURL(link.href);
+  //     } catch (err) {
+  //       console.error("Invoice download failed", err);
+  //       toast.error("Failed to download invoice");
+  //     }
+  //   };
 
   useEffect(() => {
     const fetchInvoices = async () => {

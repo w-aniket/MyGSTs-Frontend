@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AttachmentViewer from "../../Admin/Components/AttachmentViewer/AttachmentViewer";
 import "./ServiceRequestInfo.css";
+import { downloadInvoice } from "../../Utils/Invoice/downloadInvoice";
 
 const ServiceRequestInfo = ({ request, role }) => {
   const paymentStatus = request.invoice ? "Paid" : "Pending";
@@ -57,9 +58,9 @@ const ServiceRequestInfo = ({ request, role }) => {
         {request.invoice?.isPaid && (
           <div className="info-row">
             <strong>Invoice:</strong>
-            <a href={`/invoice/${request.invoice._id}`} target="_blank">
-              View Invoice
-            </a>
+            <button onClick={ () => downloadInvoice(request.invoice._id)} className="invoice-btn">
+              Download Invoice
+            </button>
           </div>
         )}
 

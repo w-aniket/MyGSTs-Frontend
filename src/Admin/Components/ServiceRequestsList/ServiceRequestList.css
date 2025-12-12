@@ -41,7 +41,7 @@
   background: #fafafa;
 }
 
-.sr-status {
+.sr-container .sr-status {
     display: inline-block;
   padding: 4px 10px;
   border-radius: 6px;
@@ -51,18 +51,18 @@
   white-space: nowrap;
 }
 
-.sr-status-pending {
+.sr-container .sr-status-pending {
   background-color: #f59e0b;
 }
 
-.sr-status-assigned {
+.sr-container .sr-status-assigned {
   background-color: #3b82f6;
 }
 
-.sr-status-in-progress {
+.sr-container .sr-status-in-progress {
   background-color: #6366f1;
 }
 
-.sr-status-done {
+.sr-container .sr-status-done {
   background-color: #10b981;
 }
