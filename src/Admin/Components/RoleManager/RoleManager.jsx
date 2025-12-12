@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import Pagination from "../Pagination/Pagination";
 import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
+import './RoleManager.css'
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -69,7 +70,7 @@ const RoleManager = () => {
     const { userId, newRole } = selectedRoleChange;
     try {
       setUpdating(userId);
-      const res =await axios.put(
+      const res = await axios.put(
         `${apiUrl}/api/admin/users/${userId}/role`,
         { role: newRole },
         {
@@ -118,11 +119,9 @@ const RoleManager = () => {
               <td>{user.email}</td>
               <td>
                 <select
-                  name=""
-                  id=""
                   value={user.role}
                   onChange={(e) => initiateRoleChange(user._id, e.target.value)}
-                  disabled={updating === user._id}
+                  disabled={updating === user._id || user.team}
                 >
                   <option value="user">User</option>
                   <option value="employee">Employee</option>
@@ -140,16 +139,16 @@ const RoleManager = () => {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
-{      showModal && (
-
-      <ConfirmModal
-        message="Are you sure you want to change the role?"
-        onConfirm={confirmRoleChange}
-        onCancel={() => {
-          setShowModal(false)
-          setSelectedRoleChange(null);}}
-      />
-)}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to change the role?"
+          onConfirm={confirmRoleChange}
+          onCancel={() => {
+            setShowModal(false);
+            setSelectedRoleChange(null);
+          }}
+        />
+      )}
     </div>
   );
 };
