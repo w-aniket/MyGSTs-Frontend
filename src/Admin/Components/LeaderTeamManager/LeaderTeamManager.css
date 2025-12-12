@@ -1,120 +1,183 @@
-/* Root wrapper to scope everything */
+/* Page Container */
 .leader-team-manager {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  font-family: "Inter", sans-serif;
 }
 
+/* Heading */
 .leader-team-manager h2 {
-  margin-top: 30px;
-  margin-bottom: 15px;
-  color: #333;
+  margin-bottom: 20px;
   font-size: 24px;
-}
-
-.leader-team-manager input[type="text"],
-.leader-team-manager select {
-  width: 100%;
-  padding: 10px;
-  margin: 6px 0 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 15px;
-  box-sizing: border-box;
-}
-
-.leader-team-manager button {
-  padding: 8px 16px;
-  margin-top: 10px;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 14px;
-}
-
-.leader-team-manager button:hover {
-  background-color: #0056b3;
-}
-
-/* Team card container */
-.leader-team-manager .team-card {
-  background: #f8f9fa;
-  padding: 20px;
-  border: 1px solid #e1e1e1;
-  border-radius: 8px;
-  margin-bottom: 25px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.leader-team-manager .team-card h4 {
-  margin-bottom: 8px;
-  font-size: 20px;
+  font-weight: 600;
   color: #222;
+  border-left: 4px solid #4a90e2;
+  padding-left: 10px;
 }
 
-.leader-team-manager .team-card p {
-  margin: 4px 0 10px;
-  font-size: 14px;
-  color: #555;
+/* Form Styling */
+.team-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.leader-team-manager .team-card ul {
-  padding-left: 20px;
-  margin-bottom: 10px;
-}
-
-.leader-team-manager .team-card ul li {
+.team-form label {
+  font-weight: 600;
   margin-bottom: 4px;
+  color: #333;
+}
+
+.team-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: 0.2s;
   font-size: 14px;
 }
 
-/* Checkbox list */
-.leader-team-manager .checkbox-list {
+.team-form input:focus {
+  border-color: #4a90e2;
+  outline: none;
+  background: #fff;
+}
+
+/* Form Buttons */
+.form-actions {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
-  margin: 12px 0;
+  margin-top: 10px;
 }
 
-.leader-team-manager .checkbox-list label {
-  background: #e9ecef;
-  padding: 6px 10px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #333;
+.form-actions button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.leader-team-manager .checkbox-list input[type="checkbox"] {
-  transform: scale(1.1);
-}
-
-/* Delete button style */
-.leader-team-manager .delete-btn {
-  background-color: #dc3545;
+.form-actions button[type="submit"] {
+  background: #4a90e2;
   color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+  background: #2d7ad2;
+}
+
+.form-actions button[type="button"] {
+  background: #e5e5e5;
+  color: black;
+}
+
+.form-actions button[type="button"]:hover {
+  background: #cfcfcf;
+}
+
+/* Team List Table */
+.team-list {
+  margin-top: 40px;
+}
+
+.teams-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.teams-table thead {
+  background: #4a90e2;
+  color: white;
+}
+
+.teams-table th,
+.teams-table td {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 14px;
+  vertical-align: top;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.teams-table tbody tr:nth-child(even) {
+  background: #f8f9fc;
+}
+
+.teams-table tbody tr:hover {
+  background: #eef3fb;
+}
+
+.teams-table button {
   padding: 6px 12px;
-  margin-top: 12px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: 0.2s;
 }
 
-.leader-team-manager .delete-btn:hover {
-  background-color: #c82333;
+/* Edit Button */
+.teams-table button:nth-child(1) {
+  background: #4a90e2;
+  color: white;
 }
 
-/* Divider */
-.leader-team-manager hr {
-  border: none;
-  border-top: 1px solid #ddd;
-  margin: 25px 0;
+.teams-table button:nth-child(1):hover {
+  background: #2d7ad2;
+}
+
+/* Delete Button */
+.teams-table button:nth-child(2) {
+  background: #ff5c5c;
+  color: white;
+  margin-left: 8px;
+}
+
+.teams-table button:nth-child(2):hover {
+  background: #e64646;
+}
+
+/* Employees as list */
+.employee-list {
+  padding-left: 16px;
+  margin: 0;
+}
+
+.employee-list li {
+  margin-bottom: 3px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .leader-team-manager {
+    padding: 15px;
+  }
+
+  .teams-table th,
+  .teams-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
 }
