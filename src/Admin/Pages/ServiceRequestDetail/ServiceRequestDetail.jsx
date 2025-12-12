@@ -22,6 +22,8 @@ const ServiceRequestDetail = () => {
   const { user } = useContext(UserContext); // info about current user including role
 
   const loadRequest = async () => {
+    const scrollY = window.scrollY;
+
     try {
       setLoading(true);
       const res = await axios.get(
@@ -33,6 +35,9 @@ const ServiceRequestDetail = () => {
       console.error("Failed to load request", error);
     } finally {
       setLoading(false);
+      setTimeout(() => {
+      window.scrollTo(0, scrollY); // restore scroll position
+    }, 50);
     }
   };
 
@@ -44,7 +49,6 @@ const ServiceRequestDetail = () => {
   if (!request) return <div className="not-found">Not found</div>;
 
   const role = user?.role;
-  console.log(request)
 
   return (
     <div className="service-request-detail">

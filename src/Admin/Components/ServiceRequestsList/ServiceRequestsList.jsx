@@ -31,7 +31,7 @@ export default function ServiceRequestList() {
   return (
     <div className="sr-container">
       <h2 className="sr-title">Service Requests</h2>
-
+      <div className="sr-table-wrapper">
       <table className="sr-table">
         <thead>
           <tr>
@@ -68,6 +68,8 @@ export default function ServiceRequestList() {
           )}
         </tbody>
       </table>
+
+      </div>
     </div>
   );
 }

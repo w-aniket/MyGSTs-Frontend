@@ -4,21 +4,25 @@ import { useNavigate } from "react-router-dom";
 import "./Notification.css"
 
 const Notification = () => {
-  const [list, setList] = useState([]);
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("token");
+  const authHeader = { headers: { Authorization: `Bearer ${token}` } };
 
-  const loadData = async () => {
-    const res = await axios.get(`${apiUrl}/api/notifications`);
-    setList(res.data);
+  const [notification, setNotification] = useState([]);
+
+
+  const loadNotifications = async () => {
+    const res = await axios.get(`${apiUrl}/api/notifications`, authHeader);
+    setNotification(res.data?.notifications);
   };
 
   useEffect(() => {
-    loadData();
+    loadNotifications();
   }, []);
 
   const handleOpen = async (n) => {
-    await axios.patch(`${apiUrl}/api/notifications/read/${n._id}`);
+    await axios.patch(`${apiUrl}/api/notifications/read/${n._id}`,{} ,authHeader);
 
     if (n.type === "contact") {
       navigate(`/admin/contact-request/${n.dataId}`);
@@ -32,7 +36,7 @@ const Notification = () => {
     <div className="notification-page">
       <h2>Notification</h2>
 
-      {list.map((n) => (
+      {notification.map((n) => (
         <div
             key={n._id}
             className={`notification-card ${!n.read ? "unread" : ""}`}

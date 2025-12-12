@@ -326,7 +326,7 @@ const ServiceDetail = () => {
                 </div>
 
                 <div className="request-form-wrapper">
-                  <ServiceRequestForm serviceId={service._id || id} />
+                  <ServiceRequestForm pricing= {service.pricing} />
                 </div>
 
                 <div className="request-foot">

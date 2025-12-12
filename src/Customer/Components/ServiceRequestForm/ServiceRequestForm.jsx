@@ -6,11 +6,11 @@ import FileUploader from "../../../Utils/FileUpload/FileUploader";
 import { toast } from "react-toastify";
 import "./ServiceRequestForm.css";
 
-const ServiceRequestForm = () => {
+const ServiceRequestForm = ({ pricing }) => {
   const { id } = useParams();
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-
+  console.log(pricing)
   const [form, setForm] = useState({
     name: user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "",
     email: user?.email || "",
@@ -81,6 +81,7 @@ const ServiceRequestForm = () => {
       Object.keys(form).forEach((key) => formData.append(key, form[key]));
       formData.append("service", id);
       formData.append("otp", otp);
+      formData.append("amount", pricing);
 
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/service-requests/verify-otp`,
@@ -116,6 +117,7 @@ const ServiceRequestForm = () => {
       files.forEach((file) => formData.append("files", file));
       Object.keys(form).forEach((key) => formData.append(key, form[key]));
       formData.append("service", id);
+      formData.append("amount", pricing);
 
       const token = localStorage.getItem("token");
 
@@ -143,7 +145,6 @@ const ServiceRequestForm = () => {
 
   return (
     <div className="service-request-container">
-      <h2 className="form-title">Request This Service</h2>
 
       {!otpStep ? (
         <form onSubmit={handleSubmit} className="service-form">
@@ -193,8 +194,6 @@ const ServiceRequestForm = () => {
             required
             className="form-textarea"
           />
-          <label className="form-label">Upload Documents (PDF or Image)</label>
-          <FileUploader files={files} setFiles={setFiles} />
 
           <button
             type="submit"
@@ -207,6 +206,8 @@ const ServiceRequestForm = () => {
               ? "Uploading File..."
               : "Submit Request"}
           </button>
+          <label className="form-label">Upload Documents (PDF or Image)</label>
+          <FileUploader files={files} setFiles={setFiles} />
         </form>
       ) : (
         <div className="otp-verification-container">

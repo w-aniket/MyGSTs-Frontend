@@ -42,7 +42,7 @@ const MyServiceRequests = () => {
         key,
         amount: order.amount,
         currency: "INR",
-        name: "Accounting Services",
+        name: "MyGSTs",
         description: "Service Request Payment",
         order_id: order.id,
         handler: async function (response) {
@@ -167,7 +167,6 @@ const MyServiceRequests = () => {
 
                   {req.invoice?.isPaid ? (
                     <>
-                      <span className="paid-badge">Paid</span>
                       <button
                         className="paid-badge download-invoice-btn"
                         onClick={() => downloadInvoice(req.invoice?._id)}

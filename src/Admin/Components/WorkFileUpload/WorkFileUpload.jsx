@@ -80,8 +80,8 @@ const WorkFileUpload = ({ request, onUpdated }) => {
               const isPdf =
                 /\.pdf(\?|$)/i.test(url) || /\/raw\/upload\//i.test(url);
               const label = isPdf
-                ? `Download PDF ${idx + 1}`
-                : `View image ${idx + 1}`;
+                ? `PDF ${idx + 1}`
+                : `Image ${idx + 1}`;
 
               const onClick = () =>
                 isPdf

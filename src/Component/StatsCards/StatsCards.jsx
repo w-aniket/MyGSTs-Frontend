@@ -45,7 +45,7 @@ const StatsCards = () => {
           },
           {
             id: 3,
-            title: "Pending Requests",
+            title: "Active Requests",
             value: data.pendingRequests || 0,
             icon: <FaClipboardList />,
             color: "#FF9800",

@@ -24,6 +24,11 @@ const NotificationBell = () => {
     }
   };
 
+  const handleClick = async () => {
+    fetchUnseen();
+    navigate("/admin/notifications")
+  }
+
   useEffect(() => {
     fetchUnseen();
   }, []);
@@ -31,7 +36,7 @@ const NotificationBell = () => {
   return (
     <div 
       className="notification-wrapper"
-      onClick={() => navigate("/admin/notifications")}
+      onClick={handleClick}
     >
       <Bell className="notification-icon" />
       {unread > 0 && <span className="notification-badge">{unread}</span>}

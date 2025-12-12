@@ -60,6 +60,7 @@ const ServiceList = () => {
           + Add Service
         </button>
       </div>
+      <div className="table-responsive">
 
       <ServiceTable
         services={services}
@@ -67,7 +68,8 @@ const ServiceList = () => {
         setLoading={setLoading}
         onEdit={handleEdit}
         onDelete={handleDelete}
-      />
+        />
+        </div>
       {showFormModal && (
         <div className="modal-overlay">
           <div className="modal-content">

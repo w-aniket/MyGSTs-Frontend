@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import AttachmentViewer from "../../Admin/Components/AttachmentViewer/AttachmentViewer";
 import "./ServiceRequestInfo.css";
 
 const ServiceRequestInfo = ({ request, role }) => {
+  const paymentStatus = request.invoice ? "Paid" : "Pending";
+
   return (
     <div className="request-info">
       <h2 className="info-title">Request Information</h2>
@@ -35,8 +37,32 @@ const ServiceRequestInfo = ({ request, role }) => {
           <span>{request.companyName || "N/A"}</span>
         </div>
         <div className="info-row">
-          <strong>Status:</strong> {request.status}
+          <strong>Status:</strong>{" "}
+          <span
+            className={`sr-status sr-status-${request.status
+              ?.toLowerCase()
+              .replace(/\s+/g, "-")}`}
+          >
+            {request.status}
+          </span>
         </div>
+        <div className="info-row">
+          <strong>Payment Status:</strong>{" "}
+          <span
+            className={`payment-status payment-${request.invoice?.status?.toLowerCase()}`}
+          >
+            {request.invoice?.status}
+          </span>
+        </div>
+        {request.invoice?.isPaid && (
+          <div className="info-row">
+            <strong>Invoice:</strong>
+            <a href={`/invoice/${request.invoice._id}`} target="_blank">
+              View Invoice
+            </a>
+          </div>
+        )}
+
         <div className="info-row">
           <strong>Created:</strong>{" "}
           <span>{new Date(request.createdAt).toLocaleString()}</span>

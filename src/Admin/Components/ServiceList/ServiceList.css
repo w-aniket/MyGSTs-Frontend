@@ -53,6 +53,17 @@
   max-height: 90vh;
   overflow-y: auto;
 }
+/* Reusable Responsive Table Wrapper */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive table {
+  min-width: 700px; 
+}
 
 .modal-close {
   position: absolute;
