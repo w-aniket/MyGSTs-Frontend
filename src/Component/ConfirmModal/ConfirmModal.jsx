@@ -1,17 +1,23 @@
-import React from 'react';
-import './ConfirmModal.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./ConfirmModal.css";
 
-const   ConfirmModal = ({ message, onConfirm, onCancel }) => {
-  return (
+const ConfirmModal = ({ message, loading, onConfirm, onCancel }) => {
+  return ReactDOM.createPortal(
     <div className="confirm-modal-overlay">
       <div className="confirm-modal">
         <p>{message}</p>
         <div className="confirm-modal-actions">
-          <button className="confirm-btn" onClick={onConfirm}>Yes</button>
-          <button className="cancel-btn" onClick={onCancel}>No</button>
+          <button className="confirm-btn" onClick={onConfirm} disabled={loading}>
+            {loading ? <span className="loader"></span> : "Yes"}
+          </button>
+          <button className="cancel-btn" onClick={onCancel} disabled={loading}>
+            No
+          </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

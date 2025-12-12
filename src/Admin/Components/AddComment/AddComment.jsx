@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { addCommentApi } from "../../../Utils/APIs/serviceRequestApi";
+import {
+  addCommentApi,
+  deleteCommentApi,
+} from "../../../Utils/APIs/serviceRequestApi";
 import { toast } from "react-toastify";
+import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
 import "./AddComment.css";
 
 const AddComment = ({ request, onUpdated }) => {
@@ -8,13 +12,18 @@ const AddComment = ({ request, onUpdated }) => {
   const [visibleToClient, setVisibleToClient] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Delete modal state
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const submitComment = async () => {
     if (!text.trim()) return;
 
     setLoading(true);
 
     try {
-      const res = await addCommentApi(request._id, { text, visibleToClient });
+      await addCommentApi(request._id, { text, visibleToClient });
       setText("");
       onUpdated();
       toast.success("Comment add successfull");
@@ -24,6 +33,34 @@ const AddComment = ({ request, onUpdated }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const openDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowConfirm(true);
+  };
+
+  // Confirm delete
+  const confirmDelete = async () => {
+    setDeleteLoading(true);
+
+    try {
+      await deleteCommentApi(request._id, deleteId);
+      toast.success("Comment deleted");
+      onUpdated();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete comment");
+    }
+
+    setDeleteLoading(false);
+    setShowConfirm(false);
+    setDeleteId(null);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirm(false);
+    setDeleteId(null);
   };
 
   const sorted = [...request.comments].sort(
@@ -52,7 +89,7 @@ const AddComment = ({ request, onUpdated }) => {
         Visible to Client
       </label>
 
-      <button onClick={submitComment} disabled={loading}>
+      <button className="main-comment-btn" onClick={submitComment} disabled={loading}>
         {loading ? "Posting..." : "Add Comment"}
       </button>
 
@@ -62,10 +99,19 @@ const AddComment = ({ request, onUpdated }) => {
 
         {staffComments.map((c, i) => (
           <div key={i} className="comment-item comment-internal">
-            <strong>
-              {c.commentedBy?.firstName} {c.commentedBy?.lastName}
-            </strong>{" "}
-            <small>({c.role})</small>
+            <div className="comment-header">
+              <strong>
+                {c.commentedBy?.firstName} {c.commentedBy?.lastName}
+              <small> ({c.role})</small>
+              </strong>{" "}
+              <button
+                className="delete-comment-btn"
+                onClick={() => openDeleteModal(c._id)}
+              >
+                ✕
+              </button>
+            </div>
+
             <p>{c.text}</p>
             <span className="comment-date">
               {new Date(c.createdAt).toLocaleString()}
@@ -80,10 +126,18 @@ const AddComment = ({ request, onUpdated }) => {
 
         {clientComments.map((c, i) => (
           <div key={i} className="comment-item comment-client">
-            <strong>
-              {c.commentedBy?.firstName} {c.commentedBy?.lastName}
-            </strong>{" "}
-            <small>({c.role})</small>
+            <div className="comment-header">
+              <strong>
+                {c.commentedBy?.firstName} {c.commentedBy?.lastName}
+              <small> ({c.role})</small>
+              </strong>{" "}
+              <button
+                className="delete-comment-btn"
+                onClick={() => openDeleteModal(c._id)}
+              >
+                ✕
+              </button>
+            </div>
             <p>{c.text}</p>
             <span className="comment-date">
               {new Date(c.createdAt).toLocaleString()}
@@ -91,6 +145,14 @@ const AddComment = ({ request, onUpdated }) => {
           </div>
         ))}
       </div>
+      {showConfirm && (
+        <ConfirmModal
+          message={"Are you sure you want to delete this comment?"}
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+          loading={deleteLoading}
+        />
+      )}
     </div>
   );
 };

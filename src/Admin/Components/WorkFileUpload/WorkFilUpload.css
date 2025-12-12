@@ -126,15 +126,3 @@
 .work-files-list li button:last-child:hover {
   background: #e65a5a;
 }
-
-/* Responsive */
-@media (max-width: 600px) {
-  .work-file-upload .btn-primary {
-    width: 100%;
-  }
-
-  .work-file-upload .download-btn,
-  .work-files-list li button:last-child {
-    width: 100%;
-  }
-}

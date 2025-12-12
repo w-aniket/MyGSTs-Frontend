@@ -4,8 +4,8 @@ import {
   uploadWorkFilesApi,
 } from "../../../Utils/APIs/serviceRequestApi";
 import { toast } from "react-toastify";
-import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
 import FileUploader from "../../../Utils/FileUpload/FileUploader";
+import ConfirmModal from "../../../Component/ConfirmModal/ConfirmModal";
 import { downloadFile } from "../../../Utils/Download";
 import "./WorkFilUpload.css"
 
@@ -13,6 +13,12 @@ const WorkFileUpload = ({ request, onUpdated }) => {
   const [files, setFiles] = useState([]);
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // delete confirm
+
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
   const handleUpload = async () => {
     if (files.length === 0) return alert("Select files");
     setLoading(true);
@@ -30,16 +36,30 @@ const WorkFileUpload = ({ request, onUpdated }) => {
     }
   };
 
-  const handleDelete = async (publicId) => {
+  const openDeleteModalModal = (publicId) => {
+    setDeleteId(publicId);
+    setShowConfirm(true)
+  }
+
+  const confirmDelete = async () => {
+    setLoading(true)
     try {
-      const res = await deleteWorkFileApi(publicId);
+      await deleteWorkFileApi(deleteId);
       onUpdated();
       toast.success("File Deleted");
     } catch (err) {
       console.error(err);
       toast.error("Delete failed");
     }
+    setLoading(false)
+    setShowConfirm(false);
+    setDeleteId(null)
   };
+
+  const cancleDelete = () => {
+    setShowConfirm(false);
+    setDeleteId(null)
+  }
 
   return (
     <div className="work-file-upload">
@@ -104,7 +124,7 @@ const WorkFileUpload = ({ request, onUpdated }) => {
                   </small>
                   <button
                     onClick={() =>
-                      handleDelete(encodeURIComponent(f.public_id))
+                      openDeleteModalModal(encodeURIComponent(f.public_id))
                     }
                   >
                     Delete
@@ -115,7 +135,14 @@ const WorkFileUpload = ({ request, onUpdated }) => {
           </ul>
         )}
       </div>
-      {/* <ConfirmModal /> */}
+      {showConfirm && (
+        <ConfirmModal
+          message="Are you sure you want to delete this file?"
+          loading={loading}
+          onConfirm={confirmDelete}
+          onCancel={cancleDelete}
+        />
+      )}
     </div>
   );
 };

@@ -23,6 +23,10 @@ export const addCommentApi = (id, payload) =>
     authHeader
   );
 
+export const deleteCommentApi = async (requestId, commentId) =>{
+  return axios.delete(`${apiUrl}/api/service-requests/${requestId}/comment/${commentId}`, authHeader);
+}
+
 export const uploadClientFilesApi = (requestId, files) => {
   const fd = new FormData();
   files.forEach((f) => fd.append("files", f));

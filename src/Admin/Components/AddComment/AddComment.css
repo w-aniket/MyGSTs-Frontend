@@ -11,6 +11,13 @@
   color: #333;
 }
 
+/* Header */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* Textarea */
 .comment-box textarea {
   width: 100%;
@@ -40,8 +47,8 @@
   margin-bottom: 16px;
 }
 
-/* Button */
-.comment-box button {
+/* ---- MAIN BUTTON (Add Comment) ---- */
+.comment-box .main-comment-btn {
   width: 160px;
   padding: 10px 14px;
   background: #6c63ff;
@@ -53,16 +60,45 @@
   transition: 0.2s ease;
 }
 
-.comment-box button:hover:not(:disabled) {
+.comment-box .main-comment-btn:hover:not(:disabled) {
   background: #5b54e6;
 }
 
-.comment-box button:disabled {
+.comment-box .main-comment-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-/* Individual Comment Styles */
+/* ---- DELETE BUTTON (COMPLETELY ISOLATED) ---- */
+.comment-box .delete-comment-btn {
+  all: unset;
+  background: #ff6464 !important;
+  color: white !important;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none !important;
+}
+
+.comment-box .delete-comment-btn:hover {
+  background: #e55353 !important;
+}
+
+.comment-box .delete-comment-btn:focus,
+.comment-box .delete-comment-btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Comment Blocks */
 .comment-item {
   background: #fafafa;
   border: 1px solid #e5e5e5;
@@ -71,6 +107,7 @@
   margin-top: 14px;
 }
 
+/* Text styles */
 .comment-item strong {
   color: #333;
   font-size: 15px;
@@ -88,10 +125,11 @@
   margin-top: 4px;
 }
 
+/* Scrollable Block */
 .comment-section-block {
   margin-top: 20px;
-   max-height: 250px;      /* Limit height */
-  overflow-y: auto;       /* Enable scrolling */
+  max-height: 250px;
+  overflow-y: auto;
   padding-right: 6px;
 }
 
@@ -108,6 +146,7 @@
   background: #b3b3b3;
 }
 
+/* Section headings */
 .comment-section-block h4 {
   font-size: 16px;
   font-weight: 600;
@@ -115,14 +154,14 @@
   color: #333;
 }
 
+/* Left border styles */
 .comment-internal {
-  border-left: 4px solid #e57373; /* Red-ish tone for internal comments */
+  border-left: 4px solid #e57373;
 }
 
 .comment-client {
-  border-left: 4px solid #4caf50; /* Green for client visible */
+  border-left: 4px solid #4caf50;
 }
-
 
 /* Responsive */
 @media (max-width: 600px) {
@@ -130,7 +169,7 @@
     padding: 16px;
   }
 
-  .comment-box button {
+  .comment-box .main-comment-btn {
     width: 100%;
   }
 }
