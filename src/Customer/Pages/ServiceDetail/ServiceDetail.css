@@ -51,6 +51,7 @@
 }
 
 .sd-badge {
+  display: flex;
   width: 60px;
   height: 60px;
   border-radius: 12px;
@@ -90,10 +91,11 @@
 
 /* highlights grid: soft pastel cards */
 .sd-highlights {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  display: flex;
+  /* grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); */
   gap: 12px;
   margin-top: 12px;
+  flex-wrap: nowrap;
 }
 
 .hl-card {

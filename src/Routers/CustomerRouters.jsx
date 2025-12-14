@@ -19,6 +19,8 @@ import ServiceDetail from "../Customer/Pages/ServiceDetail/ServiceDetail.jsx";
 import MyServiceRequests from "../Customer/Pages/MyRequests/MyServiceRequests.jsx";
 import OTPLogin from "../Customer/Auth/OTPLogin.jsx";
 import ContactWidget from "../Component/ContactWidget/ContactWidget.jsx";
+import ServiceRequestConfirmation from "../Customer/Pages/MyRequests/ServiceRequestConfirmation.jsx";
+import MyServiceRequestV2 from "../Customer/Pages/MyRequests/MyServiceRequestV2.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -39,7 +41,9 @@ const CustomerRouters = () => {
         <Route path="/signin/new-password" element={<NewPassword />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:id" element={<ServiceDetail />} />
+        <Route path="/service-requests/confirmation/:id" element={<ServiceRequestConfirmation />} />
         <Route path="/my-service-requests" element={<MyServiceRequests />} />
+        {/* <Route path="/my-service-requests" element={<MyServiceRequestV2 />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/careers" element={<Careers />} />

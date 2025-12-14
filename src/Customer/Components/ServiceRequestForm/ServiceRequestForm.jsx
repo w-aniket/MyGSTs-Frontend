@@ -6,11 +6,10 @@ import FileUploader from "../../../Utils/FileUpload/FileUploader";
 import { toast } from "react-toastify";
 import "./ServiceRequestForm.css";
 
-const ServiceRequestForm = ({ pricing }) => {
+const ServiceRequestForm = ({ pricing, serviceName }) => {
   const { id } = useParams();
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  console.log(pricing)
   const [form, setForm] = useState({
     name: user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "",
     email: user?.email || "",
@@ -81,7 +80,7 @@ const ServiceRequestForm = ({ pricing }) => {
       Object.keys(form).forEach((key) => formData.append(key, form[key]));
       formData.append("service", id);
       formData.append("otp", otp);
-      formData.append("amount", pricing);
+      formData.append("amount", pricing || 0);
 
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/service-requests/verify-otp`,
@@ -94,8 +93,14 @@ const ServiceRequestForm = ({ pricing }) => {
         // save login token and user in context/localStorage
         localStorage.setItem("token", res.data.token);
         setUser(res.data.user);
+        console.log()
 
-        navigate("/my-service-requests");
+        // navigate(`/service-requests/confirmation/%${res.data?.request._id}`, {
+        //   state: {
+        //     serviceName,
+        //     amount: pricing,
+        //   },
+        // });
       } else {
         toast.error(res.data.message);
       }
@@ -121,7 +126,7 @@ const ServiceRequestForm = ({ pricing }) => {
 
       const token = localStorage.getItem("token");
 
-      await axios.post(
+      const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/service-requests`,
         formData,
         {
@@ -133,7 +138,14 @@ const ServiceRequestForm = ({ pricing }) => {
       );
 
       toast.success("Service request submitted successfully!");
-      navigate("/my-service-requests");
+      console.log(res.data?.request._id)
+      // navigate("/my-service-requests");
+      navigate(`/service-requests/confirmation/${res.data?.request._id}`, {
+          state: {
+            serviceName,
+            amount: pricing,
+          },
+        });
     } catch (err) {
       console.error(err);
       toast.error("Failed to submit service request");
@@ -145,7 +157,6 @@ const ServiceRequestForm = ({ pricing }) => {
 
   return (
     <div className="service-request-container">
-
       {!otpStep ? (
         <form onSubmit={handleSubmit} className="service-form">
           <input
@@ -200,11 +211,7 @@ const ServiceRequestForm = ({ pricing }) => {
             disabled={submitting || uploading}
             className="form-button"
           >
-            {submitting
-              ? "Submitting..."
-              : uploading
-              ? "Uploading File..."
-              : "Submit Request"}
+            {submitting || uploading ? "Please wait..." : "Submit Request"}
           </button>
           <label className="form-label">Upload Documents (PDF or Image)</label>
           <FileUploader files={files} setFiles={setFiles} />
@@ -216,6 +223,8 @@ const ServiceRequestForm = ({ pricing }) => {
           <input
             type="text"
             maxLength="6"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             placeholder="Enter OTP"

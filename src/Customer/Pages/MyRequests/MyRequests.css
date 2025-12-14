@@ -1,183 +1,186 @@
-.request-container{
-    max-width: 1100px;
+.msr-page {
     min-height: 100vh;
-    margin: auto;
-    padding: 2rem 1rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 24px;
+    background: #f5f7fb;
+    max-width: 1200px;  
+    margin: 0 auto;   
+    margin-top: 20px;
+    isolation: isolate;
 }
 
-.request-heading {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color: #1f2937;
+.msr-header {
     text-align: center;
+    margin-bottom: 24px;
 }
 
-.message {
-    text-align: center;
-    color: #4b5563;
-    font-size: 1rem;
-    margin-top: 2rem;
+.msr-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+}
+
+.msr-header p {
+    color: #555;
+}
+
+.msr-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.msr-filters button {
+    padding: 8px 16px;
+    background: #ffffff;
     color: #2563eb;
+    border-radius: 999px;
+    border: 1px solid #dbeafe;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease;
+    outline: none;
 }
 
-.request-grid {
+.msr-filters button.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+}
+
+.msr-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap:1.5rem
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
 }
 
-.request-card {
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-    transition: all 0.02s ease;
-    cursor: default;
+.msr-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
-.request-card:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+.msr-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
 }
 
-.request-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #111827;
+.msr-card-top h3 {
+    font-size: 1.1rem;
 }
 
-.request-category {
-    font-size: 0.95rem;
-    color: #6b7280;
-    margin-top: 0.25rem;
+.msr-card-top .badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
 }
 
-.request-status {
-    font-weight: 600;
-    margin: 0.5rem 0;
+.msr-card-top .badge.pending {
+    background: #fff7ed;
+    color: #f59e0b;
 }
 
-.status-pending {
-    color: #d97706;
-}
-
-.status-in-progress {
-    color: #2563eb;
-}
-
-.status-done {
+.msr-card-top .badge.paid {
+    background: #ecfdf5;
     color: #16a34a;
 }
 
-.request-date {
-    font-size: 0.85rem;
-    color: #7a7e86;
+.msr-info {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 10px;
+     font-size: 0.9rem;
+     margin-bottom: 10px;
 }
 
-.request-files {
-    margin-top: 0.5rem;
+.msr-info span {
+    display: block;
+    color: #777;
+    font-size: 0.75rem;
+}
+
+.msr-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.msr-actions button {
+    /* all: unset; */
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
     font-size: 0.9rem;
-}
-
-.request-files ul {
-    padding-left: 1rem ;
-    margin: 0.25rem 0;
-}
-
-.request-files li a {
-    color: #007bff;
-    text-decoration: underline;
-}
-
-.request-files li a:hover {
-    color: #0056b3;
-    text-decoration: none;
-}
-.pdf-download-btn {
-  background: none;
-  border: none;
-  color: #007bff;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 0;
-  font-size: 1rem;
-}
-.pdf-download-btn:hover {
-  color: #0056b3;
-  text-decoration: none;
-}
-
-.download-invoice-btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 8px;
-    background: #198754;
-    color: white;
     cursor: pointer;
 }
 
-.download-invoice-btn:hover {
-    filter: brightness(0.85);
+.msr-actions .primary {
+    background: #2563eb;
+    color: #fff;
+    border: none;
 }
 
-
-.request-description {
-    margin-top: 0.75rem;
-    font-size: 0.95rem;
-    color: #374151;
+.msr-actions .outline {
+    background: #fff;
+    border: 1px solid #c7d2fe;
+    color: #2563eb;
 }
 
-/* Payment Section */
-.payment-section {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e5e7eb;
+.msr-actions .btn-invoice {
+    background: #2c2c2c;
+    color: #ffffff;
+    outline: none;
 }
 
-.invoice-amount {
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 0.5rem;
+.msr-pagination {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
 }
 
-/* Pay Now Button */
-.pay-now-btn {
-  background-color: #2563eb;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1.25rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+.msr-pagination button {
+    /* all: unset; */
+    padding: 8px 14px;
+    border-radius: 10px;
+    border:  1px solid #c7d2fe;
+    background: #ffffff;
+    color: #2563eb;
+    font-size: 0.85rem;
+    font-weight: 00;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.pay-now-btn:hover {
-  background-color: #1d4ed8;
+.msr-pagination button:hover:not(:disabled) {
+  background: #eff6ff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
 }
 
-/* Paid Badge */
-.paid-badge {
-  display: inline-block;
-  background-color: #22c55e;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
+.msr-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
+.msr-empty {
+    background: #fff;
+    border-radius: 14px;
+    padding: 40px;
+    text-align: center;
+}
 
-@media screen and (max-width: 640px) {
-    
-    .request-heading {
-        font-size: 1.5rem;
-    }
-
-    .request-card {
-        padding: 1rem;
-    }
+.msr-empty button {
+    all: unset;
+    margin-top: 10px;
+    padding: 10px 16px;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
 }

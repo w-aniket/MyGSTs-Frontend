@@ -1,0 +1,115 @@
+/* .msr-page {
+  min-height: 100vh;
+  padding: 24px;
+  background: #f5f7fb;
+}
+
+.msr-header {
+  margin-bottom: 24px;
+}
+
+.msr-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.msr-header p {
+  color: #555;
+}
+
+.msr-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.msr-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.msr-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.msr-card-top h3 {
+  font-size: 1.1rem;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge.pending {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+
+.badge.paid {
+  background: #ecfdf5;
+  color: #16a34a;
+}
+
+.msr-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.msr-info span {
+  display: block;
+  color: #777;
+  font-size: 0.75rem;
+}
+
+.msr-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.msr-actions button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.msr-actions .primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+}
+
+.msr-actions .outline {
+  background: #fff;
+  border: 1px solid #c7d2fe;
+  color: #2563eb;
+}
+
+.msr-empty {
+  background: #fff;
+  border-radius: 14px;
+  padding: 40px;
+  text-align: center;
+}
+
+.msr-empty button {
+  margin-top: 14px;
+  padding: 10px 16px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+} */
