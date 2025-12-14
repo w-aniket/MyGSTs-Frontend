@@ -19,7 +19,10 @@ const ServiceRequestConfirmation = () => {
   return (
     <div className="src-page">
       <div className="src-card">
-        <FaCheckCircle className="src-success-icon" />
+        <div className="src-icon-wrapper">
+  <FaCheckCircle className="src-success-icon" />
+</div>
+
 
         <h1>Request Submitted Successfully</h1>
         <p className="src-subtext">

@@ -139,7 +139,7 @@ const MyServiceRequests = () => {
                     Invoice
                   </button>
                 )}
-                <button className="outline">View Details</button>
+                <button className="outline" onClick={() => navigate(`${req._id}`)}>View Details</button>
               </div>
             </div>
           ))}

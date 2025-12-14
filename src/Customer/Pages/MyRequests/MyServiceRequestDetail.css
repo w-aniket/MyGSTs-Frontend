@@ -1,0 +1,111 @@
+.vsr-page {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 24px;
+  background: #f5f7fb;
+}
+
+.vsr-header {
+  margin-bottom: 20px;
+}
+
+.vsr-header h1 {
+  font-size: 1.8rem;
+}
+
+.vsr-badges {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+
+.badge.paid {
+  background: #ecfdf5;
+  color: #16a34a;
+}
+
+.badge.in\ progress {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.vsr-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.vsr-card.highlight {
+  border-left: 4px solid #2563eb;
+}
+
+.vsr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.vsr-grid span {
+  font-size: 0.75rem;
+  color: #777;
+}
+
+.vsr-timeline {
+  list-style: none;
+  padding: 0;
+}
+
+.vsr-timeline li {
+  padding-left: 20px;
+  margin-bottom: 8px;
+  position: relative;
+  color: #999;
+}
+
+.vsr-timeline li.done {
+  color: #2563eb;
+}
+
+.vsr-timeline li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+}
+
+.vsr-files {
+  list-style: none;
+  padding: 0;
+}
+
+.vsr-files li {
+  padding: 6px 0;
+}
+
+.vsr-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.vsr-actions .primary {
+  background: #2563eb;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+.vsr-actions .outline {
+  background: #ffffff;
+  border: 1px solid #c7d2fe;
+  color: #2563eb;
+  padding: 10px;
+  border-radius: 10px;
+}

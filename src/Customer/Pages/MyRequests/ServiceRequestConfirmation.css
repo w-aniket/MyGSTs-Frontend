@@ -38,6 +38,12 @@
 }
 
 /* ===== HEADER ===== */
+
+.src-icon-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .src-success-icon {
   font-size: 48px;
   color: #22c55e;

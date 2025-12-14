@@ -20,7 +20,7 @@ import MyServiceRequests from "../Customer/Pages/MyRequests/MyServiceRequests.js
 import OTPLogin from "../Customer/Auth/OTPLogin.jsx";
 import ContactWidget from "../Component/ContactWidget/ContactWidget.jsx";
 import ServiceRequestConfirmation from "../Customer/Pages/MyRequests/ServiceRequestConfirmation.jsx";
-import MyServiceRequestV2 from "../Customer/Pages/MyRequests/MyServiceRequestV2.jsx";
+import MyServiceRequestDetail from "../Customer/Pages/MyRequests/MyServiceRequestDetail.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -43,7 +43,7 @@ const CustomerRouters = () => {
         <Route path="/services/:id" element={<ServiceDetail />} />
         <Route path="/service-requests/confirmation/:id" element={<ServiceRequestConfirmation />} />
         <Route path="/my-service-requests" element={<MyServiceRequests />} />
-        {/* <Route path="/my-service-requests" element={<MyServiceRequestV2 />} /> */}
+        <Route path="/my-service-requests/:id" element={<MyServiceRequestDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/careers" element={<Careers />} />
