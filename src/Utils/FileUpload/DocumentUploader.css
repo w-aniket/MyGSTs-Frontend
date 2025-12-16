@@ -1,0 +1,77 @@
+.doc-upload-card {
+  background: #f9fafb;
+  border-radius: 14px;
+  padding: 6px 14px;
+}
+
+.doc-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.doc-dropzone {
+  border: 2px dashed #c7d2fe;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  color: #4f46e5;
+  background: #eef2ff;
+  transition: all 0.25s ease;
+}
+
+.doc-dropzone:hover {
+  background: #e0e7ff;
+}
+
+.doc-dropzone p {
+  margin: 6px 0 2px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.doc-dropzone span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.doc-file-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.doc-file-name {
+  font-size: 13px;
+  color: #1f2937;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.doc-file-preview img {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.doc-remove-btn {
+    all: unset;
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.doc-remove-btn:hover {
+    background: none;
+}

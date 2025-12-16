@@ -8,5 +8,14 @@ export const formatDate = (isoDate) => {
 
 export const getShortId = (id, length = 6) => {
   if (!id) return "";
-  return id.slice(-length).toUpperCase();
+  return ("SR-"+id.slice(-length).toUpperCase());
+};
+
+export const gstAmount = (amount) => {
+  const totalAmount = Number(amount);
+
+  const baseAmount = +(totalAmount / 1.18).toFixed(2);
+  const sgst = +(baseAmount * 0.09).toFixed(2);
+  const cgst = +(baseAmount * 0.09).toFixed(2);
+  return ({baseAmount, sgst, cgst})
 };

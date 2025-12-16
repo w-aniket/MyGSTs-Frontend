@@ -272,7 +272,7 @@ const ServiceDetail = () => {
               </div>
               {benefits.length > 0 && (
                 <div className="sd-highlights">
-                  {benefits.slice(0, 4).map((b, i) => (
+                  {benefits.slice(0, 6).map((b, i) => (
                     <div className="hl-card" key={i}>
                       <div className="hl-icon">
                         {/* bold vector accent */}
@@ -292,7 +292,7 @@ const ServiceDetail = () => {
               <section className="sd-features">
                 <h2>Features</h2>
                 <div className="features-grid">
-                  {features.map((f, idx) => {
+                  {features.slice(0, 6).map((f, idx) => {
                     // feature might be string or { title, points }
                     const label =
                       typeof f === "string"
@@ -307,7 +307,7 @@ const ServiceDetail = () => {
                           <div className="feature-title">{label}</div>
                           {typeof f !== "string" && Array.isArray(f.points) && (
                             <div className="feature-points">
-                              {f.points.slice(0, 3).map((p, i) => (
+                              {f.points.map((p, i) => (
                                 <div key={i} className="fp">
                                   {p}
                                 </div>
@@ -350,7 +350,7 @@ const ServiceDetail = () => {
                 <h2>Pricing</h2>
                 <div className="price-block">
                   <div className="price-left">
-                    <div className="price-amount">₹{price}</div>
+                    <div className="price-amount">₹{price}/- (incl. GST)</div>
                     <div className="price-note">Starting price</div>
                   </div>
                   <div className="price-right">
@@ -365,7 +365,7 @@ const ServiceDetail = () => {
                       Get Started
                     </button>
                     <button
-                      className="btn outline"
+                      className="btn"
                       onClick={() => window.open("https://wa.me/918830078732")}
                     >
                       Contact Sales
@@ -377,37 +377,30 @@ const ServiceDetail = () => {
           </div>
 
           {/* Right column: sticky request form (moves below on mobile) */}
-          <aside
-            className="sd-sidebar"
-            aria-label="Request service form"
-            ref={sidebarRef}
-          >
-            <div ref={placeholderRef} className="sd-sticky-placeholder" />
-            <div
-              className={`sd-sticky ${isFixed ? "fixed" : ""}`}
-              ref={stickyRef}
-              aria-hidden={false}
-            >
-              <div className="request-card">
-                <div className="request-head">
-                  <div className="req-icon">
-                    <FaPhoneAlt />
-                  </div>
-                  <div>
-                    <div className="req-title">Request this Service</div>
-                    <div className="req-sub">Quick response in 24 hours</div>
-                  </div>
+          <aside className="sd-sidebar" aria-label="Request service form">
+            <div className="request-card">
+              <div className="request-head">
+                <div className="req-icon">
+                  <FaPhoneAlt />
                 </div>
+                <div>
+                  <div className="req-title">Request this Service</div>
+                  <div className="req-sub">Quick response in 24 hours</div>
+                </div>
+              </div>
 
-                <div className="request-form-wrapper">
-                  <ServiceRequestForm pricing={service.pricing} serviceName={title} />
-                </div>
+              <div className="request-form-wrapper">
+                <ServiceRequestForm
+                  pricing={service.pricing}
+                  serviceName={title}
+                  requiredDocuments={documents}
+                />
+              </div>
 
-                <div className="request-foot">
-                  <small>
-                    Or call us directly at <strong>+91 88300 78732</strong>
-                  </small>
-                </div>
+              <div className="request-foot">
+                <small>
+                  Or call us directly at <strong>+91 88300 78732</strong>
+                </small>
               </div>
             </div>
           </aside>

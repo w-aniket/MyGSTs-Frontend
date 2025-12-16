@@ -16,28 +16,23 @@
   box-sizing: border-box;
 }
 
-/* Reset only form controls safely */
 .src-page button,
 .src-page input,
 .src-page textarea {
-  /* all: revert; */
   font-family: inherit;
 }
 
-/* ===== CARD ===== */
 .src-card {
   background: #ffffff;
   max-width: 420px;
   width: 100%;
   border-radius: 16px;
-  padding: 28px 26px;
+  padding: 20px 26px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
   /* animation: fadeInUp 0.4s ease-out; */
   animation: fadeInUp 0.4s ease-out backwards;
 }
-
-/* ===== HEADER ===== */
 
 .src-icon-wrapper {
   display: flex;
@@ -74,8 +69,14 @@
 .src-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.95rem;
+  font-size: 14px;
   padding: 6px 0;
+}
+
+.src-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 12px 0;
 }
 
 .src-row span {
@@ -87,7 +88,17 @@
   color: #111827;
 }
 
-.pending {
+.src-row.total {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.src-row.total strong {
+  color: #10a145;
+}
+
+.src-row .pending {
   color: #f59e0b;
 }
 
@@ -98,7 +109,7 @@
   margin-bottom: 18px;
 }
 
-.btn {
+.src-page .src-actions .btn {
     all: unset;
   flex: 1;
   display: inline-flex;
@@ -114,28 +125,28 @@
     transform 0.1s ease;
 }
 
-.btn.primary {
+.src-actions .btn.primary {
   background: #2563eb;
   color: #ffffff;
   border: none;
 }
 
-.btn.primary:hover {
+.src-actions .btn.primary:hover {
   background: #1d4ed8;
   box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
 }
 
-.btn.outline {
+.src-page  .src-actions .btn.outline {
   background: #ffffff;
   color: #2563eb;
   border: 1px solid #c7d2fe;
 }
 
-.btn.outline:hover {
-  background: #f0f5ff;
+.src-page  .src-actions .btn.outline:hover {
+  background: #f5f5f5
 }
 
-.btn:active {
+.src-actions .btn:active {
   transform: scale(0.97);
 }
 
@@ -144,7 +155,7 @@
   margin-top: 6px;
 }
 
-.link-btn {
+.src-footer .link-btn {
   background: none;
   border: none;
   color: #2563eb;
@@ -153,7 +164,7 @@
   text-decoration: underline;
 }
 
-.link-btn:hover {
+.src-footer .link-btn:hover {
   color: #1d4ed8;
 }
 

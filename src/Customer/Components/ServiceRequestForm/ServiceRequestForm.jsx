@@ -5,11 +5,21 @@ import { UserContext } from "../../../UserContex/UserContext";
 import FileUploader from "../../../Utils/FileUpload/FileUploader";
 import { toast } from "react-toastify";
 import "./ServiceRequestForm.css";
+import DocumentUploader from "../../../Utils/FileUpload/DocumentUploader";
 
-const ServiceRequestForm = ({ pricing, serviceName }) => {
+const ServiceRequestForm = ({
+  pricing,
+  serviceName,
+  requiredDocuments = [],
+}) => {
   const { id } = useParams();
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const [files, setFiles] = useState({});
+  const [uploading, setUploading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [otpStep, setOtpStep] = useState(false);
+  const [otp, setOtp] = useState("");
   const [form, setForm] = useState({
     name: user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "",
     email: user?.email || "",
@@ -29,12 +39,6 @@ const ServiceRequestForm = ({ pricing, serviceName }) => {
       });
     }
   }, [user]);
-
-  const [files, setFiles] = useState([]);
-  const [uploading, setUploading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [otpStep, setOtpStep] = useState(false);
-  const [otp, setOtp] = useState("");
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
@@ -76,7 +80,13 @@ const ServiceRequestForm = ({ pricing, serviceName }) => {
       setUploading(true);
 
       const formData = new FormData();
-      files.forEach((file) => formData.append("files", file));
+      Object.entries(files).forEach(([docName, file]) => {
+        if (file) {
+          formData.append("files", file);
+          formData.append("documentNames", docName);
+        }
+      });
+
       Object.keys(form).forEach((key) => formData.append(key, form[key]));
       formData.append("service", id);
       formData.append("otp", otp);
@@ -93,14 +103,13 @@ const ServiceRequestForm = ({ pricing, serviceName }) => {
         // save login token and user in context/localStorage
         localStorage.setItem("token", res.data.token);
         setUser(res.data.user);
-        console.log()
 
-        // navigate(`/service-requests/confirmation/%${res.data?.request._id}`, {
-        //   state: {
-        //     serviceName,
-        //     amount: pricing,
-        //   },
-        // });
+        navigate(`/service-requests/confirmation/${res.data?.request._id}`, {
+          state: {
+            serviceName,
+            amount: pricing,
+          },
+        });
       } else {
         toast.error(res.data.message);
       }
@@ -113,13 +122,26 @@ const ServiceRequestForm = ({ pricing, serviceName }) => {
     }
   };
 
+  const handleDocumentChange = (docName, file) => {
+    setFiles((prev) => ({
+      ...prev,
+      [docName]: file,
+    }));
+  };
+
   const handleLoggedInSubmit = async () => {
     try {
       setSubmitting(true);
       setUploading(true);
 
       const formData = new FormData();
-      files.forEach((file) => formData.append("files", file));
+      Object.entries(files).forEach(([docName, file]) => {
+        if (file) {
+          formData.append("files", file);
+          formData.append("documentNames", docName);
+        }
+      });
+
       Object.keys(form).forEach((key) => formData.append(key, form[key]));
       formData.append("service", id);
       formData.append("amount", pricing);
@@ -138,14 +160,12 @@ const ServiceRequestForm = ({ pricing, serviceName }) => {
       );
 
       toast.success("Service request submitted successfully!");
-      console.log(res.data?.request._id)
-      // navigate("/my-service-requests");
       navigate(`/service-requests/confirmation/${res.data?.request._id}`, {
-          state: {
-            serviceName,
-            amount: pricing,
-          },
-        });
+        state: {
+          serviceName,
+          amount: pricing,
+        },
+      });
     } catch (err) {
       console.error(err);
       toast.error("Failed to submit service request");
@@ -206,6 +226,16 @@ const ServiceRequestForm = ({ pricing, serviceName }) => {
             className="form-textarea"
           />
 
+          <label className="form-label">Upload Documents</label>
+          {requiredDocuments.map((doc, index) => (
+            <DocumentUploader
+              key={index}
+              label={doc}
+              file={files[doc]}
+              onChange={(file) => handleDocumentChange(doc, file)}
+            />
+          ))}
+
           <button
             type="submit"
             disabled={submitting || uploading}
@@ -213,8 +243,6 @@ const ServiceRequestForm = ({ pricing, serviceName }) => {
           >
             {submitting || uploading ? "Please wait..." : "Submit Request"}
           </button>
-          <label className="form-label">Upload Documents (PDF or Image)</label>
-          <FileUploader files={files} setFiles={setFiles} />
         </form>
       ) : (
         <div className="otp-verification-container">

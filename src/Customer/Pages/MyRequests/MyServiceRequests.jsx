@@ -105,7 +105,7 @@ const MyServiceRequests = () => {
               <div className="msr-info">
                 <div>
                   <span>Request Id</span>
-                  <strong>#{getShortId(req._id)}</strong>
+                  <strong>{getShortId(req._id)}</strong>
                 </div>
                 <div>
                   <span>Submitted</span>
@@ -126,7 +126,7 @@ const MyServiceRequests = () => {
                   <button
                     className="primary"
                     onClick={() =>
-                      handlePayNow(navigate, req._id, Number(req.amount))
+                      handlePayNow(null, req._id, Number(req.amount), fetchRequests)
                     }
                   >
                     Pay Now
