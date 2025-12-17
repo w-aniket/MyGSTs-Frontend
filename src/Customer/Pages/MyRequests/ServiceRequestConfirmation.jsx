@@ -17,7 +17,7 @@ const ServiceRequestConfirmation = () => {
   const returnAmount = gstAmount(amount)
 
   const handlePay = (id, amount) => {
-    handlePayNow(navigate, id, amount, null);
+    handlePayNow(navigate, id, amount);
   };
 
   return (
@@ -74,7 +74,7 @@ const ServiceRequestConfirmation = () => {
           </button>
           <button
             className="btn outline"
-            onClick={() => navigate("/my-service-requests")}
+            onClick={() => navigate(`/my-service-requests/${id}`)}
           >
             <FaClock /> Pay Later
           </button>

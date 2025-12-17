@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchRequestDetails } from "../../../Utils/APIs/serviceRequestApi";
 import { formatDate, getShortId } from "../../../Utils/basicFunctions";
-import { handlePayNow } from "../../../Utils/Payment/payments";
+// import { handlePayNow } from "../../../Utils/Payment/payments";
 import { downloadInvoice } from "../../../Utils/Invoice/downloadInvoice";
 import "./MyServiceRequestDetail.css";
 
@@ -28,6 +28,32 @@ const MyServiceRequestDetail = () => {
     getRequestDetails();
   }, [id]);
 
+  const scrollToWorkFiles = () => {
+    const el = document.getElementById("work-files-section");
+    if (!el) return;
+
+    const yOffset = -150; // header height
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({ top: y, behavior: "smooth" });
+
+    // Add highlight
+    el.classList.add("srd-scroll-highlight");
+
+    // Remove highlight after 1 second
+    setTimeout(() => {
+      el.classList.remove("srd-scroll-highlight");
+    }, 2000);
+  };
+
+  const handlePayNow = () => {
+    navigate(`/service-requests/confirmation/${id}`, {
+      state: {
+        serviceName: request.service?.title,
+        amount: request.amount,
+      },
+    });
+  };
   const canCancel =
     request?.status !== "Done" && request?.status !== "Cancelled";
 
@@ -55,44 +81,43 @@ const MyServiceRequestDetail = () => {
         </span>
       </div>
 
-{/* 2. Action Bar */}
-<div className="srd-action-bar">
-  <div className="srd-action-left">
-    <span className={`srd-status-pill ${request.status?.toLowerCase()}`}>
-      {request.status}
-    </span>
-  </div>
+      {/* 2. Action Bar */}
+      <div className="srd-action-bar">
+        <div className="srd-action-left">
+          <span className={`srd-status-pill ${request.status?.toLowerCase()}`}>
+            {request.status}
+          </span>
+        </div>
 
-  <div className="srd-action-right">
-    {request.paymentStatus === "Pending" && (
-      <button
-        className="srd-btn srd-btn-primary"
-        onClick={() =>
-          handlePayNow(
-            null,
-            request._id,
-            Number(request.amount),
-            getRequestDetails
-          )
-        }
-      >
-        Pay Now
-      </button>
-    )}
+        <div className="srd-action-right">
+          {request.paymentStatus === "Pending" && (
+            <button
+              className="srd-btn srd-btn-primary"
+              onClick={() =>
+                handlePayNow(
+                  null,
+                  request._id,
+                  Number(request.amount),
+                  getRequestDetails
+                )
+              }
+            >
+              Pay Now
+            </button>
+          )}
 
-    {request.paymentStatus === "Paid" && (
-      <button
-        className="srd-btn srd-btn-secondary"
-        onClick={() => downloadInvoice(request.invoice?._id)}
-      >
-        Download Invoice
-      </button>
-    )}
+          {request.paymentStatus === "Paid" && (
+            <button
+              className="srd-btn srd-btn-view-files"
+              onClick={scrollToWorkFiles}
+            >
+              View Work Files
+            </button>
+          )}
 
-    {/* Cancel will be wired in step 7 */}
-  </div>
-</div>
-
+          {/* Cancel will be wired in step 7 */}
+        </div>
+      </div>
 
       {/* Request Information */}
       <div className="srd-section">
@@ -111,8 +136,8 @@ const MyServiceRequestDetail = () => {
             </div>
 
             <div className="srd-info-item">
-              <span>Amount</span>
-              <strong>₹{request.amount}</strong>
+              <span>Request Status</span>
+              <strong >{request.status}</strong>
             </div>
 
             <div className="srd-info-item">
@@ -121,8 +146,8 @@ const MyServiceRequestDetail = () => {
             </div>
 
             <div className="srd-info-item">
-              <span>Request Status</span>
-              <strong>{request.status}</strong>
+              <span>Total Amount</span>
+              <strong>₹{request.amount}</strong>
             </div>
 
             <div className="srd-info-item">
@@ -131,6 +156,143 @@ const MyServiceRequestDetail = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* client Information */}
+
+      <div className="srd-section">
+        <h2 className="srd-section-title">Client Information</h2>
+
+        <div className="srd-card">
+          <div className="srd-info-grid">
+            <div className="srd-info-item">
+              <span>Name</span>
+              <strong>
+                {request.user?.firstName} {request.user?.lastName}
+              </strong>
+            </div>
+
+
+            <div className="srd-info-item">
+              <span>Mobile</span>
+              <strong>{request.user?.phone}</strong>
+            </div>
+
+            <div className="srd-info-item">
+              <span>Email</span>
+              <strong>{request.user?.email}</strong>
+            </div>
+
+            <div className="srd-info-item">
+              <span>Business Name</span>
+              <strong>{request.companyName}</strong>
+            </div>
+
+            <div className="srd-info-item">
+              <span>GST Number</span>
+              {request.client?.gstNumber ? (
+                <strong>
+                  {request.client.gstNumber.replace(
+                    /^(.{2}).*(.{4})$/,
+                    "$1****$2"
+                  )}
+                </strong>
+              ) : (
+                <strong>-</strong>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* description */}
+
+      {request.description && (
+        <div className="srd-section">
+          <h2 className="srd-section-title">Request Description</h2>
+
+          <div className="srd-card">
+            <p className="srd-description-text">{request.description}</p>
+          </div>
+        </div>
+      )}
+      {!request.description && (
+        <p className="srd-empty-text">
+          No additional description was provided by the client.
+        </p>
+      )}
+
+      {/* Payment */}
+
+      <div className="srd-section">
+        <h2 className="srd-section-title">Payment Details</h2>
+
+        {request.paymentStatus === "Pending" ? (
+          <div className="srd-card">
+            <div className="srd-info-grid">
+              <div className="srd-info-item">
+                <span>Amount</span>
+                <strong>₹{request.amount}</strong>
+              </div>
+
+              <div className="srd-info-item">
+                <span>Payment Status</span>
+                <strong className="text-warning">Pending</strong>
+              </div>
+            </div>
+
+            <div className="srd-payment-actions">
+              <button
+                className="srd-btn srd-btn-primary"
+                onClick={() =>
+                  handlePayNow(
+                    null,
+                    request._id,
+                    Number(request.amount),
+                    getRequestDetails
+                  )
+                }
+              >
+                Pay Now
+              </button>
+            </div>
+          </div>
+        ) : request.paymentStatus === "Paid" ? (
+          <div className="srd-card">
+            <div className="srd-info-grid">
+              <div className="srd-info-item">
+                <span>Amount Paid</span>
+                <strong>₹{request.amount}</strong>
+              </div>
+
+              <div className="srd-info-item">
+                <span>Payment Status</span>
+                <strong className="text-success">Paid</strong>
+              </div>
+
+              <div className="srd-info-item">
+                <span>Paid On</span>
+                <strong>{formatDate(request.invoice?.paidAt)}</strong>
+              </div>
+
+              <div className="srd-info-item">
+                <span>Transaction ID</span>
+                <strong>
+                  {request.invoice?.paymentDetails?.transactionId}
+                </strong>
+              </div>
+            </div>
+
+            <div className="srd-payment-actions">
+              <button
+                className="srd-btn srd-btn-secondary"
+                onClick={() => downloadInvoice(request.invoice?._id)}
+              >
+                Download Invoice
+              </button>
+            </div>
+          </div>
+        ) : null}
       </div>
 
       {/* Client upload */}
@@ -210,7 +372,7 @@ const MyServiceRequestDetail = () => {
 
       {/* Work File upload */}
 
-      <div className="srd-section">
+      <div className="srd-section" id="work-files-section">
         <h2 className="srd-section-title">Work Files</h2>
 
         <div className="srd-card">
@@ -244,109 +406,108 @@ const MyServiceRequestDetail = () => {
         </div>
       </div>
 
-{/* 6. Support */}
-<div className="srd-section">
-  <h2 className="srd-section-title">Need Help?</h2>
+      {/* 6. Support */}
+      <div className="srd-section">
+        <h2 className="srd-section-title">Need Help?</h2>
 
-  <div className="srd-card srd-support-card">
-    <div className="srd-support-left">
-      <p className="srd-support-text">
-        If you have any questions or issues related to this service request,
-        our support team is here to help you.
-      </p>
-      <span className="srd-support-ref">
-        Reference ID: <strong>{getShortId(request._id)}</strong>
-      </span>
-    </div>
+        <div className="srd-card srd-support-card">
+          <div className="srd-support-left">
+            <p className="srd-support-text">
+              If you have any questions or issues related to this service
+              request, our support team is here to help you.
+            </p>
+            <span className="srd-support-ref">
+              Reference ID: <strong>{getShortId(request._id)}</strong>
+            </span>
+          </div>
 
-    <div className="srd-support-actions">
-      <button
-        className="srd-btn srd-btn-outline"
-        onClick={() =>
-          navigate("/support", {
-            state: { requestId: request._id },
-          })
-        }
-      >
-        Contact Support
-      </button>
-    </div>
-  </div>
-</div>
+          <div className="srd-support-actions">
+            <button
+              className="srd-btn srd-btn-outline"
+              onClick={() =>
+                navigate("/support", {
+                  state: { requestId: request._id },
+                })
+              }
+            >
+              Contact Support
+            </button>
+          </div>
+        </div>
+      </div>
 
+      {/* 7. Cancel Request */}
+      {canCancel && (
+        <div className="srd-section">
+          <h2 className="srd-section-title srd-danger-title">Cancel Request</h2>
 
-{/* 7. Cancel Request */}
-{canCancel && (
-  <div className="srd-section">
-    <h2 className="srd-section-title srd-danger-title">
-      Cancel Request
-    </h2>
+          <div className="srd-card srd-danger-card">
+            <p className="srd-danger-text">
+              Cancelling this request is irreversible. If payment has already
+              been made, refunds (if applicable) will be processed according to
+              our policy.
+            </p>
 
-    <div className="srd-card srd-danger-card">
-      <p className="srd-danger-text">
-        Cancelling this request is irreversible. If payment has already
-        been made, refunds (if applicable) will be processed according to
-        our policy.
-      </p>
-
-      <button
-        className="srd-btn srd-btn-danger"
-        onClick={() => setShowCancelConfirm(true)}
-      >
-        Cancel This Request
-      </button>
-    </div>
-  </div>
-)}
-
+            <button
+              className="srd-btn srd-btn-danger"
+              onClick={() => setShowCancelConfirm(true)}
+            >
+              Cancel This Request
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Cancel Confirmation Modal */}
-{showCancelConfirm && (
-  <div className="srd-modal-backdrop">
-    <div className="srd-modal">
-      <h3 className="srd-modal-title">Confirm Cancellation</h3>
+      {showCancelConfirm && (
+        <div className="srd-modal-backdrop">
+          <div className="srd-modal">
+            <h3 className="srd-modal-title">Confirm Cancellation</h3>
 
-      <p className="srd-modal-text">
-        Are you sure you want to cancel this request? This action cannot be
-        undone.
-      </p>
+            <p className="srd-modal-text">
+              Are you sure you want to cancel this request? This action cannot
+              be undone.
+            </p>
 
-      <div className="srd-modal-actions">
-        <button
-          className="srd-btn srd-btn-secondary"
-          onClick={() => setShowCancelConfirm(false)}
-        >
-          Keep Request
-        </button>
+            <div className="srd-modal-actions">
+              <button
+                className="srd-btn srd-btn-secondary"
+                onClick={() => setShowCancelConfirm(false)}
+              >
+                Keep Request
+              </button>
 
-        <button
-          className="srd-btn srd-btn-danger"
-          onClick={async () => {
-            try {
-              await axios.post(
-                `${import.meta.env.VITE_API_URL}/api/service-requests/${id}/cancel`,
-                {},
-                {
-                  headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                  },
-                }
-              );
+              <button
+                className="srd-btn srd-btn-danger"
+                onClick={async () => {
+                  try {
+                    await axios.post(
+                      `${
+                        import.meta.env.VITE_API_URL
+                      }/api/service-requests/${id}/cancel`,
+                      {},
+                      {
+                        headers: {
+                          Authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                          )}`,
+                        },
+                      }
+                    );
 
-              setShowCancelConfirm(false);
-              fetchRequestDetails();
-            } catch (err) {
-              console.error("Cancel failed", err);
-            }
-          }}
-        >
-          Yes, Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+                    setShowCancelConfirm(false);
+                    fetchRequestDetails();
+                  } catch (err) {
+                    console.error("Cancel failed", err);
+                  }
+                }}
+              >
+                Yes, Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

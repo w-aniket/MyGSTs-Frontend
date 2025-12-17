@@ -7,8 +7,7 @@ const authHeader = { headers: { Authorization: `Bearer ${token}` } };
 export const handlePayNow = async (
   navigate = null,
   serviceRequestId,
-  amount,
-  fetchRequests = null
+  amount
 ) => {
   try {
     const res = await axios.post(
@@ -42,10 +41,7 @@ export const handlePayNow = async (
           if (verifyRes.data.success) {
             toast.success("Payment successful");
             if (typeof navigate === "function") {
-              navigate("/my-service-requests");
-            }
-            if (typeof fetchRequests === "function") {
-              await fetchRequests();
+              navigate(`/my-service-requests/${serviceRequestId}`);
             }
           }
         } catch (error) {

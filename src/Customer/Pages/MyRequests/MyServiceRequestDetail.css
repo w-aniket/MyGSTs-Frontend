@@ -70,7 +70,11 @@
 }
 
 /* Optional status states */
-.srd-status-pill.completed {
+.srd-status-pill.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+.srd-status-pill.done {
   background: #ecfdf5;
   color: #059669;
 }
@@ -122,6 +126,21 @@
   background: #4e4e4e;
 }
 
+.srd-btn-view-files {
+  background: #f8fafc; /* light gray */
+  color: #1f2937;      /* gray-800 */
+
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.srd-btn-view-files:hover {
+  background: #eef2ff;        /* subtle blue */
+  border-color: #c7d2fe;
+  color: #1d4ed8;
+}
+
 /* SECTION WRAPPER */
 .srd-section {
   margin-bottom: 32px;
@@ -144,9 +163,10 @@
 /* INFO GRID */
 .srd-info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
+
 
 .srd-info-item span {
   display: block;
@@ -158,6 +178,20 @@
 .srd-info-item strong {
   font-size: 15px;
   color: #111827;
+}
+
+.srd-description-text {
+  white-space: pre-wrap; /* keeps line breaks */
+  font-size: 14px;
+  line-height: 1.6;
+  color: #374151;
+    max-height: 180px;
+  overflow-y: auto;
+}
+
+
+.srd-payment-actions {
+  margin-top: 12px;
 }
 
 .srd-file-list {
@@ -310,19 +344,6 @@
   color: #ffffff;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .srd-support-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .srd-support-actions {
-    width: 100%;
-  }
-}
-
-
 
 /* Danger Title */
 .srd-danger-title {
@@ -393,4 +414,29 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+}
+
+.srd-scroll-highlight {
+  animation: srdHighlight 1s ease-in-out;
+}
+
+@keyframes srdHighlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 87, 246, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .srd-support-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .srd-support-actions {
+    width: 100%;
+  }
 }
