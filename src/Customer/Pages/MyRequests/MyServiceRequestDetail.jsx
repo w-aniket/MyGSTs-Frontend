@@ -72,7 +72,7 @@ const MyServiceRequestDetail = () => {
         <div>
           <h1>{request.service?.title}</h1>
           <p className="srd-sub">
-            Reqeist ID: <strong>{getShortId(request._id)}</strong>
+            Reqeist ID: <strong>{id}</strong>
           </p>
         </div>
 
@@ -127,7 +127,7 @@ const MyServiceRequestDetail = () => {
           <div className="srd-info-grid">
             <div className="srd-info-item">
               <span>Request ID</span>
-              <strong>{getShortId(request._id)}</strong>
+              <strong>{id}</strong>
             </div>
 
             <div className="srd-info-item">
@@ -417,7 +417,7 @@ const MyServiceRequestDetail = () => {
               request, our support team is here to help you.
             </p>
             <span className="srd-support-ref">
-              Reference ID: <strong>{getShortId(request._id)}</strong>
+              Reference ID: <strong>{id}</strong>
             </span>
           </div>
 

@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FaCheckCircle, FaMoneyBillWave, FaClock } from "react-icons/fa";
 import "./ServiceRequestConfirmation.css";
 import { handlePayNow } from "../../../Utils/Payment/payments";
-import { getShortId, gstAmount } from "../../../Utils/basicFunctions";
+import { gstAmount } from "../../../Utils/basicFunctions";
 
 const ServiceRequestConfirmation = () => {
   const navigate = useNavigate();
@@ -13,7 +13,6 @@ const ServiceRequestConfirmation = () => {
   const serviceName = state?.serviceName || "Service";
   const amount = Number(state?.amount) || 0;
 
-  const requestId = getShortId(id)
   const returnAmount = gstAmount(amount)
 
   const handlePay = (id, amount) => {
@@ -39,7 +38,7 @@ const ServiceRequestConfirmation = () => {
           </div>
           <div className="src-row">
             <span>Request ID</span>
-            <strong>{requestId}</strong>
+            <strong>{id}</strong>
           </div>
           <div className="src-divider" />
             <div className="src-row">

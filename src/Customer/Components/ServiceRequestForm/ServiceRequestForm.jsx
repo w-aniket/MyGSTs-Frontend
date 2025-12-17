@@ -98,13 +98,13 @@ const ServiceRequestForm = ({
       );
 
       if (res.data.success) {
-        toast.success("Request submitted successfully!");
+        toast.success("Request submitted");
 
         // save login token and user in context/localStorage
         localStorage.setItem("token", res.data.token);
         setUser(res.data.user);
 
-        navigate(`/service-requests/confirmation/${res.data?.request._id}`, {
+        navigate(`/service-requests/confirmation/${res.data?.request.displayId}`, {
           state: {
             serviceName,
             amount: pricing,
@@ -159,8 +159,8 @@ const ServiceRequestForm = ({
         }
       );
 
-      toast.success("Service request submitted successfully!");
-      navigate(`/service-requests/confirmation/${res.data?.request._id}`, {
+      toast.success("Request submitted");
+      navigate(`/service-requests/confirmation/${res.data?.request.displayId}`, {
         state: {
           serviceName,
           amount: pricing,

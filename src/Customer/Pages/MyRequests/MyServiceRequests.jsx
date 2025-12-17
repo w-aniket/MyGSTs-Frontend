@@ -126,7 +126,7 @@ const MyServiceRequests = () => {
                   <button
                     className="primary"
                     onClick={() =>
-                      handlePayNow(null, req._id, Number(req.amount), fetchRequests)
+                      handlePayNow(null, req.displayId, Number(req.amount), fetchRequests)
                     }
                   >
                     Pay Now
@@ -147,7 +147,7 @@ const MyServiceRequests = () => {
       )}
 
       {totalPages > 1 && (
-        <div className="msr-pagination">
+        <div className="msr-pagination"> 
           <button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
             Prev
           </button>
