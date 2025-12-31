@@ -1,12 +1,17 @@
 /* Prevent horizontal overflow globally */
 @import "tailwindcss";
 body {
-     background: linear-gradient(
+  background: linear-gradient(
     135deg,
     #f8fafc 0%,
     #eef2ff 40%,
     #fdf2f8 100%
-  ); 
+    ); 
+    
+  }
+  
+.web-body {
+    font-family: "Poppins", sans-serif;
 }
 
 .page-container {

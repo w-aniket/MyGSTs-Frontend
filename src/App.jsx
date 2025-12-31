@@ -13,7 +13,7 @@ import Loader from "./Component/Loader/Loader";
 function App() {
   const { user, loadingUser } = useContext(UserContext);
   return (
-    <>
+    <div className="web-body">
       <ScrollToTop />
       <Routes>
         <Route path="/*" element={<CustomerRouters />} />
@@ -49,7 +49,7 @@ function App() {
           <Loader /> {/* Try "wave" | "typing" | "shimmer" */}
         </div>
       )}
-    </>
+    </div>
   );
 }
 

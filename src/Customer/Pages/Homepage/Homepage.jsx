@@ -4,12 +4,14 @@ import IntroImage from './IntroImage/Introimage.jsx';
 import Services from './ServicesPanel/Services.jsx';
 import Contact from '../../Pages/ContactV2/Contact.jsx';
 import CareerInrto from '../../Components/CareerIntro/CareerInrto.jsx';
+import WhyChooseUs from '../../../Component/WhyChooseUs/WhyChooseUs.jsx';
 
 const Homepage = () => {
   return (
     <div>
       <IntroImage />
       <Services />
+      <WhyChooseUs />
       <CareerInrto showButton={true} reverseLayout={true} />
       <Contact />
     </div>
