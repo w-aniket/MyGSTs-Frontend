@@ -1,0 +1,105 @@
+/* Section */
+.how-section {
+  padding: 100px 20px;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  background-color: #f9fafb;
+}
+
+/* Container */
+.how-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section title */
+.how-container h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+/* Section description */
+.how-container p {
+  font-size: 1.1rem;
+  color: #6b7280;
+  max-width: 700px;
+  margin: 0 auto 80px;
+  line-height: 1.6;
+}
+
+/* Steps grid */
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  align-items: start;
+  justify-items: center;
+}
+
+/* Step card */
+.step-card {
+  background: #ffffff;
+  padding: 25px 20px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 100%;
+  max-width: 240px;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Step icon (numbered circle) */
+.step-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #2563eb; /* blue for trust */
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Step title */
+.step-card h3 {
+  font-size: 1.25rem;
+  color: #111827;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Step description */
+.step-card p {
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .how-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .how-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .step-card {
+    max-width: 300px;
+  }
+}
