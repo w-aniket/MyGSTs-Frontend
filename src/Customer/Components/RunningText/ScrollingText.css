@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 /* Container to hold scrolling text */
 .scrolling-container {
-    width: 100vw;
+    width: 100%;
     overflow: hidden;
     background-color: rgb(255, 255, 255);
     padding: 10px; /* Ensure it's above navbar */

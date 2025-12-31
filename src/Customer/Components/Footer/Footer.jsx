@@ -4,6 +4,7 @@ import fb from "../../../assets/facebook.png";
 import X from "../../../assets/twitter.png";
 import linkedin from "../../../assets/linkedin.png";
 import insta from "../../../assets/instagram.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -12,60 +13,60 @@ const Footer = () => {
         <div className="sub_footer-links">
           <div className="sub_footer-links-div">
             <h4>Company</h4>
-            <a href="/about-us">
+            <Link to="/about-us">
               <p>About</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>Blog</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>Press</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>Jobs</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>Partners</p>
-            </a>
+            </Link>
           </div>
           <div className="sub_footer-links-div">
             <h4>Solutions</h4>
-            <a href="#">
+            <Link to="#">
               <p>Marketing</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>Analytics</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>Commerce</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>Insights</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>Support</p>
-            </a>
+            </Link>
           </div>
           <div className="sub_footer-links-div">
             <h4>Documentation</h4>
-            <a href="#">
+            <Link to="#">
               <p>Guides</p>
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <p>API Status</p>
-            </a>
+            </Link>
           </div>
           <div className="sub_footer-links-div">
             <h4>Legal</h4>
-            <a href="/claim">
+            <Link to="/claim">
               <p>Claim</p>
-            </a>
-            <a href="/privacy-policy">
+            </Link>
+            <Link to="/privacy-policy">
               <p>Privacy</p>
-            </a>
-            <a href="/terms-and-conditions">
+            </Link>
+            <Link to="/terms-and-conditions">
               <p>T & C</p>
-            </a>
+            </Link>
           </div>
           <div className="sub_footer-links-div">
             <h4>Social Media</h4>
@@ -76,9 +77,9 @@ const Footer = () => {
               <p>
                 <img src={X} alt="" />
               </p>
-              <a href="https://www.instagram.com/mygsts.official/" target="_blank" rel="noopener noreferrer">
+              <Link to="https://www.instagram.com/mygsts.official/" target="_blank" rel="noopener noreferrer">
                 <img src={insta} alt="" />
-              </a>
+              </Link>
               <p>
                 <img src={linkedin} alt="" />
               </p>
@@ -91,26 +92,26 @@ const Footer = () => {
             <p>@{new Date().getFullYear()} W.Aniket All right reserved.</p>
           </div>
           <div className="sub_footer-below-links">
-            <a href="/terms-and-conditions">
+            <Link to="/terms-and-conditions">
               <div>
                 <p>Terms & Conditions</p>
               </div>
-            </a>
-            <a href="/privacy-policy">
+            </Link>
+            <Link to="/privacy-policy">
               <div>
                 <p>Privacy</p>
               </div>
-            </a>
-            <a href="/security">
+            </Link>
+            <Link to="/security">
               <div>
                 <p>Security</p>
               </div>
-            </a>
-            <a href="/cookie-declaration">
+            </Link>
+            <Link to="/cookie-declaration">
               <div>
                 <p>Cookie Declaration</p>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

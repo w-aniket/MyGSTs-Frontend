@@ -1,9 +1,5 @@
 /* Prevent horizontal overflow globally */
 @import "tailwindcss";
-html, body {
-  overflow-x: hidden;
-}
-
 body {
      background: linear-gradient(
     135deg,
