@@ -10,7 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { UserContext } from "../../../UserContex/UserContext";
 import ProfileLogo from "../ProfileLogo/ProfileLogo";
-import Full_Logo from "../../../assets/Full_Logo.png"
+import Full_Logo from "../../../assets/Full_Logo.png";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -18,7 +18,6 @@ const Navigation = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useContext(UserContext);
   const dropdownRef = useRef(null);
-
 
   const navigation = [
     { name: "Home", href: "/", current: location.pathname === "/" },
@@ -28,19 +27,24 @@ const Navigation = () => {
       current: location.pathname === "/services",
     },
     {
-      name: "About Us",
-      href: "/about",
-      current: location.pathname === "/about",
-    },
-    {
-      name: "Resources",
-      href: "/resources",
-      current: location.pathname === "/resources",
-    },
-    {
       name: "Careers",
       href: "/careers",
       current: location.pathname === "/careers",
+    },
+    {
+      name: "About Us",
+      href: "/about-us",
+      current: location.pathname === "/about-us",
+    },
+    // {
+    //   name: "Resources",
+    //   href: "/resources",
+    //   current: location.pathname === "/resources",
+    // },
+        {
+      name: "Support",
+      href: "/support",
+      current: location.pathname === "/support",
     },
     {
       name: "Contact Us",
@@ -68,7 +72,7 @@ const Navigation = () => {
         {/* Mobile Menu Button */}
         <div className="sm:hidden">
           <DisclosureButton className="mobile-menu-button">
-            <Bars3Icon className="size-8 text-white" />
+            <Bars3Icon className="menu-icon" />
           </DisclosureButton>
         </div>
 
@@ -91,18 +95,38 @@ const Navigation = () => {
         </div>
 
         {/* Profile Section */}
-
-        {user ? (
-          <ProfileLogo />
-        ) : (
-          <button id="signup" onClick={() => navigate("/signin")}>
-            Login
-          </button>
-        )}
+        <div className="navbar-actions">
+          {user ? (
+            <>
+              <button
+                className="orders-btn"
+                onClick={() => navigate("/my-service-requests")}
+                title="My Service Requests"
+              >
+                <CasesRoundedIcon />
+              </button>
+              <ProfileLogo />
+            </>
+          ) : (
+            <button id="signup" onClick={() => navigate("/signin")}>
+              Login
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Mobile Menu */}
       <DisclosurePanel className="mobile-menu">
+        {user && (
+          <DisclosureButton
+            as="a"
+            onClick={() => navigate("/my-service-requests")}
+            className="nav-link"
+          >
+            My Service Requests
+          </DisclosureButton>
+        )}
+
         {navigation.map((item) => (
           <DisclosureButton
             key={item.name}

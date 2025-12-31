@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../../UserContex/UserContext";
 import { useNavigate } from "react-router-dom";
-import "./ProfileLogo.css";
 
 const ProfileLogo = () => {
   const dropdownRef = useRef(null);

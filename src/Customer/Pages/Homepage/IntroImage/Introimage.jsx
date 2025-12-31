@@ -1,31 +1,38 @@
-import React, { useContext } from 'react';
-import './Introimage.css';
-import introImage from '../../../../assets/intro-image.jpg';
-import { Link } from 'react-router-dom';
-import { UserContext } from '../../../../UserContex/UserContext';
+import "./IntroImage.css";
+import { Link } from "react-router-dom";
 
-const intro = () => {
-  const {user} = useContext(UserContext)
+const introImage =
+  "https://res.cloudinary.com/diricpliu/image/upload/v1767189434/pexels-khwanchai-4175023_wufjzu.jpg";
+
+const Intro = () => {
   return (
-    <div className="intro-container">
-      <div className="intro-image">
-        <img src={introImage} alt="Ganesh Accounting - Accounting Made Easy" />
+ <section
+      className="home hero"
+      style={{ backgroundImage: `url(${introImage})` }}
+    >
+      <div className="hero-overlay">
+        <div className="hero-content">
+          <div className="text-content">
+
+          <span className="hero-tag">Trusted Online Accounting & Tax Services in India</span>
+
+          <h1>
+            Smart Accounting & Tax Solutions <br />
+            <span className="highlight">Built for Growing Indian Businesses</span>
+          </h1>
+
+          <p>
+Professional online accounting, GST, and income tax services designed for startups, professionals, and businesses across India. From compliance to audits, MyGSTs delivers fast, accurate, and reliable solutions—fully remote, fully secure.
+          </p>
+
+          <Link to="/contact" className="hero-cta">
+            Get Free Consultation
+          </Link>
+          </div>
+        </div>
       </div>
-      <div className="intro-text">
-        {user ? (<>
-        <h1>Service Requests</h1>
-        <p>Track your service requests</p>
-        {/* <button className=''>View</button> */}
-        <Link className='my-service-requestes-link' to="/my-service-requests">Track</Link></>):(
-          <>
-          <h1>Ganesh Accounting</h1>
-          <p>Accounting made easy</p>
-          <p>We are here to help you</p>
-          </>
-        )}
-      </div>
-    </div>
+    </section>
   );
 };
 
-export default intro;
+export default Intro;

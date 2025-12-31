@@ -4,7 +4,7 @@ import { UserContext } from "../../../UserContex/UserContext";
 import "./MyRequests.css";
 import { handlePayNow } from "../../../Utils/Payment/payments";
 import { useNavigate } from "react-router-dom";
-import { formatDate, getShortId } from "../../../Utils/basicFunctions";
+import { formatDate} from "../../../Utils/basicFunctions";
 import { downloadInvoice } from "../../../Utils/Invoice/downloadInvoice";
 
 const MyServiceRequests = () => {
@@ -94,7 +94,7 @@ const MyServiceRequests = () => {
       ) : (
         <div className="msr-list">
           {paginatedRequests.map((req) => (
-            <div className="msr-card" key={req._id}>
+            <div className="msr-card" key={req.displayId}>
               <div className="msr-card-top">
                 <h3>{req.service?.title}</h3>
                 <span className={`badge ${req.paymentStatus.toLowerCase()}`}>
@@ -105,7 +105,7 @@ const MyServiceRequests = () => {
               <div className="msr-info">
                 <div>
                   <span>Request Id</span>
-                  <strong>{getShortId(req._id)}</strong>
+                  <strong>{req.displayId}</strong>
                 </div>
                 <div>
                   <span>Submitted</span>
@@ -139,7 +139,7 @@ const MyServiceRequests = () => {
                     Invoice
                   </button>
                 )}
-                <button className="outline" onClick={() => navigate(`${req._id}`)}>View Details</button>
+                <button className="outline" onClick={() => navigate(`${req.displayId}`)}>View Details</button>
               </div>
             </div>
           ))}

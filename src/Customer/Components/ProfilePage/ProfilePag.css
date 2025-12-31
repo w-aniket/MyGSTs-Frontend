@@ -60,7 +60,7 @@ body {
     border-left: 4px solid #1e47a1;
   }
   
-  .main-content {
+  .profile-page .main-content {
     flex: 1;
     padding: 20px;
     background: white;
@@ -174,11 +174,11 @@ body {
       transform: translateX(0);
     }
   
-    .main-content {
+    .profile-page .main-content {
       padding: 15px;
     }
   
-    .hamburger {
+    .profile-page .hamburger {
         display: block;
         position: fixed;
         top: 8rem;

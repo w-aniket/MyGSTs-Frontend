@@ -93,7 +93,7 @@ const OTPLogin = () => {
 
   return (
     <div className="auth-container">
-      <h1>{step === 1 ? "Enter Email" : "Enter OTP"}</h1>
+      <h1>{step === 1 ? "Login" : "Enter OTP"}</h1>
 
       {step === 1 && (
         <div className="form-group">

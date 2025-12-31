@@ -350,7 +350,7 @@ const ServiceDetail = () => {
                 <h2>Pricing</h2>
                 <div className="price-block">
                   <div className="price-left">
-                    <div className="price-amount">₹{price}/- (incl. GST)</div>
+                    <div className="price-amount">₹{price}/-</div>
                     <div className="price-note">Starting price</div>
                   </div>
                   <div className="price-right">

@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="sub_footer-links">
           <div className="sub_footer-links-div">
             <h4>Company</h4>
-            <a href="#">
+            <a href="/about-us">
               <p>About</p>
             </a>
             <a href="#">
@@ -57,13 +57,13 @@ const Footer = () => {
           </div>
           <div className="sub_footer-links-div">
             <h4>Legal</h4>
-            <a href="#">
+            <a href="/claim">
               <p>Claim</p>
             </a>
-            <a href="#">
+            <a href="/privacy-policy">
               <p>Privacy</p>
             </a>
-            <a href="#">
+            <a href="/terms-and-conditions">
               <p>T & C</p>
             </a>
           </div>
@@ -91,22 +91,22 @@ const Footer = () => {
             <p>@{new Date().getFullYear()} W.Aniket All right reserved.</p>
           </div>
           <div className="sub_footer-below-links">
-            <a href="#">
+            <a href="/terms-and-conditions">
               <div>
                 <p>Terms & Conditions</p>
               </div>
             </a>
-            <a href="#">
+            <a href="/privacy-policy">
               <div>
                 <p>Privacy</p>
               </div>
             </a>
-            <a href="#">
+            <a href="/security">
               <div>
                 <p>Security</p>
               </div>
             </a>
-            <a href="#">
+            <a href="/cookie-declaration">
               <div>
                 <p>Cookie Declaration</p>
               </div>

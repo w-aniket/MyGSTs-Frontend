@@ -1,0 +1,118 @@
+.about-container {
+  padding: 60px 20px;
+  max-width: 1280px;
+  margin: auto;
+  font-family: "Inter", sans-serif;
+  color: #1f2937;
+}
+
+.about-container .about-hero {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.about-container .about-hero h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.about-container .about-hero p {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+.about-container .about-section {
+  margin-bottom: 60px;
+}
+
+.about-container .about-section h2 {
+  font-size: 28px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.about-container .icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  background: #f9fafb;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 700px;
+  margin: auto;
+}
+
+.about-container .card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.about-container .card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.about-container .icon {
+  font-size: 32px;
+  color: #2563eb;
+  margin-bottom: 14px;
+}
+
+.about-container .card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.about-container .card p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.about-container .vision-text {
+  text-align: center;
+  max-width: 700px;
+  margin: auto;
+  font-size: 16px;
+  color: #4b5563;
+}
+
+.about-container .about-cta {
+  text-align: center;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #ffffff;
+  padding: 50px 20px;
+  border-radius: 16px;
+}
+
+.about-container .primary-btn {
+  margin-top: 16px;
+  padding: 12px 28px;
+  background: #ffffff;
+  color: #1e40af;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.about-container .primary-btn:hover {
+  background: #e5e7eb;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .about-container .about-hero h1 {
+    font-size: 32px;
+  }
+}
