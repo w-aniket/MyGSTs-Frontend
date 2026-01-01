@@ -9,34 +9,34 @@ const Careers = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   async function fetchJobs() {
-      try {
-        const res = await axios.get(`${apiUrl}/api/public/jobs`)
-        setJobs(res.data.jobs || []);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
+    try {
+      const res = await axios.get(`${apiUrl}/api/public/jobs`);
+      setJobs(res.data.jobs || []);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
     }
+  }
 
   useEffect(() => {
     fetchJobs();
-  }, [])
+  }, []);
 
   return (
-    <div>
+    <>
+      <div className="page-container">
       <CareerInrto showButton={false} reverseLayout={false} />
-      {/* <JobCard />
-      <JobCardGlass /> */}
-      <div className="career-page">
-        <h1 className="career-heading">Career Opportunities</h1>
-        <div className="job-listings">
-          {jobs.map((job) => (
-            <div key={job._id} className="job-card-wrapper">
-              <JobCard {...job} />
-            </div>
-          ))}
+        <div className="career-page">
+          <h1 className="career-heading">Career Opportunities</h1>
+          <div className="job-listings">
+            {jobs.map((job) => (
+              <div key={job._id} className="job-card-wrapper">
+                <JobCard {...job} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import "./AboutUs.css";
 import { useNavigate } from "react-router-dom";
 import { AnimatedCard } from "../../../Component/AnimatedCard/AnimatedCard";
 import { Helmet } from "react-helmet-async";
+import WhyChooseUs from "../../../Component/WhyChooseUs/WhyChooseUs";
 
 const AboutUs = () => {
   const navigate = useNavigate();
@@ -93,24 +94,7 @@ const AboutUs = () => {
         </div>
 
         {/* Why Choose Us */}
-        <div className="about-section">
-          <h2>Why Choose MyGSTs</h2>
-          <div className="card-grid">
-            <AnimatedCard>
-              <FaHandshake className="icon" />
-              <p>Designed specifically for Indian GST compliance</p>
-            </AnimatedCard>
-            <AnimatedCard>
-              <FaLock className="icon" />
-              <p>Privacy-first and secure data handling</p>
-            </AnimatedCard>
-
-            <AnimatedCard>
-              <FaUsers className="icon" />
-              <p>Built for businesses, freelancers, and accountants</p>
-            </AnimatedCard>
-          </div>
-        </div>
+        <WhyChooseUs />
 
         {/* Our team */}
         <div className="about-section">

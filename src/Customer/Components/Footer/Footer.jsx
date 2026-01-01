@@ -16,22 +16,22 @@ const Footer = () => {
             <Link to="/about-us">
               <p>About</p>
             </Link>
-            <Link to="#">
-              <p>Blog</p>
+            <Link to="/contact">
+              <p>Contact us</p>
             </Link>
-            <Link to="#">
+            {/* <Link to="#">
               <p>Press</p>
-            </Link>
-            <Link to="#">
+            </Link> */}
+            <Link to="/careers">
               <p>Jobs</p>
             </Link>
-            <Link to="#">
+            {/* <Link to="#">
               <p>Partners</p>
-            </Link>
+            </Link> */}
           </div>
           <div className="sub_footer-links-div">
             <h4>Solutions</h4>
-            <Link to="#">
+            {/* <Link to="#">
               <p>Marketing</p>
             </Link>
             <Link to="#">
@@ -42,12 +42,12 @@ const Footer = () => {
             </Link>
             <Link to="#">
               <p>Insights</p>
-            </Link>
-            <Link to="#">
+            </Link> */}
+            <Link to="/support">
               <p>Support</p>
             </Link>
           </div>
-          <div className="sub_footer-links-div">
+          {/* <div className="sub_footer-links-div">
             <h4>Documentation</h4>
             <Link to="#">
               <p>Guides</p>
@@ -55,7 +55,7 @@ const Footer = () => {
             <Link to="#">
               <p>API Status</p>
             </Link>
-          </div>
+          </div> */}
           <div className="sub_footer-links-div">
             <h4>Legal</h4>
             <Link to="/claim">

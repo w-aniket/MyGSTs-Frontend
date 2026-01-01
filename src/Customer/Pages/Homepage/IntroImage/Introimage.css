@@ -1,8 +1,6 @@
 .hero {
   position: relative;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: 100%;
   display: flex;
   align-items: center;
   background-size: cover;
@@ -10,7 +8,6 @@
   background-repeat: no-repeat;
 }
 
-/* Overlay for readability */
 .hero-overlay {
   padding: 90px 20px;
   width: 100%;

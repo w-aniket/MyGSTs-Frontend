@@ -25,6 +25,7 @@ import TermsAndConditions from "../Customer/Pages/TermAndConditions/TermsAndCond
 import Security from "../Customer/Pages/Security/Security.jsx";
 import CookieDeclaration from "../Customer/Pages/CookieDeclaration/CookieDeclaration.jsx";
 import Claims from "../Customer/Pages/Claims/Claims.jsx";
+import Support from "../Customer/Pages/Support/Support.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -32,7 +33,6 @@ const CustomerRouters = () => {
       <ScrollingText />
       <Navigation />
       <ContactWidget />
-      <div className="page-container">
 
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -62,8 +62,8 @@ const CustomerRouters = () => {
         <Route path="/security" element={<Security />} />
         <Route path="/cookie-declaration" element={<CookieDeclaration />} />
         <Route path="/claim" element={<Claims />} />
+        <Route path="/support" element={<Support />} />
       </Routes>
-      </div>
 
       <div>
         <Footer />

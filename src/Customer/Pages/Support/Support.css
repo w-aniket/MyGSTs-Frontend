@@ -1,0 +1,254 @@
+/* ===== General Container ===== */
+.support-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: 80vh;
+  padding: 0 16px;
+  font-family: "Inter", sans-serif;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+/* ===== Support Header ===== */
+.support-header {
+  padding: 60px 16px;
+  text-align: center;
+  background: #f3f4f6;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.support-header-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.support-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.support-subtitle {
+  font-size: 18px;
+  color: #4b5563;
+  margin-bottom: 12px;
+}
+
+.support-meta {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* ===== FAQ Section (Imported) ===== */
+.faq-section {
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+/* ===== Support Ticket Section ===== */
+.support-ticket-section {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  padding: 40px 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.support-ticket-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.support-ticket-section p {
+  margin-bottom: 24px;
+  color: #4b5563;
+}
+
+.support-ticket-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.support-ticket-form input,
+.support-ticket-form select,
+.support-ticket-form textarea {
+  padding: 14px 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.support-ticket-form input:focus,
+.support-ticket-form select:focus,
+.support-ticket-form textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  outline: none;
+}
+
+.support-ticket-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.support-ticket-form button {
+  padding: 14px 24px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.support-ticket-form button:hover {
+  background-color: #1e40af;
+  transform: translateY(-2px);
+}
+
+.status-message {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #16a34a;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ===== Contact Support Section ===== */
+.contact-support-section {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  padding: 40px 24px;
+  background: #f9fafb;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.contact-support-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.contact-support-section p {
+  font-size: 16px;
+  color: #4b5563;
+  margin-bottom: 24px;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  line-height: 2;
+}
+
+.contact-list li {
+  margin-bottom: 8px;
+}
+
+.contact-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* ===== Footer Links Section ===== */
+.support-footer-links {
+  max-width: 700px;
+  margin: 40px auto 20px;
+  padding: 24px;
+  text-align: center;
+  background: #f3f4f6;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.support-footer-links h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1f2937;
+}
+
+.support-footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.footer-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .support-container {
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .support-header,
+  .support-ticket-section,
+  .contact-support-section {
+    padding: 30px 16px;
+  }
+
+  .support-header h1 {
+    font-size: 28px;
+  }
+
+  .support-ticket-section h2,
+  .contact-support-section h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .support-footer-links ul {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .support-header h1 {
+    font-size: 24px;
+  }
+
+  .support-ticket-section h2,
+  .contact-support-section h2 {
+    font-size: 20px;
+  }
+}

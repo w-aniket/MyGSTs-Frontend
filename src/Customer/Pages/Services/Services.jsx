@@ -19,7 +19,7 @@ const Services = () => {
   },[])
 
   return (
-    <div>
+    <div className='page-container'>
       <div className="services-intro-word">
         <h2>
            <Typewriter
