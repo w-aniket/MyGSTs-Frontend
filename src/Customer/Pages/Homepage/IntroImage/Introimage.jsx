@@ -1,4 +1,4 @@
-import "./IntroImage.css";
+import "./Introimage.css";
 import { Link } from "react-router-dom";
 
 const introImage =
