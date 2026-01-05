@@ -72,8 +72,6 @@ const OTPLogin = () => {
       localStorage.setItem("token", token);
       const user = jwtDecode(token);
 
-      toast.success(emailExist ? "Login Successful" : "Registration Successful");
-
       if (user.role === "admin") navigate("/admin");
       else if (user.role === "employee") navigate("/employee");
       else navigate("/");

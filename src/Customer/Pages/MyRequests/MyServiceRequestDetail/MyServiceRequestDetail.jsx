@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { fetchRequestDetails } from "../../../Utils/APIs/serviceRequestApi";
-import { formatDate, getShortId } from "../../../Utils/basicFunctions";
-// import { handlePayNow } from "../../../Utils/Payment/payments";
-import { downloadInvoice } from "../../../Utils/Invoice/downloadInvoice";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { fetchRequestDetails } from "../../../../Utils/APIs/serviceRequestApi";
+import { formatDate, getShortId } from "../../../../Utils/basicFunctions";
+import { downloadInvoice } from "../../../../Utils/Invoice/downloadInvoice";
+import SupportSection from "./SupportSection";
 import "./MyServiceRequestDetail.css";
 
 const MyServiceRequestDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const showSuccess = location.state?.supportSubmitted;
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [request, setRequests] = useState(null);
   const [loading, setLoading] = useState(true);
+  const supportTicket = {
+    status: "OPEN", // OPEN | IN_PROGRESS | RESOLVED
+    ticketId: "SUP-1023",
+  };
 
   const getRequestDetails = async () => {
     try {
@@ -67,6 +73,11 @@ const MyServiceRequestDetail = () => {
 
   return (
     <div className="srd-page">
+      {showSuccess && (
+        <div className="srd-success-banner">
+          Support ticket submitted successfully. Our team will contact you soon.
+        </div>
+      )}
       {/* Header */}
       <div className="srd-header">
         <div>
@@ -137,7 +148,7 @@ const MyServiceRequestDetail = () => {
 
             <div className="srd-info-item">
               <span>Request Status</span>
-              <strong >{request.status}</strong>
+              <strong>{request.status}</strong>
             </div>
 
             <div className="srd-info-item">
@@ -171,7 +182,6 @@ const MyServiceRequestDetail = () => {
                 {request.user?.firstName} {request.user?.lastName}
               </strong>
             </div>
-
 
             <div className="srd-info-item">
               <span>Mobile</span>
@@ -407,34 +417,7 @@ const MyServiceRequestDetail = () => {
       </div>
 
       {/* 6. Support */}
-      <div className="srd-section">
-        <h2 className="srd-section-title">Need Help?</h2>
-
-        <div className="srd-card srd-support-card">
-          <div className="srd-support-left">
-            <p className="srd-support-text">
-              If you have any questions or issues related to this service
-              request, our support team is here to help you.
-            </p>
-            <span className="srd-support-ref">
-              Reference ID: <strong>{id}</strong>
-            </span>
-          </div>
-
-          <div className="srd-support-actions">
-            <button
-              className="srd-btn srd-btn-outline"
-              onClick={() =>
-                navigate("/support", {
-                  state: { requestId: request._id },
-                })
-              }
-            >
-              Contact Support
-            </button>
-          </div>
-        </div>
-      </div>
+      <SupportSection id={id} />
 
       {/* 7. Cancel Request */}
       {canCancel && (

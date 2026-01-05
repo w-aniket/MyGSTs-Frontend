@@ -1,0 +1,38 @@
+.mst-page {
+  max-width: 900px;
+  margin: auto;
+  padding: 24px;
+}
+
+.mst-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.mst-status {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.mst-status.open {
+  color: #d97706;
+}
+
+.mst-status.resolved {
+  color: #16a34a;
+}
+
+.mst-btn {
+  background: #2563eb;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}

@@ -19,13 +19,14 @@ import MyServiceRequests from "../Customer/Pages/MyRequests/MyServiceRequests.js
 import OTPLogin from "../Customer/Auth/OTPLogin.jsx";
 import ContactWidget from "../Component/ContactWidget/ContactWidget.jsx";
 import ServiceRequestConfirmation from "../Customer/Pages/MyRequests/ServiceRequestConfirmation.jsx";
-import MyServiceRequestDetail from "../Customer/Pages/MyRequests/MyServiceRequestDetail.jsx";
+import MyServiceRequestDetail from "../Customer/Pages/MyRequests/MyServiceRequestDetail/MyServiceRequestDetail.jsx";
 import PrivacyPolicy from "../Customer/Pages/PrivacyPolicy/PrivacyPolicy.jsx";
 import TermsAndConditions from "../Customer/Pages/TermAndConditions/TermsAndConditions.jsx";
 import Security from "../Customer/Pages/Security/Security.jsx";
 import CookieDeclaration from "../Customer/Pages/CookieDeclaration/CookieDeclaration.jsx";
 import Claims from "../Customer/Pages/Claims/Claims.jsx";
 import Support from "../Customer/Pages/Support/Support.jsx";
+import MySupportTickets from "../Customer/Pages/MySupportTickets/MySupportTickets.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -63,6 +64,8 @@ const CustomerRouters = () => {
         <Route path="/cookie-declaration" element={<CookieDeclaration />} />
         <Route path="/claim" element={<Claims />} />
         <Route path="/support" element={<Support />} />
+        <Route path="/support/tickets" element={<MySupportTickets />} />
+
       </Routes>
 
       <div>

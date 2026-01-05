@@ -1,0 +1,130 @@
+/* Page Wrapper */
+.support-ticket {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Page Title */
+.support-ticket h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+/* Card (Request Context) */
+.support-ticket .support-card {
+    width: 100%;
+    text-align: center;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+}
+
+.support-ticket .support-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+.support-ticket .support-card p {
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Form Wrapper */
+.support-ticket .support-form {
+    width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+/* Labels */
+.support-ticket .support-form label {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Inputs */
+.support-ticket .support-form select,
+.support-ticket .support-form textarea,
+.support-ticket .support-form input[type="file"] {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  color: #111827;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus State */
+.support-ticket .support-form select:focus,
+.support-ticket .support-form textarea:focus,
+.support-ticket .support-form input[type="file"]:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Textarea */
+.support-ticket .support-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Submit Button */
+.support-ticket .btn-primary {
+  margin-top: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+/* Button Hover */
+.support-ticket .btn-primary:hover {
+  background: #1d4ed8;
+}
+
+/* Button Active */
+.support-ticket .btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Disabled Button */
+.support-ticket .btn-primary:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .support-ticket {
+    padding: 24px 16px;
+  }
+
+  .support-ticket .support-form {
+    padding: 20px;
+  }
+}
