@@ -1,10 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const SupportSection = ({ id, supportTicket }) => {
+const SupportSection = ({ displayId, requestId, supportTicket }) => {
   const navigate = useNavigate();
 
-  const isTicketOpen = supportTicket?.status !== "RESOLVED";
+const isTicketOpen =
+  !!supportTicket && supportTicket.status !== "RESOLVED";
+
   return (
     <div className="srd-section">
       <h2 className="srd-section-title">Need Help?</h2>
@@ -16,7 +18,7 @@ const SupportSection = ({ id, supportTicket }) => {
             our support team is here to help you.
           </p>
           <span className="srd-support-ref">
-            Reference ID: <strong>{id}</strong>
+            Reference ID: <strong>{displayId}</strong>
           </span>
 
           {supportTicket && (
@@ -32,7 +34,7 @@ const SupportSection = ({ id, supportTicket }) => {
           {!isTicketOpen ? (
             <button
               className="srd-btn srd-btn-outline"
-              onClick={() => navigate("/support", { state: { id } })}
+              onClick={() => navigate("/support", { state: { displayId, requestId } })}
             >
               Contact Support
             </button>

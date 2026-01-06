@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { fetchRequestDetails } from "../../../../Utils/APIs/serviceRequestApi";
+import {
+  fetchRequestDetails,
+  fetchSupportTicket,
+} from "../../../../Utils/APIs/serviceRequestApi";
 import { formatDate, getShortId } from "../../../../Utils/basicFunctions";
 import { downloadInvoice } from "../../../../Utils/Invoice/downloadInvoice";
 import SupportSection from "./SupportSection";
@@ -14,10 +17,7 @@ const MyServiceRequestDetail = () => {
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [request, setRequests] = useState(null);
   const [loading, setLoading] = useState(true);
-  const supportTicket = {
-    status: "OPEN", // OPEN | IN_PROGRESS | RESOLVED
-    ticketId: "SUP-1023",
-  };
+  const [supportTicket, setSupportTicket] = useState(null);
 
   const getRequestDetails = async () => {
     try {
@@ -33,6 +33,22 @@ const MyServiceRequestDetail = () => {
   useEffect(() => {
     getRequestDetails();
   }, [id]);
+
+  // fetch support ticket if any
+  useEffect(() => {
+    if (!request?._id) return;
+
+    const getSupportTicket = async () => {
+      try {
+        const res = await fetchSupportTicket(request._id);
+        setSupportTicket(res.data);
+      } catch (error) {
+        console.error("Failed to fetch support ticket", error);
+      }
+    };
+
+    getSupportTicket();
+  }, [request?._id]);
 
   const scrollToWorkFiles = () => {
     const el = document.getElementById("work-files-section");
@@ -67,7 +83,7 @@ const MyServiceRequestDetail = () => {
     return <p className="message loading">Loading request detail...</p>;
   }
 
-  if (loading) {
+  if (!request) {
     return <p className="message error">Request not found</p>;
   }
 
@@ -417,7 +433,11 @@ const MyServiceRequestDetail = () => {
       </div>
 
       {/* 6. Support */}
-      <SupportSection id={id} />
+      <SupportSection
+        displayId={id}
+        requestId={request._id}
+        supportTicket={supportTicket}
+      />
 
       {/* 7. Cancel Request */}
       {canCancel && (

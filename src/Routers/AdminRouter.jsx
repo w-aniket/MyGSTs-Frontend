@@ -9,6 +9,7 @@ import Notification from "../Admin/Pages/Notification/Notification";
 import ContactRequests from "../Admin/Pages/ContactRequests/ContactRequests";
 import ContactDetail from "../Admin/Pages/ContactRequests/ContactDetail";
 import ServiceRequestDetail from "../Admin/Pages/ServiceRequestDetail/ServiceRequestDetail";
+import AdminSupport from "../Admin/Pages/AdminSupport/AdminSupport";
 
 const AdminRouter = () => {
   return (
@@ -134,6 +135,15 @@ const AdminRouter = () => {
         element={
           <AdminLayout>
             <Notification />
+          </AdminLayout>
+        }
+      />
+
+      <Route
+        path="/support"
+        element={
+          <AdminLayout>
+            <AdminSupport />
           </AdminLayout>
         }
       />

@@ -23,9 +23,6 @@ const Signin = () => {
       const response = await axios.post(`${apiUrl}/auth/login`, form);
 
       const token = response.data.token;
-      if (!token) {
-        console.log("failed to create token");
-      }
       localStorage.setItem("token", token);
       const decoded = jwtDecode(token);
       const role = decoded.role

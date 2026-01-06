@@ -17,7 +17,6 @@ const AppliedJob = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        console.log(res.data?.applications);
 
         setAppliedJobs(res.data.applications || []);
       } catch (error) {

@@ -1,38 +1,161 @@
+/* Page layout */
 .mst-page {
   max-width: 900px;
-  margin: auto;
+  margin: 0 auto;
   padding: 24px;
+  background: #f8fafc;
+  min-height: 100vh;
 }
 
+.mst-page h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+/* Loading & empty states */
+.mst-loading,
+.mst-empty {
+  text-align: center;
+  padding: 40px;
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* Ticket card */
 .mst-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border: 1px solid #e5e7eb;
-  padding: 16px;
-  border-radius: 10px;
-  margin-bottom: 12px;
+  align-items: flex-start;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
+.mst-card:hover {
+  border-color: #cbd5f5;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+/* Ticket info */
+.mst-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.mst-info p {
+  font-size: 14px;
+  color: #475569;
+  margin: 4px 0;
+}
+
+.mst-date {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 8px;
+}
+.mst-message {
+  font-size: 14px;
+  color: #475569;
+  margin-top: 6px;
+}
+
+
+/* Status badges */
 .mst-status {
   display: inline-block;
   margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
   font-weight: 600;
+  text-transform: uppercase;
 }
 
 .mst-status.open {
-  color: #d97706;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.mst-status.in_progress {
+  background: #e0f2fe;
+  color: #075985;
 }
 
 .mst-status.resolved {
-  color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
 }
 
+/* Attachments */
+.ticket-attachments {
+  margin-top: 10px;
+}
+
+.ticket-attachments strong {
+  font-size: 13px;
+  color: #334155;
+}
+
+.ticket-attachments ul {
+  margin-top: 6px;
+  padding-left: 18px;
+}
+
+.ticket-attachments li {
+  font-size: 13px;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.ticket-attachments a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.ticket-attachments a:hover {
+  text-decoration: underline;
+}
+
+.file-size {
+  margin-left: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Action button */
 .mst-btn {
   background: #2563eb;
-  color: #fff;
-  padding: 8px 14px;
-  border-radius: 6px;
+  color: #ffffff;
   border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mst-btn:hover {
+  background: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .mst-card {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mst-btn {
+    width: 100%;
+  }
 }

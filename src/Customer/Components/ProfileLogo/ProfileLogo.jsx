@@ -42,6 +42,9 @@ const ProfileLogo = () => {
         <a onClick={() => navigate("/careers/profile") || setIsDropdownOpen(false)}>
           Your Profile
         </a>
+        <a onClick={() => navigate("/support/tickets") || setIsDropdownOpen(false)}>
+          Support Tickets
+        </a>
         {user.role === "admin" && (
           <>
             <a onClick={() => navigate("/admin")}>Admin Dashboard</a>

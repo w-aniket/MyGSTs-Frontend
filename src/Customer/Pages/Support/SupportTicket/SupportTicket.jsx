@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./SupportTicket.css";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const SupportTicket = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("token");
+  const authHeader = { headers: { Authorization: `Bearer ${token}` } }; 
 
-  const serviceRequestId = location.state?.id;
+  const {requestId, displayId} = location.state || {};
 
   const [issueType, setIssueType] = useState("");
   const [message, setMessage] = useState("");
@@ -24,31 +28,42 @@ const SupportTicket = () => {
 
     setLoading(true);
 
-    // API call placeholder
-    console.log({
-      serviceRequestId,
-      issueType,
-      message,
-      files,
-    });
+    // API call to submit support ticket
+    try {
+      const formData = new FormData();
+      formData.append("issueType", issueType);
+        formData.append("message", message);
+        formData.append("serviceRequestId", requestId);
 
-    setLoading(false);
-    toast.success("Support request submitted successfully!");
-    navigate(`/my-service-requests/${serviceRequestId}`, {
-        state: {supportSubmitted: true},
-    });
-    setTimeout(() => {
-    }, 1000);
+        files.forEach((file, index) => {
+            formData.append(`files`, file);
+        });
+        const response = await axios.post(
+            `${apiUrl}/api/support/tickets`,
+            formData,
+            authHeader
+        );
+        toast.success("Support request submitted successfully!");
+        navigate(`/my-service-requests/${displayId}`, {
+            state: {supportSubmitted: true},
+        });
+    } catch (error) {
+        console.error("Error submitting support ticket:", error);
+        toast.error("Failed to submit support request. Please try again.");
+    } finally {
+        setLoading(false);
+    }
+
   };
   return (
     <div className="support-ticket">
-      <h1>Rise Ticket</h1>
+      <h1>Rise a Support Ticket</h1>
 
       {/* Request Context */}
       <div className="support-card">
         <h3>Service Request Details</h3>
         <p>
-          Reference ID: <strong>{serviceRequestId}</strong>
+          Reference ID: <strong>{displayId}</strong>
         </p>
       </div>
 

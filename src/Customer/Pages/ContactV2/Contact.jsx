@@ -12,7 +12,6 @@ const Contact = () => {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
-    console.log(data)
      try {
       await axios.post(`${apiUrl}/api/contact`,data);
       toast.success("Your message has been send");

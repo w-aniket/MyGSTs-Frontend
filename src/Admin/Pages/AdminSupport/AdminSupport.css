@@ -1,0 +1,118 @@
+.admin-support {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.admin-support h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.admin-support .empty-text {
+  text-align: center;
+  color: #6b7280;
+}
+
+.admin-support .admin-ticket {
+  display: flex;
+  justify-content: space-between;
+  gap: px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.admin-support .ticket-details h3 {
+  margin-bottom: 12px;
+  color: #2563eb;
+}
+
+.admin-support .ticket-details p {
+  margin: 6px 0;
+  color: #374151;
+  font-size: 14px;
+}
+
+.admin-support .ticket-message {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.admin-support .ticket-actions {
+  display: flex;
+  align-items: center;
+}
+
+.admin-support .status-select {
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-support .status-select.open {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.admin-support .status-select.in_progress {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.admin-support .status-select.resolved {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.admin-support .status-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ticket-attachments ul {
+  margin-top: 6px;
+  padding-left: 18px;
+}
+
+.ticket-attachments li {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.ticket-attachments a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.ticket-attachments a:hover {
+  text-decoration: underline;
+}
+
+.file-size {
+  margin-left: 6px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-support .admin-ticket {
+    flex-direction: column;
+  }
+
+  .admin-support .ticket-actions {
+    justify-content: flex-end;
+  }
+}

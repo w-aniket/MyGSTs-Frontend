@@ -68,3 +68,7 @@ export const deleteWorkFileApi = (filePublicId) => {
 export const fetchRequestDetails = (requestId) => {
     return axios.get(`${apiUrl}/api/service-requests/${requestId}`, authHeader);
 }
+
+export const fetchSupportTicket = (requestId) => {
+    return axios.get(`${apiUrl}/api/support/tickets/request/${requestId}`, authHeader);
+}
