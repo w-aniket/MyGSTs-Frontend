@@ -27,6 +27,7 @@ import CookieDeclaration from "../Customer/Pages/CookieDeclaration/CookieDeclara
 import Claims from "../Customer/Pages/Claims/Claims.jsx";
 import Support from "../Customer/Pages/Support/Support.jsx";
 import MySupportTickets from "../Customer/Pages/MySupportTickets/MySupportTickets.jsx";
+import ComingSoon from "../Component/ComingSoon/ComingSoon.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -59,13 +60,42 @@ const CustomerRouters = () => {
         <Route path="/careers/appliedjob" element={<ProfilePag />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/refund-policy" element={<ComingSoon title='Refund Policy' description='Our Refund Policy page is currently under development. It will explain eligibility criteria, refund timelines, applicable deductions, and conditions for service cancellations on MyGSTs. Refunds will be processed according to the service stage and applicable policies. Please check back soon for detailed information.' />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/security" element={<Security />} />
         <Route path="/cookie-declaration" element={<CookieDeclaration />} />
         <Route path="/claim" element={<Claims />} />
         <Route path="/support" element={<Support />} />
         <Route path="/support/tickets" element={<MySupportTickets />} />
+        <Route
+          path="/blog"
+          element={
+            <ComingSoon
+              title="Blog"
+              description="Our blog is coming soon. We will regularly share useful articles, updates, and insights on GST, income tax, compliance, business registrations, and regulatory changes relevant to individuals, startups, and businesses in India."
+            />
+          }
+        />
 
+        <Route
+          path="/pricing"
+          element={
+            <ComingSoon
+              title="Pricing"
+              description="Our pricing plans are currently under development. Please check back soon."
+            />
+          }
+        />
+
+          <Route
+          path="/disclaimer"
+          element={
+            <ComingSoon
+              title="Disclaimer"
+              description="This Disclaimer page is currently under development. It will outline important legal information, service limitations, responsibilities, and usage terms related to MyGSTs accounting, taxation, and compliance services. Please check back soon for complete details"
+            />
+          }
+        />
       </Routes>
 
       <div>

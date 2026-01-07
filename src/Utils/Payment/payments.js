@@ -41,7 +41,7 @@ export const handlePayNow = async (
           if (verifyRes.data.success) {
             toast.success("Payment successful");
             if (typeof navigate === "function") {
-              navigate(`/my-service-requests/${serviceRequestId}`);
+              navigate(`/my-service-requests/${serviceRequestId}`, { replace: true });
             }
           }
         } catch (error) {
