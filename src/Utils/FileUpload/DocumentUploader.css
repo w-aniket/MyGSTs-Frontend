@@ -1,77 +1,108 @@
+/* =========================
+   GLOBAL SAFETY
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+/* =========================
+   CARD
+========================= */
 .doc-upload-card {
-  background: #f9fafb;
-  border-radius: 14px;
-  padding: 6px 14px;
+  width: 100%;
+  max-width: 400px;
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden; /* 🔥 CRITICAL */
 }
 
-.doc-label {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  display: block;
-}
-
+/* =========================
+   DROPZONE
+========================= */
 .doc-dropzone {
-  border: 2px dashed #c7d2fe;
-  border-radius: 12px;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px;
+  border: 1.5px dashed #c7d2fe;
+  border-radius: 10px;
+  background: #eef2ff;
   text-align: center;
   cursor: pointer;
-  color: #4f46e5;
-  background: #eef2ff;
-  transition: all 0.25s ease;
-}
-
-.doc-dropzone:hover {
-  background: #e0e7ff;
 }
 
 .doc-dropzone p {
-  margin: 6px 0 2px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 2px 0;
 }
 
 .doc-dropzone span {
-  font-size: 12px;
-  color: #6b7280;
+  font-size: 11px;
+  color: #475569;
 }
 
+/* =========================
+   FILE PREVIEW (FIXED)
+========================= */
 .doc-file-preview {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: #ffffff;
-  padding: 10px 12px;
+  gap: 6px;
+  max-width: 400px;
+  min-width: 0; /* 🔥 MOST IMPORTANT */
+  padding: 6px 8px;
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  background: #fff;
+  overflow: hidden; /* 🔥 */
 }
 
-.doc-file-name {
-  font-size: 13px;
-  color: #1f2937;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.doc-file-preview img {
-  width: 42px;
-  height: 42px;
+/* =========================
+   PREVIEW ICON / IMAGE
+========================= */
+.doc-file-preview img,
+.doc-file-preview svg {
+  width: 28px;   /* 🔥 SMALL */
+  height: 28px;
   object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
 
-.doc-remove-btn {
-    all: unset;
-  background: none;
-  border: none;
-  color: #ef4444;
-  cursor: pointer;
+/* =========================
+   FILE NAME (NO OVERFLOW)
+========================= */
+.doc-file-name {
+  flex: 1;
+  min-width: 0; /* 🔥 REQUIRED */
+  max-width: 100%;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.doc-remove-btn:hover {
-    background: none;
+/* =========================
+   REMOVE BUTTON
+========================= */
+.doc-remove-btn {
+  flex-shrink: 0;
+  all: unset;
+  cursor: pointer;
+  color: #ef4444;
+  padding: 2px;
+}
+
+/* =========================
+   MOBILE (EXTRA SAFETY)
+========================= */
+@media (max-width: 480px) {
+  .doc-file-preview {
+    gap: 4px;
+  }
+
+  .doc-file-name {
+    font-size: 10px;
+  }
 }

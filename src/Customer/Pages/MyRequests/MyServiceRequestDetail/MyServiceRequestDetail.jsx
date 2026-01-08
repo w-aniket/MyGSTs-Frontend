@@ -4,10 +4,11 @@ import {
   fetchRequestDetails,
   fetchSupportTicket,
 } from "../../../../Utils/APIs/serviceRequestApi";
-import { formatDate, getShortId } from "../../../../Utils/basicFunctions";
+import { formatDate } from "../../../../Utils/basicFunctions";
 import { downloadInvoice } from "../../../../Utils/Invoice/downloadInvoice";
 import SupportSection from "./SupportSection";
 import "./MyServiceRequestDetail.css";
+import ClientUploadSection from "./ClientUploadSection";
 
 const MyServiceRequestDetail = () => {
   const { id } = useParams();
@@ -86,6 +87,8 @@ const MyServiceRequestDetail = () => {
   if (!request) {
     return <p className="message error">Request not found</p>;
   }
+  
+  console.log("work files", request.workFiles);
 
   return (
     <div className="srd-page">
@@ -323,36 +326,7 @@ const MyServiceRequestDetail = () => {
 
       {/* Client upload */}
 
-      <div className="srd-section">
-        <h2 className="srd-section-title">Client Uploaded Detail</h2>
-
-        <div className="srd-card">
-          {request.files && request.files.length > 0 ? (
-            <div className="srd-file-list">
-              {request.files.map((file) => (
-                <div className="srd-file-item" key={file._id}>
-                  <div className="srd-file-info">
-                    <span className="srd-file-name">{file.documentName}</span>
-                    <span className="srd-file-type">
-                      {file.mimeType.toUpperCase()}
-                    </span>
-                  </div>
-                  <a
-                    href={file.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="srd-file-action"
-                  >
-                    View / Download
-                  </a>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="srd-empty-text">No documents uploaded.</p>
-          )}
-        </div>
-      </div>
+        <ClientUploadSection request={request} />
 
       {/* STEP 5: TIMELINE */}
       <div className="srd-section">
@@ -402,9 +376,9 @@ const MyServiceRequestDetail = () => {
         <h2 className="srd-section-title">Work Files</h2>
 
         <div className="srd-card">
-          {request.files && request.files.length > 0 ? (
+          {request.workFiles && request.workFiles.length > 0 ? (
             <div className="srd-file-list">
-              {request.files.map((file) => (
+              {request.workFiles.map((file) => (
                 <div className="srd-file-item" key={file._id}>
                   <div className="srd-file-info">
                     <span className="srd-file-name">{file.documentName}</span>
@@ -426,7 +400,7 @@ const MyServiceRequestDetail = () => {
             </div>
           ) : (
             <p className="srd-empty-text">
-              Work files will appear here once processing is completed.
+              Work files will be available here after payment is completed and the service is marked as done.
             </p>
           )}
         </div>

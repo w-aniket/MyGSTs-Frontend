@@ -64,3 +64,11 @@
 .otp-verification-container .form-button:active {
   transform: scale(0.98);
 }
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+  display: block;
+}

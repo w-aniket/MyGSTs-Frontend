@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { FaCloudUploadAlt, FaFilePdf, FaTrash } from "react-icons/fa";
-import "./DocumentUploader.css";
+import { FaFilePdf, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import "./DocumentUploader.css";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 
@@ -33,22 +33,9 @@ const DocumentUploader = ({ label, file, onChange }) => {
         return;
       }
 
-      const file = acceptedFiles[0];
-
-      const allowedTypes = ["application/pdf", "image/jpeg"];
-
-      if (!allowedTypes.includes(file.type)) {
-        toast.error("Invalid file format");
-        return;
-      }
-
-      if (file.size > MAX_FILE_SIZE) {
-        toast.error("File size must be less than 2 MB");
-        return;
-      }
-
-      if (acceptedFiles.length > 0) {
-        onChange(acceptedFiles[0]);
+      const selectedFile = acceptedFiles[0];
+      if (selectedFile) {
+        onChange(selectedFile);
       }
     },
   });
@@ -63,9 +50,9 @@ const DocumentUploader = ({ label, file, onChange }) => {
       const url = URL.createObjectURL(file);
       setPreview(url);
       return () => URL.revokeObjectURL(url);
-    } else {
-      setPreview("pdf");
     }
+
+    setPreview("pdf");
   }, [file]);
 
   return (
@@ -74,22 +61,22 @@ const DocumentUploader = ({ label, file, onChange }) => {
         <div {...getRootProps()} className="doc-dropzone">
           <input {...getInputProps()} />
           <p>Upload {label}</p>
-          <span>PDF / Image (Max 2 MB)</span>
+          <span>PDF / JPG / JPEG (Max 2 MB)</span>
         </div>
       ) : (
         <div className="doc-file-preview">
           {preview === "pdf" ? (
-            <FaFilePdf size={32} />
+            <FaFilePdf size={40} />
           ) : (
-            <img src={preview} alt="preview" />
+            <img src={preview} alt="Preview" />
           )}
 
           <span className="doc-file-name">{file.name}</span>
 
           <button
             type="button"
-            onClick={() => onChange(null)}
             className="doc-remove-btn"
+            onClick={() => onChange(null)}
           >
             <FaTrash />
           </button>

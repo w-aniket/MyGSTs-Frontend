@@ -45,7 +45,7 @@ const Footer = () => {
 
           <div className="trust">
             <FaShieldAlt />
-            <span>Trusted Online Accounting & Tax Services in India</span>
+            <span>Trusted Accounting & Tax Services in India</span>
           </div>
         </div>
 
