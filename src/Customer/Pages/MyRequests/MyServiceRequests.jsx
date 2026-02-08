@@ -6,6 +6,7 @@ import { handlePayNow } from "../../../Utils/Payment/payments";
 import { useNavigate } from "react-router-dom";
 import { formatDate} from "../../../Utils/basicFunctions";
 import { downloadInvoice } from "../../../Utils/Invoice/downloadInvoice";
+import { Helmet } from "react-helmet-async";
 
 const MyServiceRequests = () => {
   const { user } = useContext(UserContext);
@@ -50,9 +51,12 @@ const MyServiceRequests = () => {
 }, [page]);
 
 
-  const filteredRequests = requests.filter((req) =>
-    filter === "all" ? true : req.paymentStatus.toLowerCase() === filter
-  );
+const filteredRequests = requests.filter((req) =>
+  filter === "all"
+    ? true
+    : (req.paymentStatus || "").toLowerCase() === filter
+);
+
 
   const paginatedRequests = filteredRequests.slice(
     (page - 1) * PAGE_SIZE,
@@ -61,12 +65,29 @@ const MyServiceRequests = () => {
 
   const totalPages = Math.ceil(filteredRequests.length / PAGE_SIZE);
 
-  if (loading) {
-    return <p className="message loading">Loading your service requests...</p>;
-  }
+if (loading) {
+  return (
+    <div className="msr-page">
+      <p className="message loading">
+        Fetching your service requests…
+      </p>
+    </div>
+  );
+}
 
   return (
     <div className="msr-page">
+      <Helmet>
+  <title>My Service Requests | MyGSTs</title>
+
+  <meta
+    name="description"
+    content="View and manage your submitted GST, ITR, and business compliance service requests on MyGSTs."
+  />
+
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
+
       <div className="msr-header">
         <h1>My Service Requests</h1>
         <p>View and manage all your submitted requests.</p>
@@ -86,7 +107,8 @@ const MyServiceRequests = () => {
       {requests.length === 0 ? (
         <div className="msr-empty">
           <h3>No service requests found</h3>
-          <p>You havent't submitted any service requests yet.</p>
+          <p>You haven’t submitted any service requests yet.</p>
+
           <button onClick={() => navigate("/services")}>
             Explore Services
           </button>
@@ -97,14 +119,14 @@ const MyServiceRequests = () => {
             <div className="msr-card" key={req.displayId}>
               <div className="msr-card-top">
                 <h3>{req.service?.title}</h3>
-                <span className={`badge ${req.paymentStatus.toLowerCase()}`}>
-                  {req.paymentStatus}
+                <span className={`badge ${(req.paymentStatus || "").toLowerCase()}`}>
+                  {(req.paymentStatus || "").toLowerCase()}
                 </span>
               </div>
 
               <div className="msr-info">
                 <div>
-                  <span>Request Id</span>
+                  <span>Request ID</span>
                   <strong>{req.displayId}</strong>
                 </div>
                 <div>
@@ -113,7 +135,8 @@ const MyServiceRequests = () => {
                 </div>
                 <div>
                   <span>Amount</span>
-                  <strong>{req.amount}</strong>
+                  <strong>₹ {req.amount}</strong>
+
                 </div>
                 <div>
                   <span>Status</span>

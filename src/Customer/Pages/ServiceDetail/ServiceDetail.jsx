@@ -8,7 +8,10 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import ServiceRequestForm from "../../Components/ServiceRequestForm/ServiceRequestForm";
+import { Helmet } from "react-helmet-async";
 import "./ServiceDetail.css";
+
+
 
 const IconFallback = ({ size = 28 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -213,8 +216,47 @@ const ServiceDetail = () => {
   const iconBg = service.iconbg || "#1E90FF";
   const iconClass = service.icon || null;
 
+  const pageTitle = `${title} Services in India | MyGSTs`;
+const pageDescription = `${title} services by MyGSTs. Get professional assistance for ${title.toLowerCase()}, including documentation, compliance, and expert support across India.`;
+const canonicalUrl = `https://www.mygsts.com/services/${id}`;
+
   return (
     <div className="sd-page">
+      <Helmet>
+        <title>{pageTitle}</title>
+
+        <meta name="description" content={pageDescription} />
+
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Service Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: title,
+            description: pageDescription,
+            provider: {
+              "@type": "Organization",
+              name: "MyGSTs",
+              url: "https://www.mygsts.com",
+            },
+            areaServed: {
+              "@type": "Country",
+              name: "India",
+            },
+            ...(price && {
+              offers: {
+                "@type": "Offer",
+                priceCurrency: "INR",
+                price: price,
+                availability: "https://schema.org/InStock",
+              },
+            }),
+          })}
+        </script>
+      </Helmet>
+
       <div className="sd-container">
         {/* MAIN CONTENT + SIDEBAR LAYOUT */}
         <div className="sd-grid">
@@ -262,7 +304,8 @@ const ServiceDetail = () => {
                   {banner ? (
                     <img
                       src={banner}
-                      alt={`${title} banner`}
+                      alt={`${title} service by MyGSTs`}
+
                       className="sd-banner-img"
                     />
                   ) : (

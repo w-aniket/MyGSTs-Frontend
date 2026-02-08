@@ -88,7 +88,7 @@ const MyServiceRequestDetail = () => {
     return <p className="message error">Request not found</p>;
   }
   
-  console.log("work files", request.workFiles);
+
 
   return (
     <div className="srd-page">

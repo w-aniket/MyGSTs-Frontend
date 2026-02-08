@@ -37,10 +37,7 @@ const Services = () => {
               delaySpeed={1200}
             />
           </h1>
-          <p className="services-subtitle">
-            Professional GST, accounting, and compliance services designed for
-            growing businesses.
-          </p>
+
           <button onClick={() => navigate("/services")}>
             See All Services
           </button>

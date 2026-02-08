@@ -28,7 +28,6 @@ const MySupportTickets = () => {
 
     fetchTickets();
   }, []);
-  console.log(tickets);
 
   if (loading) {
     return <div className="mst-loading">Loading support tickets...</div>;

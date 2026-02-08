@@ -1,11 +1,9 @@
-import React from "react";
 import {
   FaBullseye,
   FaFileInvoice,
   FaLock,
   FaUsers,
   FaChartLine,
-  FaHandshake,
   FaShieldAlt,
   FaCheckCircle,
 } from "react-icons/fa";
@@ -21,20 +19,35 @@ const AboutUs = () => {
   return (
     <>
       <Helmet>
-        <title>About Us | MyGSTs – GST & Accounting Platform</title>
+        <title>
+          About MyGSTs | Business, Tax & Compliance Services in India
+        </title>
         <meta
           name="description"
-          content="MyGSTs is a modern GST and accounting platform helping Indian businesses manage compliance, invoicing, and payments with ease."
+          content="Learn about MyGSTs, a trusted digital CA platform for GST filing, ITR filing, accounting, invoicing, and business compliance services across India.
+"
         />
+        <link rel="canonical" href="https://www.mygsts.in/about-us" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "MyGSTs",
+            url: "https://www.mygsts.in",
+            description:
+              "Digital CA platform for GST, ITR, and business compliance in India",
+            areaServed: "IN",
+          })}
+        </script>
       </Helmet>
 
-      <section className="about-container">
+      <main className="about-container">
         {/* Hero Section */}
         <div className="about-hero">
           <h1>About MyGSTs</h1>
           <p>
-            Simplifying GST and accounting for individuals, startups, and
-            businesses across India.
+            Simplifying GST, accounting, and compliance for individuals,
+            startups, and businesses across India.
           </p>
         </div>
 
@@ -44,8 +57,9 @@ const AboutUs = () => {
           <div className="icon-card">
             <FaBullseye className="icon" />
             <p>
-              To remove the complexity of GST and accounting by providing a
-              secure, transparent, and easy-to-use digital platform.
+              To remove the complexity of GST and accounting by delivering a
+              secure, transparent, and easy-to-use digital platform for Indian
+              businesses.
             </p>
           </div>
         </div>
@@ -101,13 +115,13 @@ const AboutUs = () => {
           <h2>Our Team</h2>
           <div className="card-grid">
             <AnimatedCard>
-                <FaUsers className="icon" />
+              <FaUsers className="icon" />
               <h3>Accounting Experts</h3>
               <p>Certified professionals with GST experience.</p>
             </AnimatedCard>
 
             <AnimatedCard>
-                <FaUsers className="icon" />
+              <FaUsers className="icon" />
               <h3>Tech Specialists</h3>
               <p>Engineers building secure and scalable systems.</p>
             </AnimatedCard>
@@ -131,7 +145,7 @@ const AboutUs = () => {
             Get Started
           </button>
         </div>
-      </section>
+      </main>
     </>
   );
 };
