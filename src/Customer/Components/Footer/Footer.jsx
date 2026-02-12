@@ -18,7 +18,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchServices  = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/services`);
+        const response = await axios.get(`${apiUrl}/api/services/all`);
         setServices(response.data.services);
       } catch (err) {
         console.error("Error fetching services:", err);

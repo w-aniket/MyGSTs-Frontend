@@ -10,7 +10,7 @@ const Services = () => {
 
   useEffect(() => {
     axios
-      .get(`${apiUrl}/api/services`)
+      .get(`${apiUrl}/api/services/all`)
       .then((res) => {
         setServices(res.data.services);
       })
