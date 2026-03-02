@@ -218,7 +218,7 @@ const ServiceDetail = () => {
 
   const pageTitle = `${title} Services in India | MyGSTs`;
 const pageDescription = `${title} services by MyGSTs. Get professional assistance for ${title.toLowerCase()}, including documentation, compliance, and expert support across India.`;
-const canonicalUrl = `https://www.mygsts.com/services/${id}`;
+const canonicalUrl = `https://www.mygsts.in/services/${id}`;
 
   return (
     <div className="sd-page">
@@ -239,7 +239,7 @@ const canonicalUrl = `https://www.mygsts.com/services/${id}`;
             provider: {
               "@type": "Organization",
               name: "MyGSTs",
-              url: "https://www.mygsts.com",
+              url: "https://www.mygsts.in",
             },
             areaServed: {
               "@type": "Country",

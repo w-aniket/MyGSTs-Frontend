@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import IntroImage from "./IntroImage/Introimage.jsx";
 import Services from "./ServicesPanel/Services.jsx";
-import Contact from "../../Pages/ContactV2/Contact.jsx";
 import CareerInrto from "../../Components/CareerIntro/CareerInrto.jsx";
 import WhyChooseUs from "../../../Component/WhyChooseUs/WhyChooseUs.jsx";
 import HowItWorks from "../../../Component/HowItWorks/HowItWorks.jsx";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import ContactForm from "../../../Component/ContactForm/ContactForm.jsx";
 
 const Homepage = () => {
   const location = useLocation();
@@ -23,7 +23,7 @@ const Homepage = () => {
     <>
       <Helmet>
         <title>
-          Professional Tax & Business Compliance Services in India | MyGSTs
+          MyGSTs - Professional Tax & Business Compliance Services in India
         </title>
 
         <meta
@@ -31,23 +31,6 @@ const Homepage = () => {
           content="MyGSTs offers GST filing, ITR filing, MSME registration, tax audits, and compliance services for individuals and businesses in India."
         />
 
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "MyGSTs",
-              "url": "https://www.mygsts.com",
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+91-8830078732",
-                "contactType": "customer support",
-                "areaServed": "IN",
-                "availableLanguage": ["English", "Hindi"]
-              }
-            }
-          `}
-        </script>
       </Helmet>
       <main>
         <IntroImage />
@@ -69,7 +52,7 @@ const Homepage = () => {
         </section>
 
         <section aria-labelledby="contact">
-          <Contact />
+          <ContactForm />
         </section>
       </main>
     </>
