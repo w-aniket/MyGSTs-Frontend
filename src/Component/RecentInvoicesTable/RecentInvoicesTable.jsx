@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./RecentInvoicesTable.css";
 import { downloadInvoice } from "../../Utils/Invoice/downloadInvoice";
+import Pagination from "../../Admin/Components/Pagination/Pagination";
+import SearchFilter from "../../Admin/Components/SearchFilter/SearchFilter";
 
 const RecentInvoicesTable = () => {
   const [invoices, setInvoices] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(1);
-  const invoicesPerPage = 5;
+  const [pagination, setPagination] = useState({
+    page: 1,
+    totalPages: 1,
+  });
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
@@ -20,34 +23,16 @@ const RecentInvoicesTable = () => {
     },
   };
 
-  // const downloadInvoice = async (invoiceId) => {
-  //     try {
-  //       const url = `${apiUrl}/api/invoices/${invoiceId}/download`;
-  //       const res = await axios.get(url, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //         responseType: "blob",
-  //       });
-  //       const blob = new Blob([res.data], { type: "application/pdf" });
-  //       const link = document.createElement("a");
-  //       link.href = window.URL.createObjectURL(blob);
-  //       link.download = `invoice-${invoiceId}.pdf`;
-  //       document.body.appendChild(link);
-  //       link.click();
-  //       link.remove();
-  //       window.URL.revokeObjectURL(link.href);
-  //     } catch (err) {
-  //       console.error("Invoice download failed", err);
-  //       toast.error("Failed to download invoice");
-  //     }
-  //   };
-
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const res = await axios.get(`${apiUrl}/api/invoices`, config);
-        setInvoices(res.data);
+        setLoading(true);
+        const res = await axios.get(
+          `${apiUrl}/api/invoices?page=${pagination.page}&limit=5&search=${searchTerm}`,
+          config,
+        );
+        setInvoices(res.data.invoices);
+        setPagination(res.data.pagination);
       } catch (err) {
         console.error("Error fetching invoices", err);
       } finally {
@@ -56,43 +41,26 @@ const RecentInvoicesTable = () => {
     };
 
     fetchInvoices();
-  }, []);
+  }, [pagination.page, searchTerm]);
 
-  // ✅ Fix: use client.name and invoiceNumber
-  const filteredInvoices = invoices.filter(
-    (inv) =>
-      inv.client?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      String(inv.invoiceNumber).includes(searchTerm)
-  );
-
-  // Pagination logic
-  const totalPages = Math.ceil(filteredInvoices.length / invoicesPerPage);
-  const indexOfLast = currentPage * invoicesPerPage;
-  const indexOfFirst = indexOfLast - invoicesPerPage;
-  const currentInvoices = filteredInvoices.slice(indexOfFirst, indexOfLast);
-
-  const handlePageChange = (page) => {
-    if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    setPagination((prev) => ({ ...prev, page: 1 }));
   };
 
-  if (loading) return <p>Loading invoices...</p>;
+  const handlePageChange = (page) => {
+    if (page < 1 || page > pagination.totalPages) return;
+    setPagination((prev) => ({ ...prev, page }));
+  };
 
   return (
     <div className="recent-invoices-table">
       <h4>Recent Invoices</h4>
 
       {/* Search */}
-      <input
-        type="text"
-        placeholder="Search by client or invoice #"
-        value={searchTerm}
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-          setCurrentPage(1); // reset to first page on search
-        }}
-        className="invoice-search-input"
-      />
+      <div className="serach-field">
+        <SearchFilter onSearch={handleSearch} searchTerm={searchTerm} />
+      </div>
 
       <div className="table-wrapper">
         <table>
@@ -106,19 +74,32 @@ const RecentInvoicesTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentInvoices.length > 0 ? (
-              currentInvoices.map((inv) => (
+            {loading ? (
+              <tr>
+                <td colSpan="5" className="loading-message">
+                  {" "}
+                  Loading...
+                </td>
+              </tr>
+            ) : invoices.length > 0 ? (
+              invoices.map((inv) => (
                 <tr key={inv._id}>
                   <td>{inv.invoiceNumber}</td>
-                  <td>{inv.client?.firstName || ""} {inv.client?.lastName || "Unknown"}</td>
+                  <td>
+                    {inv.client?.firstName || ""}{" "}
+                    {inv.client?.lastName || "Unknown"}
+                  </td>
                   <td>{new Date(inv.createdAt).toLocaleDateString()}</td>
                   <td>₹ {inv.amount.toLocaleString()}</td>
-                  <td
-                    className="status-paid"
-                  ><button onClick={() =>downloadInvoice(inv._id)}>
-                    Download
-                  </button>
-                  </td>
+                  {inv.isPaid ? (
+                    <td className="status-paid">
+                      <button onClick={() => downloadInvoice(inv._id)}>
+                        Download
+                      </button>
+                    </td>
+                  ) : (
+                    <td className="status-pending">Pending</td>
+                  )}
                 </tr>
               ))
             ) : (
@@ -131,29 +112,11 @@ const RecentInvoicesTable = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="pagination">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Prev
-        </button>
-        {[...Array(totalPages)].map((_, i) => (
-          <button
-            key={i + 1}
-            className={currentPage === i + 1 ? "active" : ""}
-            onClick={() => handlePageChange(i + 1)}
-          >
-            {i + 1}
-          </button>
-        ))}
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
+      <Pagination
+        currentPage={pagination?.page || 1}
+        totalPages={pagination?.totalPages || 1}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
