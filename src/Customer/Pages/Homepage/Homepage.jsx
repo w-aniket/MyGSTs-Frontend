@@ -31,6 +31,8 @@ const Homepage = () => {
           content="MyGSTs offers GST filing, ITR filing, MSME registration, tax audits, and compliance services for individuals and businesses in India."
         />
 
+        <link rel="canonical" href="https://www.mygsts.in/" />
+
       </Helmet>
       <main>
         <IntroImage />

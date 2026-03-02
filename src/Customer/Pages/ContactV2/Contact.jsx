@@ -18,6 +18,7 @@ const Contact = () => {
 
         <meta name="robots" content="index, follow" />
 
+        <link rel="canonical" href="https://www.mygsts.in/contact" />
         {/* Local Business Schema */}
         <script type="application/ld+json">
           {JSON.stringify({

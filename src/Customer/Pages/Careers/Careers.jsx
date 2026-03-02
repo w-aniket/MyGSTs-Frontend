@@ -41,7 +41,7 @@ const Careers = () => {
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "MyGSTs",
-            "url": "https://www.mygsts.in",
+            "url": "https://www.mygsts.in/careers",
             "description":
               "Digital CA platform offering GST filing, ITR filing, accounting, and compliance services in India",
             "sameAs": [],

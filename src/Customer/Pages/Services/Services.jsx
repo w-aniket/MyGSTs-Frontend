@@ -28,7 +28,8 @@ const Services = () => {
           name="description"
           content="MyGSTs offers GST filing, ITR filing, MSME registration, accounting, tax audits, and complete business compliance services across India."
         />
-        <link rel="canonical" href="https://www.mygsts.com/services" />
+        <link rel="canonical" href="https://www.mygsts.in/services" />
+
       </Helmet>
 
       {/* INTRO SECTION */}
