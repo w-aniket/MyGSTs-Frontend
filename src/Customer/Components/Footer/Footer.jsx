@@ -16,16 +16,16 @@ const Footer = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const fetchServices  = async () => {
+    const fetchServices = async () => {
       try {
         const response = await axios.get(`${apiUrl}/api/services/all`);
         setServices(response.data.services);
       } catch (err) {
         console.error("Error fetching services:", err);
       }
-    }
+    };
     fetchServices();
-  } , []);
+  }, []);
 
   return (
     <footer className="premium-footer">
@@ -132,7 +132,12 @@ const Footer = () => {
           <a href="#">
             <FaFacebookF />
           </a>
-          <a href="#">
+
+          <a
+            href="https://www.instagram.com/mygsts.official"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaInstagram />
           </a>
         </div>

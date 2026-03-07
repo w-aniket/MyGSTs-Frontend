@@ -52,7 +52,11 @@ const ContactForm = () => {
               <FaEnvelope style={{ marginRight: "8px" }} />
               Email
             </h4>
-            <p>mygstsofficial@gmail.com</p>
+            <p>
+              <a href="mailto:mygstsofficial@gmail.com">
+                mygstsofficial@gmail.com
+              </a>
+            </p>
           </div>
 
           <div className="business-block">
@@ -60,8 +64,12 @@ const ContactForm = () => {
               <FaPhone style={{ marginRight: "8px" }} />
               Phone
             </h4>
-            <p>+91 8830 0787 32</p>
-            <p>+91 9356 4029 59</p>
+            <p>
+              <a href="tel:+918830078732">+91 8830 0787 32</a>
+            </p>
+            <p>
+              <a href="tel:+919356402959">+91 9356 4029 59</a>
+            </p>
           </div>
 
           <div className="business-block">
@@ -69,8 +77,17 @@ const ContactForm = () => {
               <FaMapMarkerAlt style={{ marginRight: "8px" }} />
               Address
             </h4>
-            <p>Thite Wasti, Sr. No. 14/1, Near Thite Bunglow</p>
-            <p>Kharadi, Pune – 411014</p>
+<p>
+  <a
+    href="https://www.google.com/maps/search/?api=1&query=Thite+Wasti+Kharadi+Pune+411014"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Thite Wasti, Sr. No. 14/1, Near Thite Bunglow
+    <br />
+    Kharadi, Pune – 411014
+  </a>
+</p>
           </div>
 
           <div className="business-block">
@@ -78,7 +95,15 @@ const ContactForm = () => {
               <FaInstagram style={{ marginRight: "8px" }} />
               Social Media
             </h4>
-            <p>@mygsts.official</p>
+            <p>
+  <a
+    href="https://www.instagram.com/mygsts.official"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    @mygsts.official
+  </a>
+</p>
           </div>
         </div>
 
