@@ -1,0 +1,72 @@
+/* Item */
+.bp-menu-item {
+  position: relative;
+  padding: 10px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.bp-menu-item:hover {
+  background: #f5f5f5;
+}
+
+/* Label */
+.bp-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Arrow */
+.bp-arrow {
+  font-size: 10px;
+  margin-left: 8px;
+}
+
+/* Dropdown base */
+.bp-dropdown {
+  position: absolute;
+  top: 0;
+  min-width: 220px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+/* Default → open right */
+.bp-dropdown.right {
+  left: 100%;
+  margin-left: 1px;
+}
+
+/* Open left when no space */
+.bp-dropdown.left {
+  right: 100%;
+  margin-right: 1px;
+}
+
+/* Mobile behavior */
+.bp-dropdown.mobile {
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-top: 6px;
+  margin-left: 12px;
+  box-shadow: none;
+  border-left: 2px solid #eee;
+}
+
+/* Prevent flicker gap */
+.bp-menu-item::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  height: 10px;
+  width: 100%;
+}
+
+.bp-menu-item.mobile {
+  padding-left: 10px;
+}

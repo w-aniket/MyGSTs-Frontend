@@ -7,17 +7,21 @@ import {
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import CasesRoundedIcon from "@mui/icons-material/CasesRounded";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "./Navigation.css";
 import { UserContext } from "../../../UserContex/UserContext";
 import ProfileLogo from "../ProfileLogo/ProfileLogo";
 import Full_Logo from "../../../assets/Full_Logo.png";
+import MenuItem from "../../../Component/MenuItem/MenuItem";
+import categories from "./data";
+import "./Navigation.css";
 
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useContext(UserContext);
-  const dropdownRef = useRef(null);
+
+  // Better dropdown handling (future-proof)
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const navigation = [
     { name: "Home", href: "/", current: location.pathname === "/" },
@@ -25,6 +29,11 @@ const Navigation = () => {
       name: "Services",
       href: "/services",
       current: location.pathname === "/services",
+    },
+    {
+      name: "Be Practical",
+      type: "dropdown",
+      children: categories,
     },
     {
       name: "Careers",
@@ -36,12 +45,7 @@ const Navigation = () => {
       href: "/about-us",
       current: location.pathname === "/about-us",
     },
-    // {
-    //   name: "Resources",
-    //   href: "/resources",
-    //   current: location.pathname === "/resources",
-    // },
-        {
+    {
       name: "Support",
       href: "/support",
       current: location.pathname === "/support",
@@ -52,19 +56,6 @@ const Navigation = () => {
       current: location.pathname === "/contact",
     },
   ];
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <Disclosure as="nav" className="navbar">
@@ -83,15 +74,40 @@ const Navigation = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden sm:flex nav-links">
-          {navigation.map((item) => (
-            <a
-              key={item.name}
-              onClick={() => navigate(item.href)}
-              className={`nav-link ${item.current ? "active" : ""}`}
-            >
-              {item.name}
-            </a>
-          ))}
+          {navigation.map((item) => {
+            // ✅ Dropdown
+            if (item.type === "dropdown") {
+              return (
+                <div
+                  key={item.name}
+                  className="bp-root nav-link"
+                  onMouseEnter={() => setOpenDropdown(item.name)}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                >
+                  <span>{item.name}</span>
+
+                  {openDropdown === item.name && (
+                    <div className="bp-dropdown-root">
+                      {item.children.map((cat) => (
+                        <MenuItem key={cat._id} item={cat} />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            // ✅ Normal Link
+            return (
+              <a
+                key={item.name}
+                onClick={() => navigate(item.href)}
+                className={`nav-link ${item.current ? "active" : ""}`}
+              >
+                {item.name}
+              </a>
+            );
+          })}
         </div>
 
         {/* Profile Section */}
@@ -127,16 +143,43 @@ const Navigation = () => {
           </DisclosureButton>
         )}
 
-        {navigation.map((item) => (
-          <DisclosureButton
-            key={item.name}
-            as="a"
-            onClick={() => navigate(item.href)}
-            className="nav-link"
-          >
-            {item.name}
-          </DisclosureButton>
-        ))}
+        {navigation.map((item) => {
+          // ✅ Mobile Dropdown
+          if (item.type === "dropdown") {
+            return (
+              <div key={item.name} className="bp-mobile-root nav-link">
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
+                  {item.name}
+                </span>
+
+                {mobileOpen && (
+                  <div className="bp-mobile-dropdown">
+                    {item.children.map((cat) => (
+                      <MenuItem key={cat._id} item={cat} isMobile={true} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          // ✅ Normal Mobile Link
+          return (
+            <DisclosureButton
+              key={item.name}
+              as="a"
+              onClick={() => navigate(item.href)}
+              className="nav-link"
+            >
+              {item.name}
+            </DisclosureButton>
+          );
+        })}
       </DisclosurePanel>
     </Disclosure>
   );
