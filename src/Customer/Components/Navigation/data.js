@@ -40,6 +40,38 @@ const categories = [
         slug: "engineering/civil",
         icon: "FaBuilding",
         children: []
+      },
+      {
+        _id: "1-4",
+        name: "Civil Engineering",
+        slug: "engineering/civil",
+        icon: "FaBuilding",
+        children: []
+      },
+      {
+        _id: "1-5",
+        name: "Civil Engineering",
+        slug: "engineering/civil",
+        icon: "FaBuilding",
+        children: []
+      },{
+        _id: "1-6",
+        name: "Civil Engineering",
+        slug: "engineering/civil",
+        icon: "FaBuilding",
+        children: []
+      },{
+        _id: "1-7",
+        name: "Civil Engineering",
+        slug: "engineering/civil",
+        icon: "FaBuilding",
+        children: []
+      },{
+        _id: "1-8",
+        name: "Civil Engineering",
+        slug: "engineering/civil",
+        icon: "FaBuilding",
+        children: []
       }
     ]
   },

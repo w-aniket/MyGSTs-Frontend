@@ -12,6 +12,7 @@ import ProfileLogo from "../ProfileLogo/ProfileLogo";
 import Full_Logo from "../../../assets/Full_Logo.png";
 import MenuItem from "../../../Component/MenuItem/MenuItem";
 import categories from "./data";
+import MegaMenu from "../../../Component/MegaMenu/MegaMenu";
 import "./Navigation.css";
 
 const Navigation = () => {
@@ -80,18 +81,14 @@ const Navigation = () => {
               return (
                 <div
                   key={item.name}
-                  className="bp-root nav-link"
+                  className="mega-root nav-link"
                   onMouseEnter={() => setOpenDropdown(item.name)}
                   onMouseLeave={() => setOpenDropdown(null)}
                 >
                   <span>{item.name}</span>
 
                   {openDropdown === item.name && (
-                    <div className="bp-dropdown-root">
-                      {item.children.map((cat) => (
-                        <MenuItem key={cat._id} item={cat} />
-                      ))}
-                    </div>
+                    <MegaMenu categories={item.children} />
                   )}
                 </div>
               );

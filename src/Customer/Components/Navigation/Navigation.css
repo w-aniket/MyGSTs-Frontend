@@ -6,13 +6,28 @@
   position: sticky;
   top: 0;
   z-index: 998;
+
   font-family: "Poppins", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
-  background-color: #f3f3f3;
-  padding: 12px 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: box-shadow 0.3s ease;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+
+  padding: 10px 24px;
+
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+
+  transition: all 0.3s ease;
+}
+
+/* Slight shadow on scroll feel */
+.navbar:hover {
+  box-shadow: 
+    0 12px 28px rgba(0, 0, 0, 0.12),
+    0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .navbar-container {
@@ -31,44 +46,59 @@
 }
 
 .navbar img {
-  height: 40px;
+  height: 42px;
   cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.navbar img:hover {
+  transform: scale(1.05);
 }
 
 /* ================= NAV LINKS ================= */
 
 .nav-links {
   display: flex;
-  gap: 16px;
+  gap: 18px;
 }
 
 .nav-link {
   position: relative;
-  padding: 10px 15px;
-  font-size: 16px;
+  padding: 10px 14px;
+
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  color: #1f1f2e;
+
+  color: #232a34;
   cursor: pointer;
   text-decoration: none;
-  transition: color 0.3s ease;
+
+  transition: all 0.25s ease;
 }
 
-/* Hover & Active underline */
+/* Smooth hover color */
+.nav-link:hover {
+  color: #2563eb;
+}
+
+/* Premium underline */
 .nav-link::after {
   content: "";
   position: absolute;
-  bottom: -3px;
-  left: 0;
+  bottom: -4px;
+  left: 50%;
   width: 0%;
   height: 2px;
-  background-color: #1f1f2e;
-  transition: width 0.3s ease;
+
+  background: linear-gradient(to right, #2563eb, #60a5fa);
+
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
 }
 
 .nav-link:hover::after,
 .nav-link.active::after {
-  width: 100%;
+  width: 80%;
 }
 
 /* ================= ACTIONS ================= */
@@ -83,15 +113,19 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #1f1f2e;
-  font-size: 26px;
-  padding: 6px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+
+  color: #374151;
+  font-size: 24px;
+
+  padding: 8px;
+  border-radius: 10px;
+
+  transition: all 0.25s ease;
 }
 
 .orders-btn:hover {
-  background-color: rgba(31, 31, 46, 0.08);
+  background-color: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
   transform: translateY(-1px);
 }
 
@@ -103,54 +137,67 @@
 
 #signup {
   padding: 8px 18px;
-  border: 2px solid #2563eb;
+
+  border: 1.5px solid #2563eb;
   color: #2563eb;
   background: transparent;
-  border-radius: 8px;
-  font-weight: 600;
+
+  border-radius: 10px;
+  font-weight: 500;
+
   cursor: pointer;
+
   transition: all 0.25s ease;
 }
 
 #signup:hover {
-  background-color: #2563eb;
+  background: linear-gradient(to right, #2563eb, #3b82f6);
   color: #ffffff;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
 }
 
 /* ================= PROFILE ================= */
 
-.profile-menu {
-  position: relative;
-}
-
 .profile-button {
-  width: 40px;
-  height: 40px;
-  background-color: #0096c7;
+  width: 38px;
+  height: 38px;
+
+  background: linear-gradient(135deg, #0096c7, #0077b6);
   color: white;
-  border: none;
+
   border-radius: 50%;
-  font-size: 18px;
+  font-size: 16px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   cursor: pointer;
-  transition: all 0.2s ease;
+
+  transition: all 0.25s ease;
 }
 
 .profile-button:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
+/* Dropdown */
 .profile-dropdown {
   position: absolute;
-  top: 50px;
+  top: 52px;
   right: 0;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  min-width: 150px;
-  padding: 10px 0;
+
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+
+  border-radius: 10px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+  min-width: 160px;
+  padding: 8px 0;
+
   display: none;
   z-index: 1000;
 }
@@ -161,17 +208,33 @@
 
 .profile-dropdown a {
   display: block;
-  padding: 10px 20px;
-  color: #333;
-  transition: background 0.2s ease;
+  padding: 10px 18px;
+  font-size: 14px;
+
+  color: #374151;
+  transition: all 0.2s ease;
 }
 
 .profile-dropdown a:hover {
-  background-color: #f0f0f0;
+  background-color: #f3f4f6;
+  padding-left: 22px;
 }
 
-.profile-dropdown .sign-out {
-  color: red;
+/* ================= MEGA MENU ROOT ================= */
+
+.mega-root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+/* ================= OLD DROPDOWN (fallback) ================= */
+
+.bp-dropdown-root {
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 /* ================= MOBILE ================= */
@@ -180,18 +243,12 @@
   display: none;
   background: none;
   border: none;
-  cursor: pointer;
 }
 
 .menu-icon {
-  width: 32px;
-  height: 32px;
-  color: #1f1f2e;
-  transition: 0.2s ease;
-}
-
-.mobile-menu-button:hover .menu-icon {
-  opacity: 0.75;
+  width: 30px;
+  height: 30px;
+  color: #374151;
 }
 
 .mobile-menu {
@@ -205,84 +262,24 @@
   width: 100%;
   padding: 12px;
   text-align: center;
-}
-
-/* ================= DROPDOWN (Be Practical) ================= */
-
-.bp-root {
-  position: relative;
-}
-
-/* Main dropdown */
-.bp-dropdown-root {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  min-width: 220px;
   border-radius: 8px;
-  padding: 8px 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  z-index: 999;
 }
 
-/* Item */
-.bp-menu-item {
-  position: relative;
-  padding: 10px 16px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s ease;
-}
-
-.bp-menu-item:hover {
-  background: #f5f5f5;
-}
-
-/* Label */
-.bp-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Arrow */
-.bp-arrow {
-  font-size: 10px;
-  margin-left: 8px;
-}
-
-/* Submenu */
-.bp-dropdown {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  background: #fff;
-  min-width: 200px;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* Prevent flicker */
-.bp-menu-item::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  height: 10px;
-  width: 100%;
+.mobile-menu .nav-link:hover {
+  background: #f3f4f6;
 }
 
 /* ================= MOBILE DROPDOWN ================= */
 
 .bp-mobile-root {
   padding: 10px;
+  border-radius: 8px;
 }
 
 .bp-mobile-dropdown {
-  padding-left: 10px;
+  padding-left: 12px;
+  margin-top: 6px;
 }
-
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 936px) {
