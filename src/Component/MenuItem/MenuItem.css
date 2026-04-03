@@ -13,10 +13,18 @@
 /* Label */
 .bp-label {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* keeps arrow on right */
   align-items: center;
 }
+.bp-left {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* spacing between icon and text */
+}
 
+.bp-icon {
+  font-size: 16px;
+}
 /* Arrow */
 .bp-arrow {
   font-size: 10px;

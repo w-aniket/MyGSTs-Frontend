@@ -1,6 +1,6 @@
 import React from 'react'
 
-const tabs = [ 'Role', 'Team'];
+const tabs = [ 'Role', 'Team', 'Category Management'];
 
 const StaffNavbar = ({activeTab, setActiveTab}) => {
   return (

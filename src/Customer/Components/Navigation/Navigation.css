@@ -37,6 +37,22 @@
   justify-content: space-between;
   align-items: center;
 }
+/* Loading */
+
+.mega-loading {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 250px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
 
 /* ================= LOGO ================= */
 
@@ -102,6 +118,10 @@
 }
 
 /* ================= ACTIONS ================= */
+
+.profile-menu {
+  position: relative;
+}
 
 .navbar-actions {
   display: flex;
@@ -185,7 +205,7 @@
 /* Dropdown */
 .profile-dropdown {
   position: absolute;
-  top: 52px;
+  top: 110%;
   right: 0;
 
   background: rgba(255,255,255,0.95);
@@ -213,6 +233,11 @@
 
   color: #374151;
   transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.profile-dropdown .sign-out {
+  color: red;
 }
 
 .profile-dropdown a:hover {

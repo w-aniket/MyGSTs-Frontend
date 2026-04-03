@@ -28,6 +28,7 @@ import Claims from "../Customer/Pages/Claims/Claims.jsx";
 import Support from "../Customer/Pages/Support/Support.jsx";
 import MySupportTickets from "../Customer/Pages/MySupportTickets/MySupportTickets.jsx";
 import ComingSoon from "../Component/ComingSoon/ComingSoon.jsx";
+import CategoryManagement from "../Admin/Components/CategoryManagement/CategoryManagement.jsx";
 
 const CustomerRouters = () => {
   return (

@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
+import * as FaIcons from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import "./MenuItem.css";
 
 const MenuItem = ({ item, isMobile = false }) => {
   const [open, setOpen] = useState(false);
   const [openLeft, setOpenLeft] = useState(false);
+  const Icon = item.icon ? FaIcons[item.icon] : null;
   const ref = useRef();
 
   const handleMouseEnter = () => {
@@ -38,10 +40,16 @@ const handleClick = (e) => {
       onMouseLeave={!isMobile ? () => setOpen(false) : undefined}
       onClick={(e) => handleClick(e)}
     >
-      <div className="bp-label">
-        {item.name}
-        {item.children?.length > 0 && <FaChevronRight className="bp-arrow" />}
-      </div>
+<div className="bp-label">
+  <div className="bp-left">
+    {Icon && <Icon className="bp-icon" />}
+    <span>{item.name}</span>
+  </div>
+
+  {item.children?.length > 0 && (
+    <FaChevronRight className="bp-arrow" />
+  )}
+</div>
 
       {open && item.children?.length > 0 && (
         <div

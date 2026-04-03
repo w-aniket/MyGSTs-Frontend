@@ -11,9 +11,10 @@ import { UserContext } from "../../../UserContex/UserContext";
 import ProfileLogo from "../ProfileLogo/ProfileLogo";
 import Full_Logo from "../../../assets/Full_Logo.png";
 import MenuItem from "../../../Component/MenuItem/MenuItem";
-import categories from "./data";
+// import navLinks from "./NavLinks";
 import MegaMenu from "../../../Component/MegaMenu/MegaMenu";
 import "./Navigation.css";
+import { getCategoriesTree } from "../../../Utils/APIs/categoryApi";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -23,8 +24,10 @@ const Navigation = () => {
   // Better dropdown handling (future-proof)
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const navigation = [
+  const navLinks = [
     { name: "Home", href: "/", current: location.pathname === "/" },
     {
       name: "Services",
@@ -58,6 +61,21 @@ const Navigation = () => {
     },
   ];
 
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const data = await getCategoriesTree();
+        setCategories(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCategories();
+  }, []);
+
   return (
     <Disclosure as="nav" className="navbar">
       <div className="navbar-container">
@@ -75,7 +93,7 @@ const Navigation = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden sm:flex nav-links">
-          {navigation.map((item) => {
+          {navLinks.map((item) => {
             // ✅ Dropdown
             if (item.type === "dropdown") {
               return (
@@ -87,9 +105,12 @@ const Navigation = () => {
                 >
                   <span>{item.name}</span>
 
-                  {openDropdown === item.name && (
-                    <MegaMenu categories={item.children} />
-                  )}
+                  {openDropdown === item.name &&
+                    (loading ? (
+                      <div className="mega-loading">Loading...</div>
+                    ) : (
+                      <MegaMenu categories={item.children} />
+                    ))}
                 </div>
               );
             }
@@ -140,7 +161,7 @@ const Navigation = () => {
           </DisclosureButton>
         )}
 
-        {navigation.map((item) => {
+        {navLinks.map((item) => {
           // ✅ Mobile Dropdown
           if (item.type === "dropdown") {
             return (
