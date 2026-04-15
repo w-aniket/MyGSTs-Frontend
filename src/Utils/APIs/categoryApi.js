@@ -17,6 +17,11 @@ export const createCategory = async (form) => {
     return await axios.post(`${apiUrl}/api/category`, form, authHeader);
 }
 
+
 export const deleteCategoryById = async (id) => {
     return await axios.delete(`${apiUrl}/api/category/${id}`, authHeader);
+}
+
+export const updateCategory = async (form, id) => {
+    return await axios.put(`${apiUrl}/api/category/${id}`, form, authHeader);
 }

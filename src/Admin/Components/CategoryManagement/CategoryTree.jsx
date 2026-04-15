@@ -1,13 +1,16 @@
 import React from 'react'
 import CategoryItem from './CategoryItem'
 
-const CategoryTree = ({ data, onDelete }) => {
+const CategoryTree = ({ data, onDelete, onEdit, isChild = false }) => {
   return (
+   <div className={isChild ? "" : "overflow-y-auto flex-1"}>
+
     <ul className='space-y-2'>
         {data.map((item) => (
-            <CategoryItem key={item._id} item={item} onDelete={onDelete} />
+            <CategoryItem key={item._id} item={item} onDelete={onDelete} onEdit= {onEdit} />
         ))}
     </ul>
+    </div>
   )
 }
 

@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { createCategory } from "../../../Utils/APIs/categoryApi";
+import { createCategory, updateCategory } from "../../../Utils/APIs/categoryApi";
 import IconPicker from "./IconPicker";
 
-const CategoryForm = ({ categories, refresh }) => {
+const CategoryForm = ({ categories, refresh, editData, setEditData }) => {
   const [form, setForm] = useState({
     name: "",
     parentId: null,
     icon: "",
     order: 0,
   });
+
+  useEffect(() => {
+    if (editData) {
+      setForm({
+        name: editData.name || "",
+        parentId: editData.parentId || null,
+        icon: editData.icon || "",
+        order: editData.order || 0,
+      })
+    }
+  }, [editData])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,9 +30,14 @@ const CategoryForm = ({ categories, refresh }) => {
       return;
     }
 
-    await createCategory(form)
+    if(editData) {
+      await updateCategory(form, editData._id)
+    } else {
+      await createCategory(form);
+    }
 
     setForm({ name: "", parentId: null, icon: "", order: 0 });
+    setEditData(null)
     refresh();
   };
 
@@ -40,14 +56,19 @@ const CategoryForm = ({ categories, refresh }) => {
         <select
           className="w-full border p-2 rounded"
           value={form.parentId || null}
-          onChange={(e) => setForm({ ...form, parentId: e.target.value === "" ? null : e.target.value })}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              parentId: e.target.value === "" ? null : e.target.value,
+            })
+          }
         >
           <option value="">No Parent</option>
           {categories?.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                    {cat.name}
-                </option>
-            ))}
+            <option key={cat._id} value={cat._id}>
+              {cat.name}
+            </option>
+          ))}
         </select>
 
         <IconPicker
@@ -55,8 +76,8 @@ const CategoryForm = ({ categories, refresh }) => {
           onSelect={(iconName) => setForm({ ...form, icon: iconName })}
         />
 
-         <input
-         type="number"
+        <input
+          type="number"
           className="w-full border p-2 rounded"
           placeholder="Order"
           value={form.order}
@@ -64,9 +85,8 @@ const CategoryForm = ({ categories, refresh }) => {
         />
 
         <button className="bg-blue-500 text-white px-4 rounded">
-            Add Category
+          {editData?"Update Category":"Add Category"}
         </button>
-
       </form>
     </div>
   );
