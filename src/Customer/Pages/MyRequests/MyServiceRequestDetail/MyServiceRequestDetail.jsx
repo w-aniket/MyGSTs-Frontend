@@ -9,6 +9,7 @@ import { downloadInvoice } from "../../../../Utils/Invoice/downloadInvoice";
 import SupportSection from "./SupportSection";
 import "./MyServiceRequestDetail.css";
 import ClientUploadSection from "./ClientUploadSection";
+import { handlePayNow as processPayment } from "../../../../Utils/Payment/payments";
 
 const MyServiceRequestDetail = () => {
   const { id } = useParams();
@@ -70,12 +71,7 @@ const MyServiceRequestDetail = () => {
   };
 
   const handlePayNow = () => {
-    navigate(`/service-requests/confirmation/${id}`, {
-      state: {
-        serviceName: request.service?.title,
-        amount: request.amount,
-      },
-    });
+    processPayment(null, id, Number(request.amount), getRequestDetails);
   };
   const canCancel =
     request?.status !== "Done" && request?.status !== "Cancelled";
@@ -87,8 +83,6 @@ const MyServiceRequestDetail = () => {
   if (!request) {
     return <p className="message error">Request not found</p>;
   }
-  
-
 
   return (
     <div className="srd-page">
@@ -121,17 +115,7 @@ const MyServiceRequestDetail = () => {
 
         <div className="srd-action-right">
           {request.paymentStatus === "Pending" && (
-            <button
-              className="srd-btn srd-btn-primary"
-              onClick={() =>
-                handlePayNow(
-                  null,
-                  request._id,
-                  Number(request.amount),
-                  getRequestDetails
-                )
-              }
-            >
+            <button className="srd-btn srd-btn-primary" onClick={handlePayNow}>
               Pay Now
             </button>
           )}
@@ -223,7 +207,7 @@ const MyServiceRequestDetail = () => {
                 <strong>
                   {request.client.gstNumber.replace(
                     /^(.{2}).*(.{4})$/,
-                    "$1****$2"
+                    "$1****$2",
                   )}
                 </strong>
               ) : (
@@ -260,7 +244,28 @@ const MyServiceRequestDetail = () => {
           <div className="srd-card">
             <div className="srd-info-grid">
               <div className="srd-info-item">
-                <span>Amount</span>
+                <span>Base Amount</span>
+                <strong>
+                  ₹{request.invoice?.baseAmount ?? request.amount}
+                </strong>
+              </div>
+
+              {request.invoice?.gstApplied && (
+                <>
+                  <div className="srd-info-item">
+                    <span>SGST (9%)</span>
+                    <strong>₹{request.invoice.sgst}</strong>
+                  </div>
+
+                  <div className="srd-info-item">
+                    <span>CGST (9%)</span>
+                    <strong>₹{request.invoice.cgst}</strong>
+                  </div>
+                </>
+              )}
+
+              <div className="srd-info-item">
+                <span>Total Payable</span>
                 <strong>₹{request.amount}</strong>
               </div>
 
@@ -273,14 +278,7 @@ const MyServiceRequestDetail = () => {
             <div className="srd-payment-actions">
               <button
                 className="srd-btn srd-btn-primary"
-                onClick={() =>
-                  handlePayNow(
-                    null,
-                    request._id,
-                    Number(request.amount),
-                    getRequestDetails
-                  )
-                }
+                onClick={handlePayNow}
               >
                 Pay Now
               </button>
@@ -290,7 +288,28 @@ const MyServiceRequestDetail = () => {
           <div className="srd-card">
             <div className="srd-info-grid">
               <div className="srd-info-item">
-                <span>Amount Paid</span>
+                <span>Base Amount</span>
+                <strong>
+                  ₹{request.invoice?.baseAmount ?? request.amount}
+                </strong>
+              </div>
+
+              {request.invoice?.gstApplied && (
+                <>
+                  <div className="srd-info-item">
+                    <span>SGST (9%)</span>
+                    <strong>₹{request.invoice.sgst}</strong>
+                  </div>
+
+                  <div className="srd-info-item">
+                    <span>CGST (9%)</span>
+                    <strong>₹{request.invoice.cgst}</strong>
+                  </div>
+                </>
+              )}
+
+              <div className="srd-info-item">
+                <span>Total Amount Paid</span>
                 <strong>₹{request.amount}</strong>
               </div>
 
@@ -326,7 +345,7 @@ const MyServiceRequestDetail = () => {
 
       {/* Client upload */}
 
-        <ClientUploadSection request={request} />
+      <ClientUploadSection request={request} />
 
       {/* STEP 5: TIMELINE */}
       <div className="srd-section">
@@ -353,7 +372,7 @@ const MyServiceRequestDetail = () => {
             <TimelineItem
               title="Under Review"
               active={["Assigned", "In Progress", "Done"].includes(
-                request.status
+                request.status,
               )}
             />
 
@@ -400,7 +419,8 @@ const MyServiceRequestDetail = () => {
             </div>
           ) : (
             <p className="srd-empty-text">
-              Work files will be available here after payment is completed and the service is marked as done.
+              Work files will be available here after payment is completed and
+              the service is marked as done.
             </p>
           )}
         </div>
@@ -466,10 +486,10 @@ const MyServiceRequestDetail = () => {
                       {
                         headers: {
                           Authorization: `Bearer ${localStorage.getItem(
-                            "token"
+                            "token",
                           )}`,
                         },
-                      }
+                      },
                     );
 
                     setShowCancelConfirm(false);

@@ -11,8 +11,6 @@ import ServiceRequestForm from "../../Components/ServiceRequestForm/ServiceReque
 import { Helmet } from "react-helmet-async";
 import "./ServiceDetail.css";
 
-
-
 const IconFallback = ({ size = 28 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
     <circle cx="12" cy="12" r="10" fill="#E6F2FF" />
@@ -83,6 +81,13 @@ const ServiceDetail = () => {
   const placeholderRef = useRef(null);
   const [isFixed, setIsFixed] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [gstEnabled, setGstEnabled] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`${apiUrl}/api/settings`)
+      .then((res) => setGstEnabled(res.data.settings.gstEnabled));
+  }, [apiUrl]);
 
   useEffect(() => {
     const fetchService = async () => {
@@ -212,13 +217,14 @@ const ServiceDetail = () => {
     service.shortDescription ||
     "No description available.";
   const price = service.price || service.pricing || null;
+  const displayTotal = gstEnabled ? Math.round(price * 1.18) : price;
   const banner = service.bannerImage || service.imageUrl || null;
   const iconBg = service.iconbg || "#1E90FF";
   const iconClass = service.icon || null;
 
   const pageTitle = `${title} Services in India | MyGSTs`;
-const pageDescription = `${title} services by MyGSTs. Get professional assistance for ${title.toLowerCase()}, including documentation, compliance, and expert support across India.`;
-const canonicalUrl = `https://www.mygsts.in/services/${id}`;
+  const pageDescription = `${title} services by MyGSTs. Get professional assistance for ${title.toLowerCase()}, including documentation, compliance, and expert support across India.`;
+  const canonicalUrl = `https://www.mygsts.in/services/${id}`;
 
   return (
     <div className="sd-page">
@@ -305,7 +311,6 @@ const canonicalUrl = `https://www.mygsts.in/services/${id}`;
                     <img
                       src={banner}
                       alt={`${title} service by MyGSTs`}
-
                       className="sd-banner-img"
                     />
                   ) : (
@@ -393,8 +398,12 @@ const canonicalUrl = `https://www.mygsts.in/services/${id}`;
                 <h2>Pricing</h2>
                 <div className="price-block">
                   <div className="price-left">
-                    <div className="price-amount">₹{price}/-</div>
-                    <div className="price-note">Starting price</div>
+                    <div className="price-amount">₹{displayTotal}/-</div>
+                    {gstEnabled ? (
+                      <div className="price-note">Inclusive of 18% GST</div>
+                    ) : (
+                      <div className="price-note">Starting price</div>
+                    )}
                   </div>
                   <div className="price-right">
                     <button

@@ -3,46 +3,48 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FaCheckCircle, FaMoneyBillWave, FaClock } from "react-icons/fa";
 import "./ServiceRequestConfirmation.css";
 import { handlePayNow } from "../../../Utils/Payment/payments";
-import { gstAmount } from "../../../Utils/basicFunctions";
 import { Helmet } from "react-helmet-async";
-
 
 const ServiceRequestConfirmation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { state } = useLocation();
-
+  const invoice = state?.invoice;
   const serviceName = state?.serviceName || "Service";
-  const amount = Number(state?.amount) || 0;
 
-  const returnAmount = gstAmount(amount)
+  const baseAmount = invoice?.baseAmount ?? 0;
+  const sgst = invoice?.sgst ?? 0;
+  const cgst = invoice?.cgst ?? 0;
+  const total = invoice?.amount ?? 0;
+  const gstApplied = invoice?.gstApplied ?? false;
 
-  const handlePay = (id, amount) => {
-    handlePayNow(navigate, id, amount);
+  const handlePay = (id, total) => {
+    handlePayNow(navigate, id, total);
   };
 
   return (
     <div className="src-page">
       <Helmet>
-  <title>
-    {serviceName} Request Submitted | MyGSTs
-  </title>
+        <title>{serviceName} Request Submitted | MyGSTs</title>
 
-  <meta
-    name="description"
-    content={`Your request for ${serviceName} has been successfully submitted on MyGSTs. Complete payment to start your service instantly.`}
-  />
+        <meta
+          name="description"
+          content={`Your request for ${serviceName} has been successfully submitted on MyGSTs. Complete payment to start your service instantly.`}
+        />
 
-  <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="noindex, nofollow" />
 
-  {/* Open Graph */}
-  <meta property="og:title" content={`${serviceName} Request Submitted | MyGSTs`} />
-  <meta
-    property="og:description"
-    content="Your service request was submitted successfully. Pay online to get started."
-  />
-  <meta property="og:type" content="website" />
-</Helmet>
+        {/* Open Graph */}
+        <meta
+          property="og:title"
+          content={`${serviceName} Request Submitted | MyGSTs`}
+        />
+        <meta
+          property="og:description"
+          content="Your service request was submitted successfully. Pay online to get started."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
 
       <div className="src-card">
         <div className="src-icon-wrapper">
@@ -50,10 +52,10 @@ const ServiceRequestConfirmation = () => {
         </div>
 
         <h1>Request Submitted</h1>
-       <p className="src-subtext">
-  Thank you! Our team will review your request and contact you within 24 hours.
-</p>
-
+        <p className="src-subtext">
+          Thank you! Our team will review your request and contact you within 24
+          hours.
+        </p>
 
         <div className="src-details">
           <div className="src-row">
@@ -65,26 +67,27 @@ const ServiceRequestConfirmation = () => {
             <strong>{id}</strong>
           </div>
           <div className="src-divider" />
-            <div className="src-row">
-              <span>Base Amount</span>
-              <strong>₹ {returnAmount.baseAmount}</strong>
-            </div>
-            <div className="src-row">
-              <span>SGST (9%)</span>
-              <strong>₹ {returnAmount.sgst}</strong>
-            </div>
-            <div className="src-row">
-              <span>CGST (9%)</span>
-              <strong>₹ {returnAmount.cgst}</strong>
-            </div>
-
+          <div className="src-row">
+            <span>Base Amount</span>
+            <strong>₹ {baseAmount}</strong>
+          </div>
+          {gstApplied && (
+            <>
+              <div className="src-row">
+                <span>SGST (9%)</span>
+                <strong>₹ {sgst}</strong>
+              </div>
+              <div className="src-row">
+                <span>CGST (9%)</span>
+                <strong>₹ {cgst}</strong>
+              </div>
+            </>
+          )}
           <div className="src-divider" />
-
           <div className="src-row total">
-              <span>Total Amount</span>
-              <strong>₹ {amount}</strong>
-            </div>
-          
+            <span>Total Amount</span>
+            <strong>₹ {total}</strong>
+          </div>
           <div className="src-row ">
             <span>Status</span>
             <strong className="pending">Payment Pending</strong>
@@ -92,7 +95,7 @@ const ServiceRequestConfirmation = () => {
         </div>
 
         <div className="src-actions">
-          <button className="btn primary" onClick={() => handlePay(id, amount)}>
+          <button className="btn primary" onClick={() => handlePay(id, total)}>
             <FaMoneyBillWave /> Pay Now
           </button>
           <button

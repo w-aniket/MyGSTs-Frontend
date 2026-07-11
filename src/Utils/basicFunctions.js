@@ -11,11 +11,13 @@ export const getShortId = (id, length = 6) => {
   return ("SR-"+id.slice(-length).toUpperCase());
 };
 
-export const gstAmount = (amount) => {
-  const totalAmount = Number(amount);
-
-  const baseAmount = +(totalAmount / 1.18).toFixed(2);
+export const computeGst = (base, gstEnabled) => {
+  const baseAmount = +Number(base).toFixed(2);
+  if (!gstEnabled) {
+    return { baseAmount, sgst: 0, cgst: 0, total: baseAmount, gstApplied: false };
+  }
   const sgst = +(baseAmount * 0.09).toFixed(2);
   const cgst = +(baseAmount * 0.09).toFixed(2);
-  return ({baseAmount, sgst, cgst})
+  const total = +(baseAmount + sgst + cgst).toFixed(2);
+  return { baseAmount, sgst, cgst, total, gstApplied: true };
 };

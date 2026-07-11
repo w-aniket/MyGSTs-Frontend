@@ -10,6 +10,7 @@ import ContactRequests from "../Admin/Pages/ContactRequests/ContactRequests";
 import ContactDetail from "../Admin/Pages/ContactRequests/ContactDetail";
 import ServiceRequestDetail from "../Admin/Pages/ServiceRequestDetail/ServiceRequestDetail";
 import AdminSupport from "../Admin/Pages/AdminSupport/AdminSupport";
+import Settings from "../Admin/Pages/Settings/Settings";
 
 const AdminRouter = () => {
   return (
@@ -77,15 +78,6 @@ const AdminRouter = () => {
       />
 
       <Route
-        path="/settings"
-        element={
-          <AdminLayout>
-            <JobPosts />
-          </AdminLayout>
-        }
-      />
-
-      <Route
         path="profile/:id"
         element={
           <AdminLayout>
@@ -144,6 +136,15 @@ const AdminRouter = () => {
         element={
           <AdminLayout>
             <AdminSupport />
+          </AdminLayout>
+        }
+      />
+
+      <Route
+        path="/settings"
+        element={
+          <AdminLayout>
+            <Settings />
           </AdminLayout>
         }
       />

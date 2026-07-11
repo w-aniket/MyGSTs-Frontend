@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../UserContex/UserContext";
-import FileUploader from "../../../Utils/FileUpload/FileUploader";
 import { toast } from "react-toastify";
 import "./ServiceRequestForm.css";
 import DocumentUploader from "../../../Utils/FileUpload/DocumentUploader";
@@ -20,6 +19,7 @@ const ServiceRequestForm = ({
   const [submitting, setSubmitting] = useState(false);
   const [otpStep, setOtpStep] = useState(false);
   const [otp, setOtp] = useState("");
+  const [gstEnabled, setGstEnabled] = useState(false);
   const [form, setForm] = useState({
     name: user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "",
     email: user?.email || "",
@@ -39,6 +39,17 @@ const ServiceRequestForm = ({
       });
     }
   }, [user]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/settings`)
+      .then((res) => setGstEnabled(res.data.settings.gstEnabled))
+      .catch(() => {}); // fail silently, defaults to GST-off display
+  }, []);
+
+  const displayTotal = gstEnabled
+    ? Math.round((pricing || 0) * 1.18)
+    : pricing || 0;
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
@@ -104,10 +115,14 @@ const ServiceRequestForm = ({
         localStorage.setItem("token", res.data.token);
         setUser(res.data.user);
 
+        // NOTE: requires the verify-otp backend controller to return
+        // `invoice` in its response, the same way createServiceRequest does.
+        // If it doesn't yet, this will show ₹0 on the confirmation page —
+        // check that controller next.
         navigate(`/service-requests/confirmation/${res.data?.request.displayId}`, {
           state: {
             serviceName,
-            amount: pricing,
+            invoice: res.data.invoice,
           },
         });
       } else {
@@ -163,7 +178,7 @@ const ServiceRequestForm = ({
       navigate(`/service-requests/confirmation/${res.data?.request.displayId}`, {
         state: {
           serviceName,
-          amount: pricing,
+          invoice: res.data.invoice,
         },
       });
     } catch (err) {
@@ -235,6 +250,16 @@ const ServiceRequestForm = ({
               onChange={(file) => handleDocumentChange(doc, file)}
             />
           ))}
+
+          {pricing != null && (
+            <div className="form-price-summary">
+              <span>Total Payable</span>
+              <strong>
+                ₹ {displayTotal}
+                {gstEnabled ? " (incl. 18% GST)" : ""}
+              </strong>
+            </div>
+          )}
 
           <button
             type="submit"

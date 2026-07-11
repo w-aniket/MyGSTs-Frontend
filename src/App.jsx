@@ -12,6 +12,13 @@ import Loader from "./Component/Loader/Loader";
 
 function App() {
   const { user, loadingUser } = useContext(UserContext);
+  if (loadingUser) {
+    return (
+      <div className="loading-overlay">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <div className="web-body">
       <ScrollToTop />
@@ -43,12 +50,6 @@ function App() {
         />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
-
-      {loadingUser && (
-        <div className="loading-overlay">
-          <Loader /> {/* Try "wave" | "typing" | "shimmer" */}
-        </div>
-      )}
     </div>
   );
 }

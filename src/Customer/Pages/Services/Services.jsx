@@ -36,27 +36,7 @@ const Services = () => {
       </Helmet>
 
       {/* INTRO SECTION */}
-
-
-      {/* SERVICES LIST */}
-      <section id="services" className="main-services-container">
-        {loading
-          ? Array(6)
-              .fill(0)
-              .map((_, i) => <SkeletonServiceCard key={i} />)
-          : services.map((service) => (
-              <ServiceCard
-                key={service._id}
-                title={service.title}
-                icon={service.icon || "🔧"}
-                iconbg={service.iconbg || "#e0e0e0"}
-                features={service.features || []}
-                serviceId={service._id}
-              />
-            ))}
-      </section>
-
-            <header className="services-hero">
+      <header className="services-hero">
         <div className="services-hero-container">
           {/* LEFT CONTENT */}
           <div className="hero-left">
@@ -96,6 +76,24 @@ const Services = () => {
           </div>
         </div>
       </header>
+
+      {/* SERVICES LIST */}
+      <section id="services" className="main-services-container">
+        {loading
+          ? Array(6)
+              .fill(0)
+              .map((_, i) => <SkeletonServiceCard key={i} />)
+          : services.map((service) => (
+              <ServiceCard
+                key={service._id}
+                title={service.title}
+                icon={service.icon || "🔧"}
+                iconbg={service.iconbg || "#e0e0e0"}
+                features={service.features || []}
+                serviceId={service._id}
+              />
+            ))}
+      </section>
     </main>
   );
 };
