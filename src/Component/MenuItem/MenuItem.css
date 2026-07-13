@@ -78,3 +78,21 @@
 .bp-menu-item.mobile {
   padding-left: 10px;
 }
+
+/* Disabled leaf (no children, no landing page yet) */
+.bp-label.disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.bp-label.disabled:hover {
+  color: inherit;
+}
+
+.bp-menu-item.disabled {
+  cursor: default;
+}
+
+.bp-menu-item.disabled:hover {
+  background: transparent;
+}

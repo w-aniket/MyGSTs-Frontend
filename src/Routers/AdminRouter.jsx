@@ -11,6 +11,8 @@ import ContactDetail from "../Admin/Pages/ContactRequests/ContactDetail";
 import ServiceRequestDetail from "../Admin/Pages/ServiceRequestDetail/ServiceRequestDetail";
 import AdminSupport from "../Admin/Pages/AdminSupport/AdminSupport";
 import Settings from "../Admin/Pages/Settings/Settings";
+import CourseApplicationDetail from "../Admin/Pages/CourseApplications/CourseApplicationDetail";
+import CourseApplications from "../Admin/Pages/CourseApplications/CourseApplications";
 
 const AdminRouter = () => {
   return (
@@ -145,6 +147,23 @@ const AdminRouter = () => {
         element={
           <AdminLayout>
             <Settings />
+          </AdminLayout>
+        }
+      />
+
+      <Route
+        path="/course-applications"
+        element={
+          <AdminLayout>
+            <CourseApplications />
+          </AdminLayout>
+        }
+      />
+      <Route
+        path="/course-application/:id"
+        element={
+          <AdminLayout>
+            <CourseApplicationDetail />
           </AdminLayout>
         }
       />

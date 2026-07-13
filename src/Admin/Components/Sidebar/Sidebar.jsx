@@ -21,6 +21,7 @@ const Sidebar = () => {
           <li><Link to="/admin/services" onClick={() => setSidebarOpen(false)}>Services</Link></li>
           <li><Link to="/admin/job-posts" onClick={() => setSidebarOpen(false)}>Job Posts</Link></li>
           <li><Link to="/admin/manage" onClick={() => setSidebarOpen(false)}>Manage</Link></li>
+          <li><Link to="/admin/course-applications" onClick={() => setSidebarOpen(false)}>Course Applications</Link></li>
           <li><Link to="/admin/contact-requests" onClick={() => setSidebarOpen(false)}>Contact Requests</Link></li>
           <li><Link to="/admin/support" onClick={() => setSidebarOpen(false)}>Support</Link></li>
           {/* <li><Link to="/admin/accounts" onClick={() => setSidebarOpen(false)}>Accounts</Link></li> */}

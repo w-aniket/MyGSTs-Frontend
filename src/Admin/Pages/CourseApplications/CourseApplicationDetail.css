@@ -1,0 +1,18 @@
+/* CourseApplicationDetail.css */
+
+.detail-back-btn {
+  margin-top: 20px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.detail-back-btn:hover {
+  background: #1d4ed8;
+}

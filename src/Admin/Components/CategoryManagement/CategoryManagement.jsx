@@ -56,6 +56,7 @@ const CategoryManagement = () => {
           data={categoriesTree}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          refresh={fetchData}
         />
       </div>
 

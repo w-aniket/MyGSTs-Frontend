@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import "./MenuItem.css";
@@ -8,6 +9,10 @@ const MenuItem = ({ item, isMobile = false }) => {
   const [openLeft, setOpenLeft] = useState(false);
   const Icon = item.icon ? FaIcons[item.icon] : null;
   const ref = useRef();
+  const navigate = useNavigate();
+
+  const hasChildren = item.children?.length > 0;
+  const isDisabledLeaf = !hasChildren && !item.hasLandingPage;
 
   const handleMouseEnter = () => {
     if (isMobile) return;
@@ -17,7 +22,6 @@ const MenuItem = ({ item, isMobile = false }) => {
     const rect = ref.current.getBoundingClientRect();
     const dropdownWidth = 220; // match CSS
 
-    // Better overflow detection
     if (rect.right + dropdownWidth > window.innerWidth) {
       setOpenLeft(true);
     } else {
@@ -25,37 +29,41 @@ const MenuItem = ({ item, isMobile = false }) => {
     }
   };
 
-const handleClick = (e) => {
-  if (isMobile) {
-    e.stopPropagation(); // 🔥 THIS LINE FIXES YOUR ISSUE
-    setOpen(!open);
-  }
-};
+  const handleClick = (e) => {
+    if (hasChildren) {
+      if (isMobile) {
+        e.stopPropagation(); // 🔥 keeps your existing mobile toggle fix
+        setOpen(!open);
+      }
+      return; // desktop: hover already handles expansion, click on a parent does nothing
+    }
+
+    if (item.hasLandingPage) {
+      navigate(`/courses/${item.slug}`);
+    }
+    // else: leaf with no landing page yet — no-op
+  };
 
   return (
     <div
       ref={ref}
-      className="bp-menu-item"
+      className={`bp-menu-item ${isDisabledLeaf ? "disabled" : ""}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={!isMobile ? () => setOpen(false) : undefined}
       onClick={(e) => handleClick(e)}
     >
-<div className="bp-label">
-  <div className="bp-left">
-    {Icon && <Icon className="bp-icon" />}
-    <span>{item.name}</span>
-  </div>
+      <div className="bp-label">
+        <div className="bp-left">
+          {Icon && <Icon className="bp-icon" />}
+          <span>{item.name}</span>
+        </div>
 
-  {item.children?.length > 0 && (
-    <FaChevronRight className="bp-arrow" />
-  )}
-</div>
+        {hasChildren && <FaChevronRight className="bp-arrow" />}
+      </div>
 
-      {open && item.children?.length > 0 && (
+      {open && hasChildren && (
         <div
-          className={`bp-dropdown ${
-            openLeft ? "left" : "right"
-          } ${isMobile ? "mobile" : ""}`}
+          className={`bp-dropdown ${openLeft ? "left" : "right"} ${isMobile ? "mobile" : ""}`}
         >
           {item.children.map((child) => (
             <MenuItem key={child._id} item={child} isMobile={isMobile} />

@@ -55,7 +55,7 @@ const CategoryForm = ({ categories, refresh, editData, setEditData }) => {
 
         <select
           className="w-full border p-2 rounded"
-          value={form.parentId || null}
+          value={form.parentId || ""}
           onChange={(e) =>
             setForm({
               ...form,

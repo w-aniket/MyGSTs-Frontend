@@ -1,0 +1,45 @@
+.ca-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ca-export-btn {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ca-export-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ca-type-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ca-type-badge.apply {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.ca-type-badge.brochure {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.unread-row {
+  font-weight: 600;
+  background: #f9fafb;
+}

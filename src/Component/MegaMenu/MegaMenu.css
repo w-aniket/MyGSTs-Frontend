@@ -186,3 +186,41 @@
 .mega-link:hover .mega-icon.small {
   color: #2563eb;
 }
+
+/* ================= DISABLED / CLICKABLE STATES ================= */
+
+/* Leaf items with no landing page yet — visually inert */
+.mega-item.disabled,
+.mega-title.disabled,
+.mega-link.disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.mega-item.disabled:hover {
+  background: transparent;
+  border-left: 3px solid transparent;
+}
+
+.mega-item.disabled:hover .mega-icon {
+  color: #6b7280;
+}
+
+.mega-link.disabled:hover {
+  color: #6b7280;
+  transform: none;
+}
+
+/* Leaf items that DO have a landing page — reinforce clickability */
+.mega-link.clickable {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.mega-title:not(.disabled) {
+  cursor: pointer;
+}
+
+.mega-title:not(.disabled):hover {
+  color: #2563eb;
+}
