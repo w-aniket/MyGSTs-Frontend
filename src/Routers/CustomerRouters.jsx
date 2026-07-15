@@ -32,6 +32,7 @@ import CategoryManagement from "../Admin/Components/CategoryManagement/CategoryM
 import CourseLandingPage from "../Component/CourseLandingPage/CourseLandingPage.jsx";
 import ApplicationReceived from "../Component/ApplicationReceived/ApplicationReceived";
 import RefundPolicy from "../Customer/Pages/Refundpolicy/RefundPolicy.jsx";
+import Disclaimer from "../Customer/Pages/Disclaimer/Disclaimer.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -96,13 +97,7 @@ const CustomerRouters = () => {
 
         <Route
           path="/disclaimer"
-          element={
-            <ComingSoon
-              title="Disclaimer"
-              description="This Disclaimer page is currently under development. It will outline important legal information, service limitations, responsibilities, and usage terms related to MyGSTs accounting, taxation, and compliance services. Please check back soon for complete details"
-            />
-          }
-        />
+          element={ <Disclaimer /> }/>
 
         <Route path="/courses/:slug" element={<CourseLandingPage />} />
         <Route path="/application-received" element={<ApplicationReceived />} />
