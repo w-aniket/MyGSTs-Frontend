@@ -31,6 +31,7 @@ import ComingSoon from "../Component/ComingSoon/ComingSoon.jsx";
 import CategoryManagement from "../Admin/Components/CategoryManagement/CategoryManagement.jsx";
 import CourseLandingPage from "../Component/CourseLandingPage/CourseLandingPage.jsx";
 import ApplicationReceived from "../Component/ApplicationReceived/ApplicationReceived";
+import RefundPolicy from "../Customer/Pages/Refundpolicy/RefundPolicy.jsx";
 
 const CustomerRouters = () => {
   return (
@@ -38,6 +39,8 @@ const CustomerRouters = () => {
       <ScrollingText />
       <Navigation />
       <ContactWidget />
+
+
 
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -63,15 +66,8 @@ const CustomerRouters = () => {
         <Route path="/careers/appliedjob" element={<ProfilePag />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route
-          path="/refund-policy"
-          element={
-            <ComingSoon
-              title="Refund Policy"
-              description="Our Refund Policy page is currently under development. It will explain eligibility criteria, refund timelines, applicable deductions, and conditions for service cancellations on MyGSTs. Refunds will be processed according to the service stage and applicable policies. Please check back soon for detailed information."
-            />
-          }
-        />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/security" element={<Security />} />
         <Route path="/cookie-declaration" element={<CookieDeclaration />} />
