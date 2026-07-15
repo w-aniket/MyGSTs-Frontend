@@ -5,9 +5,9 @@ const cardVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-export const AnimatedCard = ({ children }) => (
+export const AnimatedCard = ({ children, className = "" }) => (
   <motion.div
-    className="card"
+    className={`card ${className}`.trim()}
     variants={cardVariants}
     initial="hidden"
     whileInView="visible"

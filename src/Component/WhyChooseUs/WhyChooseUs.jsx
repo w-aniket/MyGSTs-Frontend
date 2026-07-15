@@ -1,4 +1,5 @@
 import React from "react";
+import { FaBolt, FaStopwatch, FaHandshake, FaLock } from "react-icons/fa";
 import "./WhyChooseUs.css";
 
 const WhyChooseUs = () => {
@@ -6,29 +7,22 @@ const WhyChooseUs = () => {
     {
       title: "Fast & Responsive Support",
       desc: "Get quick responses from our expert team whenever you need assistance.",
-      icon: "⚡",
-      position: "top",
+      icon: <FaBolt />,
     },
     {
       title: "Quick & Accurate Service",
       desc: "Our streamlined process ensures fast delivery with zero compromise on accuracy.",
-      icon: "⏱️",
-      position: "right",
-
+      icon: <FaStopwatch />,
     },
     {
       title: "Trusted by Businesses",
       desc: "Hundreds of growing businesses rely on us for compliance and accounting.",
-      icon: "🤝",
-      position: "bottom",
-
+      icon: <FaHandshake />,
     },
     {
       title: "Secure & Confidential Data",
       desc: "Your financial data is protected using industry-standard security practices.",
-      icon: "🔒",
-      position: "left",
-
+      icon: <FaLock />,
     },
   ];
 

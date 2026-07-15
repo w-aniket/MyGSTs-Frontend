@@ -1,18 +1,82 @@
 import {
-  FaBullseye,
   FaFileInvoice,
-  FaLock,
-  FaUsers,
+  FaFileInvoiceDollar,
   FaChartLine,
-  FaShieldAlt,
-  FaCheckCircle,
+  FaGlobeAsia,
+  FaLock,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 import "./AboutUs.css";
 import { useNavigate } from "react-router-dom";
 import { AnimatedCard } from "../../../Component/AnimatedCard/AnimatedCard";
 import { Helmet } from "react-helmet-async";
 import WhyChooseUs from "../../../Component/WhyChooseUs/WhyChooseUs";
+
+// TODO: replace with real numbers once available
+const stats = [
+  { value: "500+", label: "Businesses Onboarded" },
+  { value: "10K+", label: "Filings Processed" },
+  { value: "50+", label: "Courses & Certifications" },
+  { value: "100%", label: "Data Encrypted" },
+];
+
+// TODO: replace with real service list / copy if this differs from actual offerings
+const services = [
+  {
+    icon: <FaFileInvoice />,
+    title: "GST & Invoicing",
+    desc: "GST registration, return filing, and invoice management in one place.",
+  },
+  {
+    icon: <FaFileInvoiceDollar />,
+    title: "ITR Filing",
+    desc: "Income tax return filing for individuals, freelancers, and businesses.",
+  },
+  {
+    icon: <FaChartLine />,
+    title: "Accounting & Bookkeeping",
+    desc: "Structured financial records, kept current and audit-ready.",
+  },
+  {
+    icon: <FaGlobeAsia />,
+    title: "ShopAct & Import-Export",
+    desc: "Business registration and licensing for local and cross-border trade.",
+  },
+  {
+    icon: <FaLock />,
+    title: "Secure Payments",
+    desc: "Encrypted, reliable payment processing for every transaction.",
+  },
+];
+
+// TODO: swap in real names, roles, and photos — this is placeholder data
+const team = [
+  {
+    initials: "PD",
+    name: "Ganesh Wakchaure",
+    role: "Senior Chartered Accountant",
+    group: "ca",
+  },
+  {
+    initials: "AJ",
+    name: "Ananya Joshi",
+    role: "GST Compliance Specialist",
+    group: "ca",
+  },
+  {
+    initials: "RK",
+    name: "Aniket Wakchaure",
+    role: "Lead Full-Stack Engineer",
+    group: "tech",
+  },
+  {
+    initials: "VS",
+    name: "Aniket Kokane",
+    role: "Product & Platform Lead",
+    group: "tech",
+  },
+];
 
 const AboutUs = () => {
   const navigate = useNavigate();
@@ -24,8 +88,7 @@ const AboutUs = () => {
         </title>
         <meta
           name="description"
-          content="Learn about MyGSTs, a trusted digital CA platform for GST filing, ITR filing, accounting, invoicing, and business compliance services across India.
-"
+          content="Learn about MyGSTs, a trusted digital CA platform for GST filing, ITR filing, accounting, invoicing, and business compliance services across India."
         />
         <link rel="canonical" href="https://www.mygsts.in/about-us" />
         <script type="application/ld+json">
@@ -42,106 +105,86 @@ const AboutUs = () => {
       </Helmet>
 
       <main className="about-container">
-        {/* Hero Section */}
+        {/* Hero */}
         <div className="about-hero">
-          <h1>About MyGSTs</h1>
+          <span className="hero-badge">GST &middot; ITR &middot; Tax &middot; Service Registration &middot; Courses</span>
+          <h1>Compliance, simplified for Indian businesses</h1>
           <p>
-            Simplifying GST, accounting, and compliance for individuals,
-            startups, and businesses across India.
+            MyGSTs brings GST, tax filing, accounting, and business licensing
+            onto one secure platform — built for founders, freelancers, and
+            growing teams across India.
           </p>
+          <button className="primary-btn" onClick={() => navigate("/services")}>
+            Explore Services
+          </button>
         </div>
 
-        {/* Mission */}
+        {/* Stats strip — signature element */}
+        <div className="stats-strip">
+          {stats.map((s, i) => (
+            <div className="stat-block" key={i}>
+              <span className="stat-value">{s.value}</span>
+              <span className="stat-label">{s.label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Mission — pull-quote treatment, deliberately not a card */}
         <div className="about-section">
-          <h2>Our Mission</h2>
-          <div className="icon-card">
-            <FaBullseye className="icon" />
+          <motion.div
+            className="mission-quote"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
             <p>
-              To remove the complexity of GST and accounting by delivering a
-              secure, transparent, and easy-to-use digital platform for Indian
-              businesses.
+              Our mission is to remove the complexity of GST and accounting,
+              and deliver a secure, transparent, and easy-to-use platform for
+              every Indian business — from first registration to daily
+              filings.
             </p>
-          </div>
+          </motion.div>
         </div>
 
-        {/* What We Do */}
+        {/* What We Do — horizontal rows, distinct from card-grid sections below */}
         <div className="about-section">
           <h2>What We Do</h2>
-          <div className="card-grid">
-            <AnimatedCard>
-              <FaFileInvoice className="icon" />
-              <h3>GST & Invoicing</h3>
-              <p>GST filing, invoice creation, and compliance tracking.</p>
-            </AnimatedCard>
-            <AnimatedCard>
-              <FaChartLine className="icon" />
-              <h3>Accounting</h3>
-              <p>Clear financial records and structured workflows.</p>
-            </AnimatedCard>
-            <AnimatedCard>
-              <FaLock className="icon" />
-              <h3>Secure Payments</h3>
-              <p>Safe and reliable online payment processing.</p>
-            </AnimatedCard>
-          </div>
-        </div>
-
-        {/* trusted $ secure */}
-        <div className="about-section">
-          <h2>Trusted & Secure</h2>
-          <div className="card-grid">
-            <AnimatedCard>
-              <FaShieldAlt className="icon" />
-              <p>Secure & Encrypted Platform</p>
-            </AnimatedCard>
-
-            <AnimatedCard>
-              <FaCheckCircle className="icon" />
-              <p>GST Compliant Workflows</p>
-            </AnimatedCard>
-
-            <AnimatedCard>
-              <FaLock className="icon" />
-              <p>Data Privacy Guaranteed</p>
-            </AnimatedCard>
+          <div className="service-list">
+            {services.map((s, i) => (
+              <div className="service-row" key={i}>
+                <div className="service-icon">{s.icon}</div>
+                <div className="service-text">
+                  <h3>{s.title}</h3>
+                  <p>{s.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Why Choose Us */}
         <WhyChooseUs />
 
-        {/* Our team */}
+        {/* Our Team */}
         <div className="about-section">
-          <h2>Our Team</h2>
-          <div className="card-grid">
-            <AnimatedCard>
-              <FaUsers className="icon" />
-              <h3>Accounting Experts</h3>
-              <p>Certified professionals with GST experience.</p>
-            </AnimatedCard>
-
-            <AnimatedCard>
-              <FaUsers className="icon" />
-              <h3>Tech Specialists</h3>
-              <p>Engineers building secure and scalable systems.</p>
-            </AnimatedCard>
+          <h2>The Team Behind MyGSTs</h2>
+          <div className="team-grid">
+            {team.map((member, i) => (
+              <AnimatedCard key={i} className={`team-card team-${member.group}`}>
+                <div className="team-avatar">{member.initials}</div>
+                <h3>{member.name}</h3>
+                <p>{member.role}</p>
+              </AnimatedCard>
+            ))}
           </div>
         </div>
 
-        {/* Vision */}
-        <div className="about-section">
-          <h2>Our Vision</h2>
-          <p className="vision-text">
-            To become a trusted digital accounting partner for every Indian
-            business by delivering accurate, compliant, and scalable solutions.
-          </p>
-        </div>
-
-        {/* CTA */}
+        {/* Vision + CTA combined */}
         <div className="about-cta">
           <h2>Get Started with MyGSTs</h2>
           <p>Take control of your GST and accounting today.</p>
-          <button className="primary-btn" onClick={() => navigate("/services")}>
+          <button className="primary-btn cta-btn" onClick={() => navigate("/services")}>
             Get Started
           </button>
         </div>

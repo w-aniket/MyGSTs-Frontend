@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
+import ConsentCheckbox from "../Components/Legal/Consentcheckbox"; // adjust path to wherever you save ConsentCheckbox.jsx
 import "./OtpLogin.css";
 
 const OTPLogin = () => {
@@ -17,6 +18,7 @@ const OTPLogin = () => {
   const [loading, setLoading] = useState(false);
   const [cooldown, setCooldown] = useState(0);
   const [emailError, setEmailError] = useState("");
+  const [agreed, setAgreed] = useState(false); // consent checkbox state
 
   // keep regex here so both UI and sendOtp can use the same rule
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,6 +46,9 @@ const OTPLogin = () => {
     if (!emailRegex.test(trimmed)) {
       setEmailError("Please enter a valid email");
       return toast.error("Please enter a valid email");
+    }
+    if (!agreed) {
+      return toast.error("Please accept the Privacy Policy and Terms & Conditions");
     }
 
     setLoading(true);
@@ -91,7 +96,7 @@ const OTPLogin = () => {
 
   return (
     <div className="auth-container">
-      <h1>{step === 1 ? "Login" : "Enter OTP"}</h1>
+      <h1>{step === 1 ? "Login / Register" : "Enter OTP"}</h1>
 
       {step === 1 && (
         <div className="form-group">
@@ -126,11 +131,19 @@ const OTPLogin = () => {
           />
           {emailError && <p id="email-error" className="error-text">{emailError}</p>}
 
+          <ConsentCheckbox checked={agreed} onChange={setAgreed} id="login-consent" />
+
           <button
             onClick={sendOtp}
             className="login-btn"
-            disabled={loading || !!emailError || !email}
-            title={(!email || emailError) ? "Enter a valid email to enable" : "Send OTP"}
+            disabled={loading || !!emailError || !email || !agreed}
+            title={
+              !email || emailError
+                ? "Enter a valid email to enable"
+                : !agreed
+                ? "Please accept the Privacy Policy and Terms & Conditions"
+                : "Send OTP"
+            }
           >
             {loading ? "Sending..." : "Send OTP"}
           </button>

@@ -1,0 +1,45 @@
+/* Add this to Legal.css, or import as a separate ConsentCheckbox.css */
+
+.consent-check-wrapper {
+  margin: 1px 0;
+  font-family: "Inter", sans-serif;
+}
+
+.consent-check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.consent-check-row input[type="checkbox"] {
+  margin-top: 2px;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  accent-color: #1f2937;
+  cursor: pointer;
+}
+
+.consent-check-row span {
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.consent-check-row a {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.consent-check-row a:hover {
+  color: #1d4ed8;
+}
+
+/* Disabled submit button state, for reference */
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
