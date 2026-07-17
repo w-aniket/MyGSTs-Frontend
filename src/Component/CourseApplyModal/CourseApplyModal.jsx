@@ -132,7 +132,7 @@ const CourseApplyModal = ({ type, courseId, courseName, courseSlug, brochureUrl,
             <span>
               I agree to receive information regarding my submitted
               application, and informational and promotional messages, calls,
-              and updates through SMS, Email, WhatsApp, and RCS by signing up.
+              and updates through SMS, Email, and WhatsApp.
             </span>
           </label>
 

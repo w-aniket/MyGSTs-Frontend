@@ -5,6 +5,7 @@ import { UserContext } from "../../../UserContex/UserContext";
 import { toast } from "react-toastify";
 import "./ServiceRequestForm.css";
 import DocumentUploader from "../../../Utils/FileUpload/DocumentUploader";
+import ConsentCheckbox from "../../Components/Legal/Consentcheckbox"; // adjust path to match your project structure
 
 const ServiceRequestForm = ({
   pricing,
@@ -20,6 +21,7 @@ const ServiceRequestForm = ({
   const [otpStep, setOtpStep] = useState(false);
   const [otp, setOtp] = useState("");
   const [gstEnabled, setGstEnabled] = useState(false);
+  const [agreed, setAgreed] = useState(false); // consent checkbox state (only relevant for guest/non-logged-in submissions)
   const [form, setForm] = useState({
     name: user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "",
     email: user?.email || "",
@@ -63,7 +65,11 @@ const ServiceRequestForm = ({
 
     if (user) return handleLoggedInSubmit();
 
-    // Not logged in
+    // Not logged in — require consent before we send an OTP / collect their data
+
+    if (!agreed) {
+      return toast.error("Please accept the Privacy Policy and Terms & Conditions");
+    }
 
     try {
       const res = await axios.post(
@@ -261,10 +267,20 @@ const ServiceRequestForm = ({
             </div>
           )}
 
+          {/* Only guests need to consent here — logged-in users already agreed at registration */}
+          {!user && (
+            <ConsentCheckbox
+              checked={agreed}
+              onChange={setAgreed}
+              id="service-request-consent"
+            />
+          )}
+
           <button
             type="submit"
-            disabled={submitting || uploading}
+            disabled={submitting || uploading || (!user && !agreed)}
             className="form-button"
+            title={!user && !agreed ? "Please accept the Privacy Policy and Terms & Conditions" : undefined}
           >
             {submitting || uploading ? "Please wait..." : "Submit Request"}
           </button>

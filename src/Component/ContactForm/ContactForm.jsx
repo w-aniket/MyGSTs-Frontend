@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ContactForm.css";
 import {
   FaBuilding,
@@ -9,12 +9,20 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ConsentCheckbox from "../../Customer/Components/Legal/Consentcheckbox"; // adjust path to match your project structure
 
 const ContactForm = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [agreed, setAgreed] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!agreed) {
+      toast.error("Please accept the Privacy Policy and Terms & Conditions");
+      return;
+    }
+
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
@@ -22,6 +30,7 @@ const ContactForm = () => {
       await axios.post(`${apiUrl}/api/contact`, data);
       toast.success("Your message has been sent successfully.");
       event.target.reset();
+      setAgreed(false);
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     }
@@ -142,7 +151,18 @@ const ContactForm = () => {
               <label>Your Message</label>
             </div>
 
-            <button type="submit" className="business-btn">
+            <ConsentCheckbox
+              checked={agreed}
+              onChange={setAgreed}
+              id="contact-form-consent"
+            />
+
+            <button
+              type="submit"
+              className="business-btn"
+              disabled={!agreed}
+              title={!agreed ? "Please accept the Privacy Policy and Terms & Conditions" : undefined}
+            >
               Send Message
             </button>
           </form>
