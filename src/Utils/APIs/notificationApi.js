@@ -2,6 +2,9 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 const token = localStorage.getItem("token");
 const authHeader = { headers: { Authorization: `Bearer ${token}` } };
+const getAuthHeader = () => ({
+  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+});
 
 
 export const getNotificationsApi = async () => {
@@ -15,9 +18,9 @@ export const getUnreadCountApi = async () => {
 };
 
 export const markAsReadApi = async (id) => {
-  return axios.patch(`${apiUrl}/api/notifications/read/${id}`, authHeader);
+  return axios.patch(`${apiUrl}/api/notifications/read/${id}`, {}, authHeader);
 };
 
 export const markAllAsReadApi = async () => {
-  return axios.patch(`${apiUrl}/api/notifications/read-all`, authHeader);
+  return axios.patch(`${apiUrl}/api/notifications/read-all`, {}, getAuthHeader());
 };
