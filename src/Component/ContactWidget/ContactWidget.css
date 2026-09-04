@@ -54,3 +54,9 @@
 .contactPage {
     color: #8e24aa; /* Purple shade */
 }
+
+.chatBot {
+  color: #0f172a;
+  background: white;
+  border: none;
+}
